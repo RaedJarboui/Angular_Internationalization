@@ -1,0 +1,84 @@
+<div class="h-100 bg-plum-plate bg-animation">
+  <div class="d-flex h-100 justify-content-center align-items-center">
+    <div class="mx-auto app-login-box col-md-8">
+      <div class="app-logo-inverse mx-auto mb-3"></div>
+      <div class="modal-dialog w-100 mx-auto">
+        <div class="modal-content">
+          <form *ngIf="!isLoggedIn"
+          name="form"
+          #f="ngForm"
+          novalidate >
+          <div class="modal-body">
+            <div class="h5 modal-title text-center">
+              <h4 class="mt-2">
+                <div>Welcome back,</div>
+                <span>Please sign in to your account below.</span>
+              </h4>
+            </div>
+           
+            <div id="exampleInputGroup1" role="group" aria-describedby="exampleInputGroup1__BV_description_" class="mb-3">
+             
+              <div>
+                <input id="username" name="username"
+                type="text" placeholder="Enter username..." required="required"
+                  aria-required="true" class="form-control" aria-describedby="exampleInputGroup1__BV_description_" [(ngModel)]="form.username"
+                  #username="ngModel"
+                  >
+                  <!-- <div
+            class="alert alert-danger"
+            role="alert"
+            *ngIf="f.submitted && username.invalid"
+          >
+            Username is required!
+          </div> -->
+                <!-- <small tabindex="-1" id="exampleInputGroup1__BV_description_" class="form-text text-muted">We'll never
+                  share your email with anyone else.
+                </small> -->
+              </div>
+            </div>
+            <div id="exampleInputGroup2" role="group" class="mb-3">
+              <div><input id="exampleInput2" [(ngModel)]="form.password"
+                type="password" name="password" #password="ngModel"
+                [(ngModel)]="form.password"
+
+                placeholder="Enter password..." required="required"
+                  aria-required="true" class="form-control"></div>
+            </div>
+            <div class="custom-control custom-checkbox form-check">
+              <input id="exampleCheck" type="checkbox" name="check" autocomplete="off" class="form-check-input" value="true">
+              <label for="exampleCheck" class="form-label form-check-label">
+                Keep me logged in
+              </label>
+            </div>
+            <div class="form-group">
+              <div
+                class="alert alert-danger"
+                role="alert"
+                *ngIf="isLoginFailed"
+              >
+                Login failed: {{ errorMessage }}
+              </div>
+            </div>
+            <div class="divider"></div>
+            <h6 class="mb-0">
+              No account?
+              <a [routerLink]="['/pages/register-boxed']" class="text-primary">Sign up now</a>
+            </h6>
+          </div>
+          <div class="modal-footer clearfix">
+            <div class="float-start"><a [routerLink]="['/pages/register-boxed']" routerLinkActive="active" class="btn-lg btn btn-link">Recover
+                Password</a></div>
+            <div class="float-end">
+              <button type="button" (click)="onSubmit()" class="btn btn-primary btn-lg">Login to Dashboard</button>
+            </div>
+          </div>
+        
+          </form>
+        </div>
+      </div>
+      <div class="text-center text-white opacity-8 mt-3">
+        Copyright © ArchitectUI 2019
+      </div>
+    </div>
+  </div>
+</div>

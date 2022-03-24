@@ -1,0 +1,35 @@
+<!-- <app-page-title [heading]="heading" [subheading]="subheading" [icon]="icon"></app-page-title> -->
+<table class="table table-striped">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col" sortable="name">TableName</th>
+        <th scope="col" sortable="area">Translate</th>
+        <th>View Table details</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr
+        *ngFor="let t of tables_list; index as i">
+        <th scope="row">{{i+1}}</th>
+        <td>{{t.tableName}}</td>
+        <td>
+            <div class="row">
+                <label>Yes</label>
+                <label class="switch">
+                <input type="checkbox" [(ngModel)]="t.translate" (change)="toggleVisibility(i,$event)" >                
+                <span class="slider round"></span>
+                </label>
+                <label>No</label>
+        </div>
+        </td>
+        <td>
+          <div *ngIf="t.translate">
+            <button class="mb-2 me-2 btn-transition btn btn-outline-focus" (click) ="details(i)">Details</button>
+            <!-- <button (click)="details(i)">Details</button> -->
+          </div>
+        </td>
+        
+      </tr>
+    </tbody>
+  </table>

@@ -1,0 +1,128 @@
+<!-- <app-page-title [heading]="heading" [subheading]="subheading" [icon]="icon"></app-page-title> -->
+<div class="border">
+  <button class="btn btn-md btn-outline-primary" (click)="open(content)">
+    <i class="fa fa-user"></i>New {{selected_table}}</button>
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<div *ngIf="!boolValue; else notInclude">
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">column_value</th>
+        <th *ngFor="let l of global_langues" scope="col">{{ l.locale }}</th>
+        <th scope="col">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let s of array_string; index as i">
+        <th scope="row">{{ i }}</th>
+        <td>{{ s }}</td>
+        <td *ngFor="let l of global_langues">
+            <div *ngFor="let d of db_data">
+              <div *ngFor="let dd of d.translations">
+                <div *ngIf="dd.langue === l.locale && s === d.field_value">
+                  <input type="text" name="items[]" value="{{dd.value}}" />
+                  </div>
+                </div>
+                </div>
+                <div *ngFor="let m of missing">
+                <div *ngIf="s === m">
+                  <input type="text" name="items[]" />
+                </div>
+              </div>
+              <div *ngFor="let m of missing_lang">
+                  <div *ngIf="m.langue === l.locale && s === m.field_value ">
+                  <input type="text" name="items[]" />
+                  </div>
+                </div>               
+        </td>
+        <td>
+          <button class="btn-wide mb-2 me-2 btn btn-primary btn-sm" (click)="addTranslation(i)">save</button>
+          <!-- <button (click)="addTranslation(i)">save</button> -->
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<ng-template #notInclude>
+  Table Name:
+  <select [ngModel]="selected_tab" (ngModelChange)="select1($event)" class="browser-default custom-select">
+    <option value="Select one" selected>Select one</option>
+    <option *ngFor="let c of last_array">{{ c.TABLE_ABACUS_NAME }}</option>
+  </select>
+  column:
+  <select [(ngModel)]="selected_col" class="browser-default custom-select" (ngModelChange)="select2($event)">
+    <option value="Select one" selected>Select one</option>
+    <option *ngFor="let c of columns">{{ c }}</option>
+  </select>
+  <br />
+  <br />
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">value</th>
+        <th *ngFor="let l of global_langues" scope="col">{{ l.locale }}</th>
+        <th scope="col">Translation</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let c of select2_array; index as i">
+        <th scope="row">{{i}}</th>
+        <td>{{ c }}</td>
+        <td *ngFor="let l of global_langues; index as j">
+          <div *ngFor="let d of db_data_json">
+            <div *ngFor="let dd of d.translations">             
+              <div *ngIf="dd.langue === l.locale && c === d.field_value">
+          <input type="text" name="items[]" value="{{dd.value}}" />
+          </div>
+          </div>
+          </div>
+          <div *ngFor="let m of missing">
+            <div *ngIf="c === m">
+              <input type="text" name="items[]" />
+              </div>
+            </div>
+            <div *ngFor="let m of missing_lang">
+              <div *ngIf="m.langue === l.locale && c === m.field_value ">
+              <input type="text" name="items[]" />
+              </div>
+            </div>    
+        </td>
+        <td>
+          <button class="btn-wide mb-2 me-2 btn btn-primary btn-sm" (click)="addTranslation1(i)">save</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</ng-template>
+
+
+<ng-template #content let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">New {{selected_table}}</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form #f="ngForm" (ngSubmit)="onSubmit(f)" novalidate>
+      <div *ngFor="let item of list_columns" class="form-group">
+          <label for={{item}}>{{item}}</label>
+          <div class="input-group">
+            <input id={{item}} name={{item}} class="form-control" ngModel>
+          </div>
+        </div>
+       
+        <div class="border text-center">
+          <button data-dismiss="modal" class="btn btn-info">Submit</button>
+          </div>
+    </form>
+  </div>
+  <!-- <div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Save</button>
+  </div> -->
+</ng-template>
