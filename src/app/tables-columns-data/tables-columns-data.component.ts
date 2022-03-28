@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 //import { TranslateService } from '@ngx-translate/core';
 import { ActivatedRoute } from '@angular/router';
+import { EventService } from '../services/event.service';
+import { TranslationService } from '../services/translation.service';
 import * as $ from 'jquery';
 import {ModalDismissReasons, NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import { MatDialog, MatDialogModule, MAT_DIALOG_DATA, MatDialogConfig } from '@angular/material/dialog';
 import { NgForm } from '@angular/forms';
-import { TranslationService } from 'src/app/services/translation.service';
-import { EventService } from 'src/app/services/event.service';
 
 
 @Component({
@@ -15,9 +15,6 @@ import { EventService } from 'src/app/services/event.service';
   styleUrls: ['./tables-columns-data.component.css'],
 })
 export class TablesColumnsDataComponent implements OnInit {
-  heading = 'Bootstrap 5 Tables';
-  subheading = 'Tables are the backbone of almost all web applications.';
-  icon = 'pe-7s-drawer icon-gradient bg-happy-itmeo';
   selected_table: string;
   selected_column: string;
   selected_tab: string;
@@ -61,6 +58,8 @@ export class TablesColumnsDataComponent implements OnInit {
   tables_columns;
   col =[]
   value_json:Boolean
+  name1 = 'Angular 4';
+
 
 
 
@@ -208,10 +207,11 @@ export class TablesColumnsDataComponent implements OnInit {
 
            this.missing_language=this.global_langues.filter(({ locale: id1 }) => !this.db_data[j].translations.some(({ langue: id2 }) => id2 === id1))
         }
-        console.log(this.missing_language)
+        //console.log(this.missing_language)
       });
     });
   }
+  
   
   private getDismissReason(reason: any): string {
     if (reason === ModalDismissReasons.ESC) {
@@ -254,7 +254,11 @@ export class TablesColumnsDataComponent implements OnInit {
 
     
   }
+  
   select1(value) {
+    console.log("hi")
+    this.selected_tab=value
+    console.log(value)
     this.select_array = [];
     this.selected_col=null
     console.log(value);

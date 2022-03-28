@@ -104,6 +104,7 @@ import {BubbleChartComponent} from './DemoPages/Charts/chartjs/examples/bubble-c
 import {DynamicChartComponent} from './DemoPages/Charts/chartjs/examples/dynamic-chart/dynamic-chart.component';
 import {DoughnutChartComponent} from './DemoPages/Charts/chartjs/examples/doughnut-chart/doughnut-chart.component';
 import {PieChartComponent} from './DemoPages/Charts/chartjs/examples/pie-chart/pie-chart.component';
+import { SharedModule } from './shared/shared.module';
 
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
@@ -200,6 +201,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
 
   ],
   imports: [
+    
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
@@ -232,7 +234,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
       // DEFAULT_DROPZONE_CONFIG,
     },
     ConfigActions,
-  ],
+  ],exports:[HttpClientModule,FormsModule],
   bootstrap: [AppComponent]
 })
 
