@@ -1,3 +1,4 @@
+<!-- <app-page-title [heading]="heading" [subheading]="subheading" [icon]="icon"></app-page-title> -->
 <div class="border">
   <button class="btn btn-md btn-outline-primary" (click)="open(content)">
     <i class="fa fa-user"></i>New {{selected_table}}</button>
@@ -5,7 +6,6 @@
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 <div *ngIf="!boolValue; else notInclude">
-  
   <table class="table table-bordered">
     <thead>
       <tr>
@@ -39,7 +39,8 @@
                 </div>               
         </td>
         <td>
-          <button (click)="addTranslation(i)">save</button>
+          <button class="btn-wide mb-2 me-2 btn btn-primary btn-sm" (click)="addTranslation(i)">save</button>
+          <!-- <button (click)="addTranslation(i)">save</button> -->
         </td>
       </tr>
     </tbody>
@@ -47,9 +48,8 @@
 </div>
 
 <ng-template #notInclude>
-
   Table Name:
-  <select (ngModelChange)="select1($event)" [ngModel]="selected_tab" class="browser-default custom-select">
+  <select [(ngModel)]="selected_tab" (ngModelChange)="select1($event)" class="browser-default custom-select">
     <option value="Select one" selected>Select one</option>
     <option *ngFor="let c of last_array">{{ c.TABLE_ABACUS_NAME }}</option>
   </select>
@@ -58,7 +58,6 @@
     <option value="Select one" selected>Select one</option>
     <option *ngFor="let c of columns">{{ c }}</option>
   </select>
-
   <br />
   <br />
   <table class="table table-bordered">
@@ -93,7 +92,9 @@
               </div>
             </div>    
         </td>
-        <td><button (click)="addTranslation1(i)">save</button></td>
+        <td>
+          <button class="btn-wide mb-2 me-2 btn btn-primary btn-sm" (click)="addTranslation1(i)">save</button>
+        </td>
       </tr>
     </tbody>
   </table>

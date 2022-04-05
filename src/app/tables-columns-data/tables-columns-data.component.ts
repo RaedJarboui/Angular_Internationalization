@@ -15,6 +15,9 @@ import { NgForm } from '@angular/forms';
   styleUrls: ['./tables-columns-data.component.css'],
 })
 export class TablesColumnsDataComponent implements OnInit {
+  heading = 'Bootstrap 5 Tables';
+  subheading = 'Tables are the backbone of almost all web applications.';
+  icon = 'pe-7s-drawer icon-gradient bg-happy-itmeo';
   selected_table: string;
   selected_column: string;
   selected_tab: string;
@@ -36,8 +39,8 @@ export class TablesColumnsDataComponent implements OnInit {
   boolValue: Boolean;
   ACM_ADDRESS_SETTING = [];
   columns = [];
-  last_array = [];
-  select_array = [];
+  last_array :any;
+  select_array :any;
   select2_array = [];
   array_translation_values;
   container: any[] = [1];
@@ -58,12 +61,6 @@ export class TablesColumnsDataComponent implements OnInit {
   tables_columns;
   col =[]
   value_json:Boolean
-  name1 = 'Angular 4';
-
-
-
-
-
   constructor(
     private translationService: TranslationService,
     private route: ActivatedRoute,
@@ -95,123 +92,48 @@ export class TablesColumnsDataComponent implements OnInit {
       console.log(this.count);
       console.log(this.langues);
       console.log(this.global_langues);
-    });
-    this.eventService.getTableData(this.selected_table).subscribe((data) => {
-      this.tables = data;
-      console.log(this.tables);
-      this.eventService
-        .getListColumns(this.selected_table)
-        .subscribe((data) => {
-          this.list_columns = data;
-          console.log(this.list_columns);
-          console.log(this.list_columns.indexOf(this.selected_column));
-          this.column_index = this.list_columns.indexOf(this.selected_column);
-          this.abacus_name_column_index =
-            this.list_columns.indexOf('TABLE_ABACUS_NAME');
-          for (var i = 0; i < this.tables.length; i++) {
-            this.array_string.push(this.tables[i][this.column_index]);
-            this.abacus_json_array.push(
-              this.tables[i][this.abacus_name_column_index]
-            );
-            this.dp = [...new Set(this.abacus_json_array)];
-          }
-          for (var i = 0; i < this.dp.length; i++) {
-            for (var j = 0; j < this.tables.length; j++) {
-              if (this.tables[j][this.abacus_name_column_index] == this.dp[i]) {
-                if (this.boolValue) {
-                  var jsonStr = this.tables[j][this.column_index]
-                    .replace(/\\n/g, '\\n')
-                    .replace(/\\'/g, "\\'")
-                    .replace(/\\"/g, '\\"')
-                    .replace(/\\&/g, '\\&')
-                    .replace(/\\r/g, '\\r')
-                    .replace(/\\t/g, '\\t')
-                    .replace(/\\b/g, '\\b')
-                    .replace(/\\f/g, '\\f')
-                    .replace(/[\u0000-\u0019]+/g, '');
-                  this.tables[j][this.column_index] = JSON.parse(jsonStr);
-                  this.ACM_ADDRESS_SETTING.push({
-                    TABLE_ABACUS_NAME: this.dp[i],
-                    VALUE_JSON: this.tables[j][this.column_index],
-                  });
-                } else
-                  this.ACM_ADDRESS_SETTING.push({
-                    TABLE_ABACUS_NAME: this.dp[i],
-                    VALUE_JSON: this.tables[j][this.column_index],
-                  });
-              }
-            }
-          }
-          const arr1 = this.getUniqueListBy(
-            this.ACM_ADDRESS_SETTING,
-            'TABLE_ABACUS_NAME'
-          );
-          console.log(arr1);
-          this.columns = arr1;
-          for (var i = 0; i < this.columns.length; i++) {
-            console.log(this.columns[i].VALUE_JSON);
-            this.last_array.push({
-              TABLE_ABACUS_NAME: this.columns[i].TABLE_ABACUS_NAME,
-              VALUE_JSON: Object.keys(this.columns[i].VALUE_JSON),
-            });
-          }
-          console.log(this.last_array);
-        });
-      this.eventService.getTranslation().subscribe((data) => {
-        this.array_translation_values = data;
-        console.log(this.array_translation_values);
+        if(this.boolValue == false){
 
-        for (var i = 0; i < this.array_translation_values.length; i++) {
-          if (
-            this.array_translation_values[i].name_table == this.selected_table
-          ) {
-            console.log(
-              this.array_string.some((e) =>
-                e.includes(this.array_translation_values[i].field_value)
-              )
-            );
-            this.db_data.push(this.array_translation_values[i]);
-          }
-        }
-        console.log(this.db_data);
-        for (var j = 0; j < this.db_data.length; j++) {
-          //console.log(this.array_string.includes(this.db_data[j].field_value));
-          if (this.array_string.includes(this.db_data[j].field_value)) {
-            //console.log(this.db_data[j].field_value);
-            this.db1_data.push(this.db_data[j].field_value);
-          }
-        }
-        console.log(this.db1_data);
-        for (var j = 0; j < this.db_data.length; j++) {
-          for (var i = 0; i < this.global_langues.length; i++) {
-            var test =this.global_langues[i].locale
-        var isPresent = this.db_data[j].translations.some(function(el){ return el.langue === test});
-        if(isPresent == true){
-          console.log("true",j)
-        }else {
-          console.log("false",j)
-          this.missing_lang.push({field_value:this.db_data[j].field_value,langue:test})
-
-        }
-      }
-        }
-        console.log(isPresent);
-        console.log(this.missing_lang);
-
-
-        this.missing = this.array_string.filter(
-          (item) => this.db1_data.indexOf(item) < 0
-        );
-        console.log(this.missing);
-        for (var j = 0; j < this.db_data.length; j++) {
-
-           this.missing_language=this.global_langues.filter(({ locale: id1 }) => !this.db_data[j].translations.some(({ langue: id2 }) => id2 === id1))
-        }
-        //console.log(this.missing_language)
-      });
-    });
-  }
+      console.log("trueeeeeeeee")
+      this.translationService.nameTypeColumnData(this.selected_table,this.selected_column,this.IsJson).subscribe((data)=>{
+        console.log(data);
+         this.array_string = data.arrayString;
+         this.db_data = data.db_data
+         this.db1_data = data.db1_data
+         this.missing = data.missing
+         this.missing_lang= data.missing_lang
+         console.log("array_string",this.array_string)
+        console.log("db_data",this.db_data)
+        console.log("db1_data",this.db1_data)
+        console.log("missing",this.missing)
+        console.log("missing_lang",this.missing_lang)
+      
+       
   
+  
+  
+      })
+    }else{
+      console.log("falseeeeeeeeeeeee")
+
+      this.translationService.nameTypeColumnDatajson(this.selected_table,this.selected_column,this.IsJson).subscribe((data)=>{
+        console.log(data)
+        this.last_array = data
+        console.log("last_array",this.last_array)
+        this.eventService.getTableData(this.selected_table).subscribe((data) => {
+          this.tables = data;
+          console.log("tables",this.tables)
+
+        })
+
+      })
+    }
+
+    
+
+    });
+    
+  }
   
   private getDismissReason(reason: any): string {
     if (reason === ModalDismissReasons.ESC) {
@@ -254,109 +176,86 @@ export class TablesColumnsDataComponent implements OnInit {
 
     
   }
-  
   select1(value) {
-    console.log("hi")
-    this.selected_tab=value
-    console.log(value)
+
+
     this.select_array = [];
     this.selected_col=null
     console.log(value);
+    console.log(this.selected_tab);
+    
+
     console.log(this.last_array);
     for (var i = 0; i < this.last_array.length; i++) {
       if (this.last_array[i].TABLE_ABACUS_NAME == value) {
         this.columns = this.last_array[i].VALUE_JSON;
       }
     }
-    for (var i = 0; i < this.tables.length; i++) {
-      if (this.tables[i][this.abacus_name_column_index] == value) {
-        this.select_array.push({
-          TABLE_ABACUS_NAME: this.tables[i][this.abacus_name_column_index],
-          VALUE_JSON: this.tables[i][this.column_index],
-        });
+    var a = '"'+ this.selected_tab+  '"'; 
+      console.log(a);
+    this.translationService.select1(this.selected_table,this.selected_column,this.IsJson,a).subscribe((data)=>{
+      console.log(data);
+      
+      this.select_array=data
+      console.log(this.tables);
+      console.log(this.select_array)
+      
+      console.log(this.select_array[0].VALUE_JSON)
+      for (var key in this.select_array[0].VALUE_JSON) {
+        console.log(this.select_array[0].VALUE_JSON[key])
+        if ( this.select_array[0].VALUE_JSON[key] == null || this.select_array[0].VALUE_JSON[key] == "" || this.select_array[0].VALUE_JSON[key] ==true || this.select_array[0].VALUE_JSON[key]==false || Number.isInteger(this.select_array[0].VALUE_JSON[key]) ){
+          this.values_null.push(key)
+        }
       }
-    }
-    console.log(this.select_array[0].VALUE_JSON);
-    for (var key in this.select_array[0].VALUE_JSON) {
-      if ( this.select_array[0].VALUE_JSON[key] == null || this.select_array[0].VALUE_JSON[key] == "" || this.select_array[0].VALUE_JSON[key] ==true || this.select_array[0].VALUE_JSON[key]==false || Number.isInteger(this.select_array[0].VALUE_JSON[key]) ){
-        this.values_null.push(key)
-      }
-    }
-    console.log(this.values_null)
-    console.log(this.columns)
-    this.columns = this.columns.filter(
-      (item) => this.values_null.indexOf(item) < 0
-    );
-    console.log(this.columns)
+      console.log(this.values_null)
+      console.log(this.columns)
+      this.columns = this.columns.filter(
+        (item) => this.values_null.indexOf(item) < 0
+      );
+      console.log(this.columns)
+
+    })
+   
+   
   }
   select2(value) {
     this.select2_array = [];
     this.db_data_json=[]
-    
     console.log(this.columns);
     console.log(value);
     console.log(this.selected_col);
     console.log(this.select_array)
-    for (var i = 0; i < this.select_array.length; i++) {
-      var a = this.selected_col;
-      //console.log(this.select_array[i].VALUE_JSON[this.selected_col]);
-      this.select2_array.push(
-        this.select_array[i].VALUE_JSON[this.selected_col]
-      );
-    }
-    console.log(this.select2_array);
-    console.log(this.array_translation_values);
-    for (var i = 0; i < this.array_translation_values.length; i++) {
-      if (this.array_translation_values[i].name_table == this.selected_table) {
-        console.log(
-          this.select2_array.some((e) =>
-            e == this.array_translation_values[i].field_value
-          )
-        );
-        this.db_data_json.push(this.array_translation_values[i]);
-      }
-    }
-    console.log(this.db_data_json);
-    for (var j = 0; j < this.db_data_json.length; j++) {
-      // console.log(
-      //   this.select2_array.includes(this.db_data_json[j].field_value)
-      // );
-      if (this.select2_array.includes(this.db_data_json[j].field_value)) {
-        //console.log(this.db_data_json[j].field_value);
-        this.db1_data_json.push(this.db_data[j].field_value);
-      }
-    }
-    console.log(this.db1_data_json);
-    for (var j = 0; j < this.db_data_json.length; j++) {
-      for (var i = 0; i < this.global_langues.length; i++) {
-        var test =this.global_langues[i].locale
-    var isPresent = this.db_data_json[j].translations.some(function(el){ return el.langue === test});
-    if(isPresent == true){
-      console.log("true",j)
-    }else {
-      console.log("false",j)
-      this.missing_lang.push({field_value:this.db_data_json[j].field_value,langue:test})
-      break;
+    console.log(this.selected_tab);
+    var a = '"'+ this.selected_tab+  '"'; 
+    var b = '"'+ this.selected_col+  '"'; 
+    console.log(a)
+    console.log(b)
 
-    }
+    var obj = {
+      "column":this.selected_tab,
+      "col":this.selected_col
   }
+  console.log(this.selected_table);
+  console.log(this.selected_column);
+  console.log(this.IsJson);
 
-    }
-    console.log(this.missing_lang);
-    this.missing = this.select2_array.filter(
-      (item) => this.db1_data_json.indexOf(item) < 0
-    );
-    console.log(this.missing);
+    this.translationService.select2(this.selected_table,this.selected_column,this.IsJson,obj).subscribe((data)=>{
+      console.log(data);
+      this.select2_array = data.select2_array;
+         this.db_data_json = data.db_data_json
+         this.db1_data_json = data.db1_data_json
+         this.missing = data.missing
+         this.missing_lang= data.missing_lang
+         console.log("select2_array",this.select2_array)
+         console.log("db_data_json",this.db_data_json)
+         console.log("db1_data_json",this.db1_data_json)
+         console.log("missing",this.missing)
+         console.log("missing_lang",this.missing_lang)
+    },err=>{
+      console.log(err);
 
-    for (var j = 0; j < this.db_data_json.length; j++) {
-
-      this.missing_language=this.global_langues.filter(({ locale: id1 }) => !this.db_data_json[j].translations.some(({ langue: id2 }) => id2 === id1))
-   }
-   console.log(this.missing_language)
-    console.log(this.array_is_empty)
-    this.missing_lang= this.missing_lang.filter((v,i,a)=>a.findIndex(t=>(t.field_value === v.field_value && t.langue===v.langue))===i)
-    console.log(this.missing_lang);
-
+    })
+  
   }
   getUniqueListBy(arr, key) {
     return [...new Map(arr.map((item) => [item[key], item])).values()];
@@ -557,4 +456,6 @@ function values(values: any) {
 export interface DialogData {
   example: string;
 }
+
+
 

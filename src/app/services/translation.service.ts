@@ -48,5 +48,23 @@ editListTables(id:number,value):Observable<Object>{
  addEntity(name,value):Observable<Object>{
    return this.http.post(`http://localhost:8080/api/${name}`,value);
  }
+ name_type_column(name):Observable<Object>{
+  return this.http.get(`http://localhost:8080/translate/get/table/${name}`);
+}
+
+nameTypeColumnData(nameTable,selectedColumn,json):Observable<Object>{
+  return this.http.get(`http://localhost:8080/translate/get/table/data/${nameTable}/${selectedColumn}/${json}`);
+ }
+
+ nameTypeColumnDatajson(nameTable,selectedColumn,json):Observable<Object>{
+  return this.http.get(`http://localhost:8080/translate/get/table/data/json/${nameTable}/${selectedColumn}/${json}`);
+ }
+ select1(nameTable,selectedColumn,json,column):Observable<Object>{
+  return this.http.post(`http://localhost:8080/translate/get/table/data/json/${nameTable}/${selectedColumn}/${json}/select1`,column);
+ }
+ select2(nameTable,selectedColumn,json,Columns):Observable<Object>{
+  
+  return this.http.post(`http://localhost:8080/translate/get/table/data/json/${nameTable}/${selectedColumn}/${json}/select2`,Columns);
+ }
 
 }

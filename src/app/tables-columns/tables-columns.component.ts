@@ -10,7 +10,7 @@ import { TranslationService } from 'src/app/services/translation.service';
 export class TablesColumnsComponent implements OnInit {
   tables_columns;
   columns=[];
-  col =[]
+  col : any
   name_table:string
   is_json:Boolean;
   value_json:Boolean
@@ -22,19 +22,10 @@ export class TablesColumnsComponent implements OnInit {
   ngOnInit(): void {
     this.name_table= this.route.snapshot.params['name'];
     console.log(this.name_table)
-    this.translationService.getListColumnsType(this.name_table).subscribe((data)=>{
-      this.tables_columns=data;
-      console.log(this.tables_columns)
-      for(var i=0;i<this.tables_columns.length;i++){
-        this.columns.push(this.tables_columns[i])
-      }
-      console.log(this.columns);
-      for(var i=0;i<this.columns.length;i++){
-          const a =this.columns[i].split(',')
-          console.log(a)
-        this.col.push({name_column:a[0],type_column:a[1]});
-      }
-      console.log(this.col);
+    this.translationService.name_type_column(this.name_table).subscribe((data)=>{
+      console.log(data);
+      this.col =data ;
+      console.log(this.col)
       if(this.col.some(e=>e.name_column.includes("JSON"))){
         console.log("true")
         this.value_json=true
@@ -42,8 +33,6 @@ export class TablesColumnsComponent implements OnInit {
         console.log("false")
         this.value_json=false
       } 
-
-    
     })
   }
   show(index){
