@@ -7,6 +7,7 @@ import * as $ from 'jquery';
 import {ModalDismissReasons, NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import { MatDialog, MatDialogModule, MAT_DIALOG_DATA, MatDialogConfig } from '@angular/material/dialog';
 import { NgForm } from '@angular/forms';
+import { HttpParams } from '@angular/common/http';
 
 
 @Component({
@@ -31,7 +32,7 @@ export class TablesColumnsDataComponent implements OnInit {
   global_langues = [];
   langues;
   abacus_json_array = [];
-  count: number;
+  //count: number;
   dp;
   abacus_name_column_index: number;
   c = 3;
@@ -61,6 +62,15 @@ export class TablesColumnsDataComponent implements OnInit {
   tables_columns;
   col =[]
   value_json:Boolean
+  currentIndex = -1;
+  title = '';
+
+  page = 1;
+  count = 0;
+  pageSize = 2;
+  pageSizes = [1, 2,5, 10];
+  currentTutorial = null;
+
   constructor(
     private translationService: TranslationService,
     private route: ActivatedRoute,
@@ -68,11 +78,13 @@ export class TablesColumnsDataComponent implements OnInit {
     private modalService: NgbModal,
     public dataDialogHandler: MatDialog
   ) {}
+ 
 
   ngOnInit(): void {
+   
     this.array_string=[]
     this.db_data=[]
-    this.count = 0;
+   
     this.selected_table = this.route.snapshot.params['name'];
     this.selected_column = this.route.snapshot.params['col'];
     this.IsJson = this.route.snapshot.params['json'];
@@ -92,26 +104,57 @@ export class TablesColumnsDataComponent implements OnInit {
       console.log(this.count);
       console.log(this.langues);
       console.log(this.global_langues);
-        if(this.boolValue == false){
 
       console.log("trueeeeeeeee")
-      this.translationService.nameTypeColumnData(this.selected_table,this.selected_column,this.IsJson).subscribe((data)=>{
+      this.retrieveTranslation();
+
+    
+
+    });
+    
+  }
+  getRequestParams(page, size) {
+    let params = {};
+
+    if (page) {
+      params[`page`] = page - 1;
+    }
+
+    if (size) {
+      params[`size`] = size;
+    }
+
+    return params;
+  }
+
+  retrieveTranslation() {
+    const params = this.getRequestParams(this.page+1, this.pageSize);
+    console.log(params)
+    if(this.boolValue == false){
+
+      console.log("trueeeeeeeee")
+      this.translationService.nameTypeColumnData(this.selected_table,this.selected_column,this.IsJson,params).subscribe((data)=>{
         console.log(data);
          this.array_string = data.arrayString;
          this.db_data = data.db_data
          this.db1_data = data.db1_data
          this.missing = data.missing
          this.missing_lang= data.missing_lang
+         this.count = 3
          console.log("array_string",this.array_string)
         console.log("db_data",this.db_data)
         console.log("db1_data",this.db1_data)
         console.log("missing",this.missing)
         console.log("missing_lang",this.missing_lang)
+        console.log("count",this.count)
+
       
        
   
   
   
+      },err=>{
+        console.log(err)
       })
     }else{
       console.log("falseeeeeeeeeeeee")
@@ -122,17 +165,116 @@ export class TablesColumnsDataComponent implements OnInit {
         console.log("last_array",this.last_array)
         this.eventService.getTableData(this.selected_table).subscribe((data) => {
           this.tables = data;
-          console.log("tables",this.tables)
+          //console.log("tables",this.tables)
 
         })
 
       })
     }
-
     
+  }
 
-    });
-    
+
+  handlePageChange(event) {
+    console.log(event)
+    this.page=event
+    const params = this.getRequestParams(this.page+1, this.pageSize);
+    console.log(params)
+    console.log(event)
+    if(this.boolValue == false){
+
+      console.log("trueeeeeeeee")
+      this.translationService.nameTypeColumnData(this.selected_table,this.selected_column,this.IsJson,params).subscribe((data)=>{
+        console.log(data);
+         this.array_string = data.arrayString;
+         this.db_data = data.db_data
+         this.db1_data = data.db1_data
+         this.missing = data.missing
+         this.missing_lang= data.missing_lang
+         this.count = data.count
+         console.log("array_string",this.array_string)
+        console.log("db_data",this.db_data)
+        console.log("db1_data",this.db1_data)
+        console.log("missing",this.missing)
+        console.log("missing_lang",this.missing_lang)
+      
+       
+  
+  
+  
+      },err=>{
+        console.log(err)
+      })
+    }else{
+      console.log("falseeeeeeeeeeeee")
+
+      this.translationService.nameTypeColumnDatajson(this.selected_table,this.selected_column,this.IsJson).subscribe((data)=>{
+        console.log(data)
+        this.last_array = data
+        console.log("last_array",this.last_array)
+        this.eventService.getTableData(this.selected_table).subscribe((data) => {
+          this.tables = data;
+          console.log(this.selected_tab)
+          this.select2(this.selected_col)
+
+        })
+
+      })
+    }
+     }
+
+  handlePageSizeChange(event) {
+    this.pageSize = event.target.value;
+    const params = this.getRequestParams(this.page+1, this.pageSize);
+    console.log(params)
+    if(this.boolValue == false){
+
+      console.log("trueeeeeeeee")
+      this.translationService.nameTypeColumnData(this.selected_table,this.selected_column,this.IsJson,params).subscribe((data)=>{
+        console.log(data);
+         this.array_string = data.arrayString;
+         this.db_data = data.db_data
+         this.db1_data = data.db1_data
+         this.missing = data.missing
+         this.missing_lang= data.missing_lang
+         this.count = data.count
+         console.log("array_string",this.array_string)
+        console.log("db_data",this.db_data)
+        console.log("db1_data",this.db1_data)
+        console.log("missing",this.missing)
+        console.log("missing_lang",this.missing_lang)
+      
+       
+  
+  
+  
+      },err=>{
+        console.log(err)
+      })
+    }else{
+      console.log("falseeeeeeeeeeeee")
+
+      this.translationService.nameTypeColumnDatajson(this.selected_table,this.selected_column,this.IsJson).subscribe((data)=>{
+        console.log(data)
+        this.last_array = data
+        console.log("last_array",this.last_array)
+        this.eventService.getTableData(this.selected_table).subscribe((data) => {
+          this.tables = data;
+          console.log(this.selected_tab)
+          this.select2(this.selected_col)
+
+        })
+      })
+    }
+    //this.ngOnInit();
+  }
+
+  setActiveTutorial(tutorial, index) {
+    this.currentTutorial = tutorial;
+    this.currentIndex = index;
+    console.log( "currentTutorial :", this.currentTutorial)
+
+    console.log("currentIndex :",  this.currentIndex)
   }
   
   private getDismissReason(reason: any): string {
@@ -178,7 +320,7 @@ export class TablesColumnsDataComponent implements OnInit {
   }
   select1(value) {
 
-
+    this.page=1
     this.select_array = [];
     this.selected_col=null
     console.log(value);
@@ -197,7 +339,7 @@ export class TablesColumnsDataComponent implements OnInit {
       console.log(data);
       
       this.select_array=data
-      console.log(this.tables);
+      //console.log(this.tables);
       console.log(this.select_array)
       
       console.log(this.select_array[0].VALUE_JSON)
@@ -238,19 +380,25 @@ export class TablesColumnsDataComponent implements OnInit {
   console.log(this.selected_table);
   console.log(this.selected_column);
   console.log(this.IsJson);
+  const params = this.getRequestParams(this.page+1, this.pageSize);
+  console.log(params)
 
-    this.translationService.select2(this.selected_table,this.selected_column,this.IsJson,obj).subscribe((data)=>{
+    this.translationService.select2(this.selected_table,this.selected_column,this.IsJson,obj,params).subscribe((data)=>{
       console.log(data);
       this.select2_array = data.select2_array;
          this.db_data_json = data.db_data_json
          this.db1_data_json = data.db1_data_json
          this.missing = data.missing
          this.missing_lang= data.missing_lang
+         this.count=data.count;
          console.log("select2_array",this.select2_array)
          console.log("db_data_json",this.db_data_json)
          console.log("db1_data_json",this.db1_data_json)
          console.log("missing",this.missing)
          console.log("missing_lang",this.missing_lang)
+         console.log("count",this.count)
+
+
     },err=>{
       console.log(err);
 

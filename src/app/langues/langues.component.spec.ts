@@ -1,4 +1,5 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { MatAutocomplete } from '@angular/material/autocomplete';
 
 import { LanguesComponent } from './langues.component';
 
@@ -8,7 +9,7 @@ describe('LanguesComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ LanguesComponent ]
+      declarations: [ LanguesComponent]
     })
     .compileComponents();
   }));

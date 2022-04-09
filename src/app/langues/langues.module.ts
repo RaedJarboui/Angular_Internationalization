@@ -4,6 +4,8 @@ import { CommonModule } from '@angular/common';
 import { LanguesRoutingModule } from './langues-routing.module';
 import { LanguesComponent } from './langues.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import { SharedModule } from '../shared/shared.module';
+import {MatAutocompleteModule} from '@angular/material/autocomplete';
 
 @NgModule({
   declarations: [LanguesComponent],
@@ -11,7 +13,9 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
     CommonModule,
     LanguesRoutingModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    SharedModule,
+    MatAutocompleteModule
   ]
 })
 export class LanguesModule { }

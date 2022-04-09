@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http'
+import { HttpClient, HttpParams } from '@angular/common/http'
 import { Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root'
@@ -11,6 +11,9 @@ export class TranslationService {
   getLangues(): Observable<Object>{
     return this.http.get(`http://localhost:8080/langues`);
  }
+ getPageableLangues(params): Observable<Object>{
+  return this.http.get(`http://localhost:8080/paginated/langues`,{params});
+}
  addLangue(value):Observable<Object>{
   return this.http.post(`http://localhost:8080/langues`,value);
 
@@ -26,7 +29,7 @@ getTableList():Observable<Object>{
 
 }
 getListTables():Observable<Object>{
-  return this.http.get(`http://localhost:8080/list/tabless`);
+  return this.http.get(`http://localhost:8080/list/tablesfromdb`);
 
 }
 addTableList(value):Observable<Object>{
@@ -52,8 +55,9 @@ editListTables(id:number,value):Observable<Object>{
   return this.http.get(`http://localhost:8080/translate/get/table/${name}`);
 }
 
-nameTypeColumnData(nameTable,selectedColumn,json):Observable<Object>{
-  return this.http.get(`http://localhost:8080/translate/get/table/data/${nameTable}/${selectedColumn}/${json}`);
+nameTypeColumnData(nameTable,selectedColumn,json,params):Observable<any>{
+  
+  return this.http.get<any>(`http://localhost:8080/translate/get/table/data/${nameTable}/${selectedColumn}/${json}`,{ params } );
  }
 
  nameTypeColumnDatajson(nameTable,selectedColumn,json):Observable<Object>{
@@ -62,9 +66,13 @@ nameTypeColumnData(nameTable,selectedColumn,json):Observable<Object>{
  select1(nameTable,selectedColumn,json,column):Observable<Object>{
   return this.http.post(`http://localhost:8080/translate/get/table/data/json/${nameTable}/${selectedColumn}/${json}/select1`,column);
  }
- select2(nameTable,selectedColumn,json,Columns):Observable<Object>{
+ select2(nameTable,selectedColumn,json,Columns,params):Observable<any>{
   
-  return this.http.post(`http://localhost:8080/translate/get/table/data/json/${nameTable}/${selectedColumn}/${json}/select2`,Columns);
+  return this.http.post(`http://localhost:8080/translate/get/table/data/json/${nameTable}/${selectedColumn}/${json}/select2`,Columns,{params});
+ }
+ findAllByText(text):Observable<any>{
+  
+  return this.http.get(`http://localhost:8080/find/suggestion/${text}`);
  }
 
 }

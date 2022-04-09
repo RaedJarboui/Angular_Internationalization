@@ -1,9 +1,16 @@
 <!-- <app-page-title [heading]="heading" [subheading]="subheading" [icon]="icon"></app-page-title>       -->
-<div class="border">
+<!-- <div class="border">
   <button class="btn btn-md btn-outline-primary" (click)="open(content)">
     <i class="fa fa-user"></i>New Language</button>
 </div>
-
+<div class="col-md-12">
+  <pagination-controls
+    previousLabel="Prev"
+    nextLabel="Next"
+    responsive="true"
+    (pageChange)="handlePageChange($event)"
+  ></pagination-controls>
+</div> 
   <table class="table table-striped">
     <thead>
       <tr>
@@ -16,7 +23,14 @@
     </thead>
     <tbody>
       <tr
-        *ngFor="let l of langues; index as i">
+        *ngFor="let l of langues| paginate : {
+          itemsPerPage: pageSize,
+          currentPage: page,
+          totalItems: count
+        };
+  let i = index
+  "
+  [class.active]="i == currentIndex">
         <th scope="row">{{ (page -1) * pageSize + i + 1 }}</th>
        
         <td>{{ l.locale }}</td>
@@ -33,7 +47,6 @@
         </td>
         <td>
           <button class="mb-2 me-2 btn btn-danger"  (click)="openDelete(contentDelete, l)">Delete</button>
-          <!-- <button (click)="openDelete(contentDelete, l)">Delete</button> -->
         </td>
       </tr>
     </tbody>
@@ -84,4 +97,28 @@
         <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Cancel</button>
       </div>
     </ng-template>
+
+    Items per Page:
+    <select (change)="handlePageSizeChange($event)">
+      <option *ngFor="let size of pageSizes" [ngValue]="size">
+        {{ size }}
+      </option>
+    </select> -->
+
+    <form class="example-form">
+    
+      <input
+        type="text"
+        placeholder="Search for a street"
+        [formControl]="control"
+        [matAutocomplete]="auto"
+        (keyup)="onKeyUp($event)"
+      />
+    
+      <mat-autocomplete #auto="matAutocomplete">
+        <mat-option *ngFor="let street of filteredStreets " [value]="street">
+          {{street}}
+        </mat-option>
+      </mat-autocomplete>
+    </form>
       

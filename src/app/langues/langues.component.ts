@@ -1,8 +1,11 @@
 import { Component, Inject,ViewChild, OnInit } from '@angular/core';
 import { MatDialog, MatDialogModule, MAT_DIALOG_DATA, MatDialogConfig } from '@angular/material/dialog';
 import {ModalDismissReasons, NgbModal} from '@ng-bootstrap/ng-bootstrap';
-import { NgForm } from '@angular/forms';
+import { FormControl, NgForm } from '@angular/forms';
 import { TranslationService } from 'src/app/services/translation.service';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { data } from 'jquery';
 
 @Component({
   selector: 'app-langues',
@@ -11,63 +14,128 @@ import { TranslationService } from 'src/app/services/translation.service';
 })
 export class LanguesComponent implements OnInit {
   langues;
+  paginated_langues;
   closeResult:string
   searchTerm: string;
-  page = 1;
-  pageSize = 4;
   collectionSize: number;
   deleteId:number
   isGlobal:boolean
   heading = 'Bootstrap 5 Tables';
   subheading = 'Tables are the backbone of almost all web applications.';
   icon = 'pe-7s-drawer icon-gradient bg-happy-itmeo';
-  countries = [
-    {
-      name: 'Russia',
-      flag: 'f/f3/Flag_of_Russia.svg',
-      area: 17075200,
-      population: 146989754
-    },
-    {
-      name: 'Canada',
-      flag: 'c/cf/Flag_of_Canada.svg',
-      area: 9976140,
-      population: 36624199
-    },
-    {
-      name: 'United States',
-      flag: 'a/a4/Flag_of_the_United_States.svg',
-      area: 9629091,
-      population: 324459463
-    },
-    {
-      name: 'China',
-      flag: 'f/fa/Flag_of_the_People%27s_Republic_of_China.svg',
-      area: 9596960,
-      population: 1409517397
-    }
+  currentIndex = -1;
+  title = '';
+  page = 1;
+  count = 0;
+  pageSize = 2;
+  pageSizes = [1,2, 5, 10];
+  currentTutorial = null;
+  control = new FormControl();
+  streets: string[] = [
+    'Champs',
+    'Lombard',
+    'Abbey ',
+    'Ac',
+    'Fifth',
+    'Faille',
   ];
+  filteredStreets:Observable<any>;
+
+  text = ''; //initialised the text variable
 
   constructor(public translationService:TranslationService,public dataDialogHandler: MatDialog,private modalService: NgbModal
     ) {
 
+
    }
-//    public openDataDialog(): void {
 
-//     const dialogConfig = new MatDialogConfig();
-
-//     dialogConfig.data = {};
-
-//     this.dataDialogHandler.open(DataDialogComponent, dialogConfig);
-// }
 
   ngOnInit(): void {
-    this.translationService.getLangues().subscribe((data)=>{
-      this.langues=data;
-      console.log(data)
-      this.collectionSize =  this.langues.length;
+    // const params = this.getRequestParams(this.page+1, this.pageSize);
+    // console.log(params)
+    // this.translationService.getLangues().subscribe((data)=>{
+    //     this.paginated_langues=data;
+    //     this.count = this.paginated_langues.length
+    //     console.log(this.count)
+    //   this.translationService.getPageableLangues(params).subscribe((data)=>{
+    //     this.langues=data;
+    //     console.log(data)
+  
+    //   })
+    // })
 
-    })
+    // this.filteredStreets = this.control.valueChanges.pipe(
+    //   map((value) => this._filter(value))
+    // );
+    console.log(this.control)
+
+    
+  }
+  onKeyUp(event){
+    var inputValue = event.target.value;
+    console.log(inputValue);
+    if(inputValue.length > 0){
+      this.translationService.findAllByText(inputValue).subscribe((data)=>{
+        this.filteredStreets=data;
+        console.log(this.filteredStreets)
+
+
+      })
+  }else this.filteredStreets=null
+}
+  private _filter(value: string) {
+    console.log(this.control.value);
+    if(this.control.value.length > 0){
+      this.translationService.findAllByText(this.control.value).subscribe((data)=>{
+        console.log(data)
+        this.filteredStreets=data;
+        // return data;
+
+      })
+      return this.filteredStreets
+    //   const filterValue = this._normalizeValue(value);
+    //   console.log(this.streets.filter((street) =>
+    //   this._normalizeValue(street).includes(filterValue)
+    // ))
+    //   return this.streets.filter((street) =>
+    //     this._normalizeValue(street).includes(filterValue)
+    //   );
+    }
+   
+  }
+
+  private _normalizeValue(value: string): string {
+    return value.toLowerCase().replace(/\s/g, '');
+  }
+  
+  getRequestParams(page, size) {
+    let params = {};
+
+    if (page) {
+      params[`page`] = page - 1;
+    }
+
+    if (size) {
+      params[`size`] = size;
+    }
+
+    return params;
+  }
+  
+  handlePageChange(event) {
+    console.log(event)
+    this.page=event
+    const params = this.getRequestParams(this.page+1, this.pageSize);
+    console.log(params)
+    console.log(event)
+    this.ngOnInit()
+  }
+  handlePageSizeChange(event) {
+    this.pageSize = event.target.value;
+    const params = this.getRequestParams(this.page+1, this.pageSize);
+    console.log(params)
+    this.ngOnInit()
+
   }
   toggleVisibility(event,index){
    
@@ -143,6 +211,10 @@ export interface DialogData {
   example: string;
 }
 
+
+function startWith(arg0: string): import("rxjs").OperatorFunction<any, unknown> {
+  throw new Error('Function not implemented.');
+}
 // @Component({
 //     selector: 'data-dialog',
 //     templateUrl: './data-dialog.html'

@@ -3,10 +3,44 @@
   <button class="btn btn-md btn-outline-primary" (click)="open(content)">
     <i class="fa fa-user"></i>New {{selected_table}}</button>
 </div>
+<!-- <div class="col-md-12">
+  <pagination-controls
+    previousLabel="Prev"
+    nextLabel="Next"
+    responsive="true"
+    (pageChange)="handlePageChange($event)"
+  ></pagination-controls>
+</div> -->
 
+<!-- <ul class="list-group">
+  <li
+    class="list-group-item"
+    *ngFor="
+      let s of array_string | paginate : {
+              itemsPerPage: pageSize,
+              currentPage: page,
+              totalItems: count
+            };
+      let i = index
+    "
+    [class.active]="i == currentIndex"
+    (click)="setActiveTutorial(tutorial, i)"
+  >
+    {{ s }}
+  </li>
+</ul> -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<div class="col-md-12">
+  <pagination-controls
+    previousLabel="Prev"
+    nextLabel="Next"
+    responsive="true"
+    (pageChange)="handlePageChange($event)"
+  ></pagination-controls>
+</div> 
 <div *ngIf="!boolValue; else notInclude">
-  <table class="table table-bordered">
+  
+   <table class="table table-bordered">
     <thead>
       <tr>
         <th scope="col">#</th>
@@ -16,7 +50,15 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let s of array_string; index as i">
+      <tr *ngFor="let s of array_string | paginate : {
+        itemsPerPage: pageSize,
+        currentPage: page,
+        totalItems: count
+      };
+let i = index
+"
+[class.active]="i == currentIndex"
+>
         <th scope="row">{{ i }}</th>
         <td>{{ s }}</td>
         <td *ngFor="let l of global_langues">
@@ -40,14 +82,20 @@
         </td>
         <td>
           <button class="btn-wide mb-2 me-2 btn btn-primary btn-sm" (click)="addTranslation(i)">save</button>
-          <!-- <button (click)="addTranslation(i)">save</button> -->
         </td>
       </tr>
     </tbody>
   </table>
+  Items per Page:
+<select (change)="handlePageSizeChange($event)">
+  <option *ngFor="let size of pageSizes" [ngValue]="size">
+    {{ size }}
+  </option>
+</select>
 </div>
 
 <ng-template #notInclude>
+  
   Table Name:
   <select [(ngModel)]="selected_tab" (ngModelChange)="select1($event)" class="browser-default custom-select">
     <option value="Select one" selected>Select one</option>
@@ -60,6 +108,7 @@
   </select>
   <br />
   <br />
+ 
   <table class="table table-bordered">
     <thead>
       <tr>
@@ -70,7 +119,14 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let c of select2_array; index as i">
+      <tr *ngFor="let c of select2_array| paginate : {
+        itemsPerPage: pageSize,
+        currentPage: page,
+        totalItems: count
+      };
+let i = index"
+[class.active]="i == currentIndex"
+>
         <th scope="row">{{i}}</th>
         <td>{{ c }}</td>
         <td *ngFor="let l of global_langues; index as j">
@@ -98,6 +154,12 @@
       </tr>
     </tbody>
   </table>
+  Items per Page:
+<select (change)="handlePageSizeChange($event)">
+  <option *ngFor="let size of pageSizes" [ngValue]="size">
+    {{ size }}
+  </option>
+</select>
 </ng-template>
 
 
@@ -122,7 +184,7 @@
           </div>
     </form>
   </div>
-  <!-- <div class="modal-footer">
-    <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Save</button>
-  </div> -->
-</ng-template>
+ 
+</ng-template> 
+
+
