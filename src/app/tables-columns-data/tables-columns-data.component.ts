@@ -8,6 +8,7 @@ import {ModalDismissReasons, NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import { MatDialog, MatDialogModule, MAT_DIALOG_DATA, MatDialogConfig } from '@angular/material/dialog';
 import { NgForm } from '@angular/forms';
 import { HttpParams } from '@angular/common/http';
+import { Observable } from 'rxjs';
 
 
 @Component({
@@ -71,6 +72,17 @@ export class TablesColumnsDataComponent implements OnInit {
   pageSizes = [1, 2,5, 10];
   currentTutorial = null;
 
+  streets: string[] = [
+    'Champs',
+    'Lombard',
+    'Abbey ',
+    'Ac',
+    'Fifth',
+    'Faille',
+  ];
+  filteredTranslation:Observable<any>;
+  count_street:number
+
   constructor(
     private translationService: TranslationService,
     private route: ActivatedRoute,
@@ -106,7 +118,14 @@ export class TablesColumnsDataComponent implements OnInit {
       console.log(this.global_langues);
 
       console.log("trueeeeeeeee")
-      this.retrieveTranslation();
+      this.eventService
+        .getListColumns(this.selected_table)
+        .subscribe((data) => {
+          this.list_columns = data;
+          console.log(this.list_columns);
+          this.retrieveTranslation();
+
+        })
 
     
 
@@ -409,7 +428,9 @@ export class TablesColumnsDataComponent implements OnInit {
     return [...new Map(arr.map((item) => [item[key], item])).values()];
   }
 
-  onKey(e: any) {
+  onKey(e: any,j) {
+    console.log(j)
+console.log(this.global_langues[j].locale)
     var tabKeyPressed = false;
     tabKeyPressed = e.keyCode == 9;
     if (tabKeyPressed) {
@@ -425,6 +446,34 @@ export class TablesColumnsDataComponent implements OnInit {
     console.log(this.values);
     this.array_translation_values.push(this.values);
   }
+
+  onKeyUp(event,j){
+    console.log(j)
+    console.log(this.global_langues[j].locale)
+    var inputValue = event.target.value;
+    console.log(inputValue);
+    if(inputValue.length > 0){
+      this.translationService.AutocompleteTranslation(this.global_langues[j].locale,inputValue).subscribe((data)=>{
+        console.log("filtered data",data)
+        this.filteredTranslation = data;
+        console.log("filteredTranslation data",this.filteredTranslation)
+      })
+      
+  }else this.filteredTranslation=null
+}
+myClickFunction(j){
+ 
+console.log(j)
+console.log(this.global_langues[j].locale)
+
+  if(this.filteredTranslation !=null){
+    console.log("not empty")
+    this.filteredTranslation=null
+  }else     console.log(" empty")
+
+
+  
+}
 
   addTranslation(i) {
     console.log(i);
@@ -459,6 +508,7 @@ export class TablesColumnsDataComponent implements OnInit {
           r.push(hash[a.value]);
         }
         hash[a.value].data.push(a.translation);
+        console.log(r)
         return r;
       }, []);
 

@@ -61,7 +61,7 @@ let i = index
 >
         <th scope="row">{{ i }}</th>
         <td>{{ s }}</td>
-        <td *ngFor="let l of global_langues">
+        <td *ngFor="let l of global_langues;let j = index">
             <div *ngFor="let d of db_data">
               <div *ngFor="let dd of d.translations">
                 <div *ngIf="dd.langue === l.locale && s === d.field_value">
@@ -71,14 +71,31 @@ let i = index
                 </div>
                 <div *ngFor="let m of missing">
                 <div *ngIf="s === m">
-                  <input type="text" name="items[]" />
+                  <input type="text" name="items[]" [matAutocomplete]="auto"
+                  (keyup)="onKeyUp($event,j)" (click)="myClickFunction(j)" />
+                  <mat-autocomplete #auto="matAutocomplete">
+                    <mat-option *ngFor="let f of filteredTranslation " [value]="f">
+                      {{f}}
+                    </mat-option>
+                  </mat-autocomplete>
                 </div>
+                 
               </div>
+            
+           
               <div *ngFor="let m of missing_lang">
                   <div *ngIf="m.langue === l.locale && s === m.field_value ">
-                  <input type="text" name="items[]" />
+                  <input type="text" name="items[]" [matAutocomplete]="auto"
+                  (keyup)="onKeyUp($event,j)" (click)="myClickFunction(j)" />
+                  <mat-autocomplete #auto="matAutocomplete">
+                    <mat-option *ngFor="let f of filteredTranslation " [value]="f">
+                      {{f}}
+                    </mat-option>
+                  </mat-autocomplete>
                   </div>
-                </div>               
+                 
+                </div>
+               
         </td>
         <td>
           <button class="btn-wide mb-2 me-2 btn btn-primary btn-sm" (click)="addTranslation(i)">save</button>
@@ -139,12 +156,24 @@ let i = index"
           </div>
           <div *ngFor="let m of missing">
             <div *ngIf="c === m">
-              <input type="text" name="items[]" />
+              <input type="text" name="items[]" [matAutocomplete]="auto"
+              (keyup)="onKeyUp($event,j)" (click)="myClickFunction(j)" />
+              <mat-autocomplete #auto="matAutocomplete">
+                <mat-option *ngFor="let f of filteredTranslation " [value]="f">
+                  {{f}}
+                </mat-option>
+              </mat-autocomplete>
               </div>
             </div>
             <div *ngFor="let m of missing_lang">
               <div *ngIf="m.langue === l.locale && c === m.field_value ">
-              <input type="text" name="items[]" />
+              <input type="text" name="items[]" [matAutocomplete]="auto"
+              (keyup)="onKeyUp($event,j)" (click)="myClickFunction(j)" />
+              <mat-autocomplete #auto="matAutocomplete">
+                <mat-option *ngFor="let f of filteredTranslation " [value]="f">
+                  {{f}}
+                </mat-option>
+              </mat-autocomplete>
               </div>
             </div>    
         </td>
@@ -186,5 +215,22 @@ let i = index"
   </div>
  
 </ng-template> 
+
+    
+ 
+<!-- <input
+type="text"
+placeholder="Search for a street"
+[matAutocomplete]="auto"
+(keyup)="onKeyUp($event)"
+/>
+
+<mat-autocomplete #auto="matAutocomplete">
+<mat-option *ngFor="let street of filteredStreets " [value]="street">
+  {{street}}
+</mat-option>
+</mat-autocomplete> -->
+
+  
 
 

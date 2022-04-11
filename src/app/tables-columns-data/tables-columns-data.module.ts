@@ -5,13 +5,16 @@ import { TablesColumnsDataComponent } from './tables-columns-data.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 
 import { SharedModule } from '../shared/shared.module';
+import {MatAutocompleteModule} from '@angular/material/autocomplete';
 
 @NgModule({
   declarations: [TablesColumnsDataComponent],
   imports: [
     CommonModule,
     TablesColumnsDataRoutingModule,
-    SharedModule
+    SharedModule,
+    MatAutocompleteModule
+
     //  FormsModule,
     //   ReactiveFormsModule
   ],

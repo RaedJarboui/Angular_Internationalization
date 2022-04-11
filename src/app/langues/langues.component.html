@@ -1,5 +1,5 @@
 <!-- <app-page-title [heading]="heading" [subheading]="subheading" [icon]="icon"></app-page-title>       -->
-<!-- <div class="border">
+<div class="border">
   <button class="btn btn-md btn-outline-primary" (click)="open(content)">
     <i class="fa fa-user"></i>New Language</button>
 </div>
@@ -103,14 +103,12 @@
       <option *ngFor="let size of pageSizes" [ngValue]="size">
         {{ size }}
       </option>
-    </select> -->
+    </select>
 
-    <form class="example-form">
     
       <input
         type="text"
         placeholder="Search for a street"
-        [formControl]="control"
         [matAutocomplete]="auto"
         (keyup)="onKeyUp($event)"
       />
@@ -120,5 +118,4 @@
           {{street}}
         </mat-option>
       </mat-autocomplete>
-    </form>
       

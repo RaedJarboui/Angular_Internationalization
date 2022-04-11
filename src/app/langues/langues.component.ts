@@ -51,18 +51,18 @@ export class LanguesComponent implements OnInit {
 
 
   ngOnInit(): void {
-    // const params = this.getRequestParams(this.page+1, this.pageSize);
-    // console.log(params)
-    // this.translationService.getLangues().subscribe((data)=>{
-    //     this.paginated_langues=data;
-    //     this.count = this.paginated_langues.length
-    //     console.log(this.count)
-    //   this.translationService.getPageableLangues(params).subscribe((data)=>{
-    //     this.langues=data;
-    //     console.log(data)
+    const params = this.getRequestParams(this.page+1, this.pageSize);
+    console.log(params)
+    this.translationService.getLangues().subscribe((data)=>{
+        this.paginated_langues=data;
+        this.count = this.paginated_langues.length
+        console.log(this.count)
+      this.translationService.getPageableLangues(params).subscribe((data)=>{
+        this.langues=data;
+        console.log(data)
   
-    //   })
-    // })
+      })
+    })
 
     // this.filteredStreets = this.control.valueChanges.pipe(
     //   map((value) => this._filter(value))
