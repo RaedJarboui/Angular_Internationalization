@@ -1,6 +1,22 @@
 {
   "name": "acm-crm-translate-web1",
   "version": "1.0.0",
+  "keywords": [
+    "virtual",
+    "keyboard",
+    "onscreen",
+    "kiosk"
+  ],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/hodgef/simple-keyboard"
+  },
+  "author": "Francisco Hodge <hello@franciscohodge.com> (https://github.com/hodgef)",
+  "bugs": {
+    "url": "https://github.com/hodgef/simple-keyboard/issues"
+  },
+  "homepage": "https://virtual-keyboard.js.org/angular",
   "scripts": {
     "postinstall": "ngcc",
     "ng": "ng",
@@ -48,12 +64,17 @@
     "rxjs": "^6.6.3",
     "sass": "^1.32.8",
     "tslib": "^2.0.0",
+    "core-js": "^2.4.1",
+    "simple-keyboard": "latest",
+    "simple-keyboard-layouts": "1.8.2",
     "zone.js": "~0.10.2"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "~0.901.5",
     "@angular/cli": "~9.1.5",
+    "@angular/language-service": "^5.2.0",
     "@angular/compiler-cli": "~9.1.6",
+    "@types/core-js": "0.9.46",
     "@fortawesome/fontawesome-free": "^5.8.1",
     "@types/jasmine": "~3.6.0",
     "@types/jasminewd2": "~2.0.3",

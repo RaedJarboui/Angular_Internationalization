@@ -72,6 +72,10 @@ const routes: Routes = [
 {  path: 'tabscolumns/:name/:col/:json',canActivate: [AuthGuard], data: {extraParameter: 'dashboardsMenu'},
 loadChildren: () => import(`./tables-columns-data/tables-columns-data.module`)
 .then(m => m.TablesColumnsDataModule)},
+{  path: 'keyboard',canActivate: [AuthGuard], data: {extraParameter: 'dashboardsMenu'},
+loadChildren: () => import(`./virtual-keyboad/virtual-keyboad.module`)
+.then(m => m.VirtualKeyboadModule)},
+
 
       // Dashboads
 
@@ -133,6 +137,7 @@ loadChildren: () => import(`./tables-columns-data/tables-columns-data.module`)
       {path: 'pages/forgot-password-boxed', component: ForgotPasswordBoxedComponent, data: {extraParameter: ''}}
     ]
   },
+  { path: 'Virtual-Keyboard', loadChildren: () => import('./virtual-keyboad/virtual-keyboad.module').then(m => m.VirtualKeyboadModule) },
   {path: '**', redirectTo: ''}
 ];
 

@@ -65,7 +65,13 @@ let i = index
             <div *ngFor="let d of db_data">
               <div *ngFor="let dd of d.translations">
                 <div *ngIf="dd.langue === l.locale && s === d.field_value">
-                  <input type="text" name="items[]" value="{{dd.value}}" />
+                  <input type="text" name="items[]" value="{{dd.value}}" [matAutocomplete]="auto"
+                  (keyup)="onKeyUp($event,j)" (click)="myClickFunction(j)" />
+                  <mat-autocomplete #auto="matAutocomplete">
+                    <mat-option *ngFor="let f of filteredTranslation " [value]="f">
+                      {{f}}
+                    </mat-option>
+                  </mat-autocomplete>
                   </div>
                 </div>
                 </div>
@@ -150,7 +156,13 @@ let i = index"
           <div *ngFor="let d of db_data_json">
             <div *ngFor="let dd of d.translations">             
               <div *ngIf="dd.langue === l.locale && c === d.field_value">
-          <input type="text" name="items[]" value="{{dd.value}}" />
+          <input type="text" name="items[]" value="{{dd.value}}" [matAutocomplete]="auto"
+          (keyup)="onKeyUp($event,j)" (click)="myClickFunction(j)" />
+          <mat-autocomplete #auto="matAutocomplete">
+            <mat-option *ngFor="let f of filteredTranslation " [value]="f">
+              {{f}}
+            </mat-option>
+          </mat-autocomplete>
           </div>
           </div>
           </div>
