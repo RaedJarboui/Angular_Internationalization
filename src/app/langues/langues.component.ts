@@ -4,7 +4,7 @@ import {ModalDismissReasons, NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import { FormControl, NgForm } from '@angular/forms';
 import { TranslationService } from 'src/app/services/translation.service';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { map, startWith } from 'rxjs/operators';
 import { data } from 'jquery';
 
 @Component({
@@ -30,16 +30,8 @@ export class LanguesComponent implements OnInit {
   pageSize = 2;
   pageSizes = [1,2, 5, 10];
   currentTutorial = null;
-  control = new FormControl();
-  streets: string[] = [
-    'Champs',
-    'Lombard',
-    'Abbey ',
-    'Ac',
-    'Fifth',
-    'Faille',
-  ];
-  filteredStreets:Observable<any>;
+  
+
 
   text = ''; //initialised the text variable
 
@@ -49,8 +41,14 @@ export class LanguesComponent implements OnInit {
 
    }
 
+   value:string
 
   ngOnInit(): void {
+
+   
+
+
+
     const params = this.getRequestParams(this.page+1, this.pageSize);
     console.log(params)
     this.translationService.getLangues().subscribe((data)=>{
@@ -64,45 +62,25 @@ export class LanguesComponent implements OnInit {
       })
     })
 
-    // this.filteredStreets = this.control.valueChanges.pipe(
-    //   map((value) => this._filter(value))
-    // );
-    console.log(this.control)
+   
 
     
   }
-  onKeyUp(event){
-    var inputValue = event.target.value;
-    console.log(inputValue);
-    if(inputValue.length > 0){
-      this.translationService.findAllByText(inputValue).subscribe((data)=>{
-        this.filteredStreets=data;
-        console.log(this.filteredStreets)
+ 
+  //   onKeyUp(event){
+  //     var inputValue = event.target.value;
+  //     console.log(inputValue);
+  //     if(inputValue.length > 0){
+  //       this.translationService.findAllByText(inputValue).subscribe((data)=>{
+  //         this.filteredStreets=data;
+  //         console.log(this.filteredStreets)
 
 
-      })
-  }else this.filteredStreets=null
-}
-  private _filter(value: string) {
-    console.log(this.control.value);
-    if(this.control.value.length > 0){
-      this.translationService.findAllByText(this.control.value).subscribe((data)=>{
-        console.log(data)
-        this.filteredStreets=data;
-        // return data;
+  //       })
+  //   }else this.filteredStreets=null
+  // }
+ 
 
-      })
-      return this.filteredStreets
-    //   const filterValue = this._normalizeValue(value);
-    //   console.log(this.streets.filter((street) =>
-    //   this._normalizeValue(street).includes(filterValue)
-    // ))
-    //   return this.streets.filter((street) =>
-    //     this._normalizeValue(street).includes(filterValue)
-    //   );
-    }
-   
-  }
 
   private _normalizeValue(value: string): string {
     return value.toLowerCase().replace(/\s/g, '');
@@ -212,9 +190,7 @@ export interface DialogData {
 }
 
 
-function startWith(arg0: string): import("rxjs").OperatorFunction<any, unknown> {
-  throw new Error('Function not implemented.');
-}
+
 // @Component({
 //     selector: 'data-dialog',
 //     templateUrl: './data-dialog.html'

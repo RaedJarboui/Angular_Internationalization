@@ -1,9 +1,13 @@
-import { CommonModule } from "@angular/common";
 import { NgModule } from "@angular/core";
 import { FormsModule } from "@angular/forms";
 import {NgxPaginationModule} from 'ngx-pagination';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
+import { AppComponent } from "../app.component";
+import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
+import { CommonModule } from "@angular/common";
+import { FontAwesomeModule, FaIconLibrary  } from '@fortawesome/angular-fontawesome';
 
+import { faCoffee, fas } from '@fortawesome/free-solid-svg-icons';
 
 
 
@@ -15,6 +19,8 @@ import {MatAutocompleteModule} from '@angular/material/autocomplete';
      FormsModule,
      NgxPaginationModule ,
     MatAutocompleteModule,
+    NgbModule,
+    FontAwesomeModule
    
    ],
    declarations: [
@@ -24,8 +30,8 @@ import {MatAutocompleteModule} from '@angular/material/autocomplete';
      FormsModule,
      NgxPaginationModule , 
     MatAutocompleteModule,
-   
-   ]
+    FontAwesomeModule
+   ],bootstrap: [AppComponent]
  })
  export class SharedModule {
   

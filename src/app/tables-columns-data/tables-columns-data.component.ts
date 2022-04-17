@@ -6,9 +6,10 @@ import { TranslationService } from '../services/translation.service';
 import * as $ from 'jquery';
 import {ModalDismissReasons, NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import { MatDialog, MatDialogModule, MAT_DIALOG_DATA, MatDialogConfig } from '@angular/material/dialog';
-import { NgForm } from '@angular/forms';
+import { FormControl, NgForm } from '@angular/forms';
 import { HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import {startWith, map} from 'rxjs/operators';
 
 
 @Component({
@@ -80,7 +81,10 @@ export class TablesColumnsDataComponent implements OnInit {
     'Fifth',
     'Faille',
   ];
+  control = new FormControl();
   filteredTranslation:Observable<any>;
+  filteredStreets: Observable<string[]>;
+
   count_street:number
 
   constructor(
@@ -93,6 +97,7 @@ export class TablesColumnsDataComponent implements OnInit {
  
 
   ngOnInit(): void {
+   
    
     this.array_string=[]
     this.db_data=[]

@@ -11,6 +11,9 @@ import {LoadingBarRouterModule} from '@ngx-loading-bar/router';
 import {CommonModule} from '@angular/common';
 import {HttpClientModule} from '@angular/common/http';
 import {AppComponent} from './app.component';
+import { FontAwesomeModule, FaIconLibrary  } from '@fortawesome/angular-fontawesome';
+
+import { faCoffee, fas } from '@fortawesome/free-solid-svg-icons';
 
 // BOOTSTRAP COMPONENTS
 
@@ -19,7 +22,6 @@ import {PerfectScrollbarModule} from 'ngx-perfect-scrollbar';
 import {PERFECT_SCROLLBAR_CONFIG} from 'ngx-perfect-scrollbar';
 import {PerfectScrollbarConfigInterface} from 'ngx-perfect-scrollbar';
 import {ChartsModule} from 'ng2-charts';
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { MatDialogModule } from '@angular/material/dialog';
 
 
@@ -205,6 +207,8 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
+    FontAwesomeModule ,
+    
     //TablesColumnsComponent,
     NgReduxModule,
     CommonModule,
@@ -215,7 +219,6 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     PerfectScrollbarModule,
     NgbModule,
     MatDialogModule,
-    FontAwesomeModule,
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
@@ -240,8 +243,9 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
 
 export class AppModule {
   constructor(private ngRedux: NgRedux<ArchitectUIState>,
-              private devTool: DevToolsExtension) {
-
+              private devTool: DevToolsExtension,
+              library: FaIconLibrary) {
+               
     this.ngRedux.configureStore(
       rootReducer,
       {} as ArchitectUIState,
