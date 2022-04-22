@@ -53,6 +53,8 @@ import {LayoutComponent} from './DemoPages/Forms/Elements/layout/layout.componen
 
 import {ChartjsComponent} from './DemoPages/Charts/chartjs/chartjs.component';
 import { AuthGuard } from './guards/AuthGuard';
+import { DisplayTranslationComponent } from './display-translation/display-translation.component';
+import { AngularSpinnerComponent } from './angular-spinner/angular-spinner.component';
 
 const routes: Routes = [
   {
@@ -77,13 +79,17 @@ loadChildren: () => import(`./virtual-keyboad/virtual-keyboad.module`)
 .then(m => m.VirtualKeyboadModule)},
 
 
+
+
       // Dashboads
 
       {path: '', component: AnalyticsComponent,canActivate: [AuthGuard], data: {extraParameter: 'dashboardsMenu'}},
 
       //Page
 
-    
+      {path: 'translation', component: DisplayTranslationComponent,canActivate: [AuthGuard], data: {extraParameter: 'dashboardsMenu'}},
+      {path: 'spinner', component: AngularSpinnerComponent,canActivate: [AuthGuard], data: {extraParameter: 'dashboardsMenu'}},
+
 
       // Elements
 
@@ -143,11 +149,8 @@ loadChildren: () => import(`./virtual-keyboad/virtual-keyboad.module`)
 
 @NgModule({
   imports: [RouterModule.forRoot(routes,
-    {
-    scrollPositionRestoration: 'enabled',
-    anchorScrolling: 'enabled',
-    relativeLinkResolution: 'legacy'
-})],
+ 
+)],
   exports: [RouterModule]
 })
 export class AppRoutingModule {

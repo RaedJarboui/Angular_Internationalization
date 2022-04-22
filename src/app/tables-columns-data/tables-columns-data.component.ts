@@ -1,21 +1,26 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation,ChangeDetectorRef,DoCheck, KeyValueDiffers, KeyValueDiffer, ElementRef, ViewChild, ViewChildren  } from '@angular/core';
 //import { TranslateService } from '@ngx-translate/core';
 import { ActivatedRoute } from '@angular/router';
 import { EventService } from '../services/event.service';
 import { TranslationService } from '../services/translation.service';
 import * as $ from 'jquery';
 import {ModalDismissReasons, NgbModal} from '@ng-bootstrap/ng-bootstrap';
-import { MatDialog, MatDialogModule, MAT_DIALOG_DATA, MatDialogConfig } from '@angular/material/dialog';
-import { FormControl, NgForm } from '@angular/forms';
-import { HttpParams } from '@angular/common/http';
+import { MatDialog } from '@angular/material/dialog';
+import { FormControl, FormGroup, NgForm } from '@angular/forms';
 import { Observable } from 'rxjs';
-import {startWith, map} from 'rxjs/operators';
+import Keyboard from "simple-keyboard";
+import KeyboardLayouts from "simple-keyboard-layouts";
+import { decodedTextSpanIntersectsWith } from 'typescript';
+
 
 
 @Component({
   selector: 'app-tables-columns-data',
+  encapsulation: ViewEncapsulation.None ,
   templateUrl: './tables-columns-data.component.html',
-  styleUrls: ['./tables-columns-data.component.css'],
+  styleUrls: [
+    "../../../node_modules/simple-keyboard/build/css/index.css",
+    './tables-columns-data.component.css'],
 })
 export class TablesColumnsDataComponent implements OnInit {
   heading = 'Bootstrap 5 Tables';
@@ -48,6 +53,7 @@ export class TablesColumnsDataComponent implements OnInit {
   array_translation_values;
   container: any[] = [1];
   newArray: any = [{ key: 1, values: '' }];
+  isActiveData=[]
   values = [];
   db_data = [];
   db1_data = [];
@@ -72,36 +78,45 @@ export class TablesColumnsDataComponent implements OnInit {
   pageSize = 2;
   pageSizes = [1, 2,5, 10];
   currentTutorial = null;
-
-  streets: string[] = [
-    'Champs',
-    'Lombard',
-    'Abbey ',
-    'Ac',
-    'Fifth',
-    'Faille',
-  ];
-  control = new FormControl();
   filteredTranslation:Observable<any>;
-  filteredStreets: Observable<string[]>;
 
-  count_street:number
+
+  value = "";
+  keyboard: Keyboard;
+  keyboardLayouts: any;
+  layouts: Array<object>;
+  layoutsObj: object;
+  selectedLayout: string = "english";
+  selectedInput:any;
+  columns_exists :Boolean =false
+  select2_array_exists :Boolean =false
+
+
+ 
 
   constructor(
     private translationService: TranslationService,
     private route: ActivatedRoute,
     private eventService: EventService,
     private modalService: NgbModal,
-    public dataDialogHandler: MatDialog
-  ) {}
- 
+    public dataDialogHandler: MatDialog,
+  ) {
 
-  ngOnInit(): void {
-   
-   
+    this.keyboardLayouts = new KeyboardLayouts();
+
+    this.layoutsObj = this.keyboardLayouts.get();
+    this.layouts = Object.keys(this.layoutsObj).map(layoutName => ({
+      name: layoutName,
+      value: this.layoutsObj[layoutName]
+    }));
+
+
+  }
+  
+
+  ngOnInit(): void {   
     this.array_string=[]
     this.db_data=[]
-   
     this.selected_table = this.route.snapshot.params['name'];
     this.selected_column = this.route.snapshot.params['col'];
     this.IsJson = this.route.snapshot.params['json'];
@@ -129,14 +144,11 @@ export class TablesColumnsDataComponent implements OnInit {
           this.list_columns = data;
           console.log(this.list_columns);
           this.retrieveTranslation();
-
         })
 
-    
-
-    });
-    
+    });  
   }
+  
   getRequestParams(page, size) {
     let params = {};
 
@@ -150,7 +162,7 @@ export class TablesColumnsDataComponent implements OnInit {
 
     return params;
   }
-
+  
   retrieveTranslation() {
     const params = this.getRequestParams(this.page+1, this.pageSize);
     console.log(params)
@@ -171,11 +183,9 @@ export class TablesColumnsDataComponent implements OnInit {
         console.log("missing",this.missing)
         console.log("missing_lang",this.missing_lang)
         console.log("count",this.count)
-
-      
-       
-  
-  
+        const expected = new Set();
+        this.missing_lang = this.missing_lang.filter(item => !expected.has(JSON.stringify(item)) ? expected.add(JSON.stringify(item)) : false);
+        console.log("unique values :",this.missing_lang)
   
       },err=>{
         console.log(err)
@@ -204,7 +214,6 @@ export class TablesColumnsDataComponent implements OnInit {
     this.page=event
     const params = this.getRequestParams(this.page+1, this.pageSize);
     console.log(params)
-    console.log(event)
     if(this.boolValue == false){
 
       console.log("trueeeeeeeee")
@@ -221,11 +230,6 @@ export class TablesColumnsDataComponent implements OnInit {
         console.log("db1_data",this.db1_data)
         console.log("missing",this.missing)
         console.log("missing_lang",this.missing_lang)
-      
-       
-  
-  
-  
       },err=>{
         console.log(err)
       })
@@ -267,11 +271,6 @@ export class TablesColumnsDataComponent implements OnInit {
         console.log("db1_data",this.db1_data)
         console.log("missing",this.missing)
         console.log("missing_lang",this.missing_lang)
-      
-       
-  
-  
-  
       },err=>{
         console.log(err)
       })
@@ -290,7 +289,6 @@ export class TablesColumnsDataComponent implements OnInit {
         })
       })
     }
-    //this.ngOnInit();
   }
 
   setActiveTutorial(tutorial, index) {
@@ -346,11 +344,12 @@ export class TablesColumnsDataComponent implements OnInit {
 
     this.page=1
     this.select_array = [];
+    this.select2_array=[]
+    this.columns=[]
     this.selected_col=null
+    this.columns_exists =false
     console.log(value);
     console.log(this.selected_tab);
-    
-
     console.log(this.last_array);
     for (var i = 0; i < this.last_array.length; i++) {
       if (this.last_array[i].TABLE_ABACUS_NAME == value) {
@@ -379,6 +378,15 @@ export class TablesColumnsDataComponent implements OnInit {
         (item) => this.values_null.indexOf(item) < 0
       );
       console.log(this.columns)
+      if(this.columns){
+        this.columns_exists=true
+        console.log("table column exists :", this.columns_exists)
+
+      }else{
+        this.columns_exists=false
+        console.log("table column exists :", this.columns_exists)
+
+      } 
 
     })
    
@@ -387,6 +395,7 @@ export class TablesColumnsDataComponent implements OnInit {
   select2(value) {
     this.select2_array = [];
     this.db_data_json=[]
+    this.select2_array_exists =false
     console.log(this.columns);
     console.log(value);
     console.log(this.selected_col);
@@ -421,6 +430,13 @@ export class TablesColumnsDataComponent implements OnInit {
          console.log("missing",this.missing)
          console.log("missing_lang",this.missing_lang)
          console.log("count",this.count)
+         const expected = new Set();
+         this.missing_lang = this.missing_lang.filter(item => !expected.has(JSON.stringify(item)) ? expected.add(JSON.stringify(item)) : false);
+        console.log("unique values :",this.missing_lang)
+         if(this.select2_array){
+           this.select2_array_exists=true
+           console.log("this.select2_array_exists",this.select2_array_exists)
+         }
 
 
     },err=>{
@@ -652,13 +668,77 @@ console.log(this.global_langues[j].locale)
         return false;
     }
   }
+
+
+ngAfterViewInit() {
+  var k : Keyboard
+  this.keyboard = new Keyboard({
+    onChange: input => this.onChange(input),
+    onKeyPress: button => this.onKeyPress(button),
+    layout: this.layoutsObj[this.selectedLayout]
+  });
+  console.log(this.keyboard)
+  k = this.keyboard  ,
+  setTimeout(() => {
+  }, 3000);
+
+
 }
-function values(values: any) {
-  throw new Error('Function not implemented.');
+onInputFocus() {
+this.keyboard = new Keyboard({
+      onChange: input => this.onChange(input),
+      onKeyPress: button => this.onKeyPress(button)
+    });
 }
+
+public isActive:boolean = false;
+public test:boolean = true;  
+onChange = (input: string) => {
+this.value = input;
+console.log("Input changed", input);
+};
+
+onKeyPress = (button: string) => {
+console.log("Button pressed", button);
+
+/**
+ * If you want to handle the shift and caps lock buttons
+ */
+if (button === "{shift}" || button === "{lock}") this.handleShift();
+};
+
+onInputChange = (event: any) => {
+this.keyboard.setInput(event.target.value);
+};
+
+onSelectChange = (event: any) => {
+let value = event.target.value;
+console.log("onSelectChange", event, value);
+this.selectedLayout = value;
+this.keyboard.setOptions({
+  layout: this.layoutsObj[this.selectedLayout]
+});
+};
+
+handleShift = () => {
+let currentLayout = this.keyboard.options.layoutName;
+let shiftToggle = currentLayout === "default" ? "shift" : "default";
+
+this.keyboard.setOptions({
+  layoutName: shiftToggle
+});
+};
+
+row:number
+cell:number
+valeur = "a"
+}
+
+
 export interface DialogData {
   example: string;
 }
+
 
 
 

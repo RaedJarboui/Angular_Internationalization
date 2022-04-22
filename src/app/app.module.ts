@@ -9,9 +9,10 @@ import {ConfigActions} from './ThemeOptions/store/config.actions';
 import {AppRoutingModule} from './app-routing.module';
 import {LoadingBarRouterModule} from '@ngx-loading-bar/router';
 import {CommonModule} from '@angular/common';
-import {HttpClientModule} from '@angular/common/http';
+import {HttpClient, HttpClientModule} from '@angular/common/http';
 import {AppComponent} from './app.component';
 import { FontAwesomeModule, FaIconLibrary  } from '@fortawesome/angular-fontawesome';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 
 import { faCoffee, fas } from '@fortawesome/free-solid-svg-icons';
 
@@ -107,12 +108,19 @@ import {DynamicChartComponent} from './DemoPages/Charts/chartjs/examples/dynamic
 import {DoughnutChartComponent} from './DemoPages/Charts/chartjs/examples/doughnut-chart/doughnut-chart.component';
 import {PieChartComponent} from './DemoPages/Charts/chartjs/examples/pie-chart/pie-chart.component';
 import { SharedModule } from './shared/shared.module';
+import { DisplayTranslationComponent } from './display-translation/display-translation.component';
 
-
+import {TranslateModule, TranslateLoader} from '@ngx-translate/core';
+import {TranslateHttpLoader} from '@ngx-translate/http-loader';
+import { AngularSpinnerComponent } from './angular-spinner/angular-spinner.component';
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true
 };
 
+
+export function HttpLoaderFactory(http: HttpClient) {
+  return new TranslateHttpLoader(http);
+}
 @NgModule({
   declarations: [
 
@@ -198,6 +206,8 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     DynamicChartComponent,
     BubbleChartComponent,
     ScatterChartComponent,
+    DisplayTranslationComponent,
+    AngularSpinnerComponent,
     
 
 
@@ -222,10 +232,20 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
+    MatProgressSpinnerModule,
+
 
     // Charts
 
     ChartsModule,
+    TranslateModule.forRoot({
+      loader: {
+          provide: TranslateLoader,
+          useFactory: HttpLoaderFactory,
+          deps: [HttpClient]
+      }
+  })
+  
   ],
   providers: [
     {

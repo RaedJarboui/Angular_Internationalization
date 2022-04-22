@@ -28,18 +28,12 @@ export class VirtualKeyboadComponent implements OnInit {
   layoutsObj: object;
   selectedLayout: string = "english";
   visible = false;
-  pass;
+  
+
   private propertiesChanged: EventEmitter<any> = new EventEmitter();
 
 
-  // get keyboardd():Keyboard {
-  //   return this.keyboard;
-  // }
-
-  // set keyboarddd(k:Keyboard) {
-  //   this.keyboard = k;
-  //   this.propertiesChanged.emit(k);
-  // }
+  
 
   constructor() {
     this.keyboardLayouts = new KeyboardLayouts();
@@ -49,39 +43,29 @@ export class VirtualKeyboadComponent implements OnInit {
       name: layoutName,
       value: this.layoutsObj[layoutName]
     }));
-    // this.keyboard = new Keyboard({
-    //   onChange: input => this.onChange(input),
-    //   onKeyPress: button => this.onKeyPress(button),
-    //   layout: this.layoutsObj[this.selectedLayout]
-    // });
-    // this.propertiesChanged.subscribe(() =>
-    //  this.changesDetected(),
-    //  console.log( this.propertiesChanged)
-    //  );
+    
+   
 
    
   }
   ngOnInit(): void {
-    // const div = document.createElement('div');
-    // div.className += "simple-keyboard";
-    // document.body.appendChild(div);
+    
+    
   }
   
-  
-  changesDetected() {
-    console.log('Changes detected');
-  }
     
 
     ngAfterViewInit() {
-      var k : Keyboard
-      this.keyboard = new Keyboard({
-        onChange: input => this.onChange(input),
-        onKeyPress: button => this.onKeyPress(button),
-        layout: this.layoutsObj[this.selectedLayout]
-      });
-      console.log(this.keyboard)
-      k = this.keyboard
+        var k : Keyboard
+        this.keyboard = new Keyboard({
+          onChange: input => this.onChange(input),
+          onKeyPress: button => this.onKeyPress(button),
+          layout: this.layoutsObj[this.selectedLayout]
+        });
+        console.log(this.keyboard)
+        k = this.keyboard  ,
+        setTimeout(() => {
+        }, 3000);
       
 
     }
@@ -91,34 +75,9 @@ export class VirtualKeyboadComponent implements OnInit {
             onKeyPress: button => this.onKeyPress(button)
           });
       }
-      
-      DeChange(){
-        
-      }
-    toggle(){
-      this.visible = !this.visible;
-      console.log(this.visible)
-  }
- 
-
 
   public isActive:boolean = false;
-  public test:boolean = true;
-
-  onClick(e) {
-    this.isActive = !this.isActive;
-    console.log(this.isActive)
-     if(this.isActive){
-      this.keyboard = new Keyboard({
-        onChange: input => this.onChange(input),
-        onKeyPress: button => this.onKeyPress(button)
-      });
-     }
-     
-  
-  }
-  
-  
+  public test:boolean = true;  
     onChange = (input: string) => {
       this.value = input;
       console.log("Input changed", input);
@@ -155,11 +114,18 @@ export class VirtualKeyboadComponent implements OnInit {
       });
     };
 
-   
+    row:number
+    cell:number
+    valeur = "a"
+    ClickIcon(){
+     
+    
 
+   
+  }
 
    }
 
- 
+   
 
 

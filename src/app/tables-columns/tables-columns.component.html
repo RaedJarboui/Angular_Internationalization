@@ -11,7 +11,7 @@
     </thead>
     <tbody *ngIf="!value_json">
       <tr [ngStyle]="{'backgroundColor': c.type_column !== 'varchar' ? 'red' : 'green'}" *ngFor="let c of col;index as i">
-        <th scope="row">1</th>
+        <th scope="row">{{i}}</th>
         <td>{{c.name_column}}</td>
         <td>{{c.type_column}}</td>
         <td>
@@ -27,7 +27,7 @@
 
     <tbody *ngIf="value_json">
       <tr [ngStyle]="{'backgroundColor': c.name_column !== 'VALUE_JSON' ? 'red' : 'green'}" *ngFor="let c of col;index as i">
-        <th scope="row">1</th>
+        <th scope="row">{{i}}</th>
         <td>{{c.name_column}}</td>
         <td>{{c.type_column}}</td>
         <td>

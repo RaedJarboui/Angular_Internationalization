@@ -1,0 +1,79 @@
+app-tables-columns-data ul {
+    text-align: center;
+  }
+  
+ 
+  
+  app-tables-columns-data .simple-keyboard {
+    max-width: 850px;
+    bottom: 500px;
+
+  }
+
+  app-tables-columns-data #container {position:relative;}
+  app-tables-columns-data .icon {
+  display:block;
+  position:absolute;
+  top:4px;
+  left:4px;
+  width:13px;
+  height:13px;
+  background-color:red;
+}
+
+app-tables-columns-data i{ margin:15px; }
+
+
+
+app-tables-columns-data .fa.fa-keyboard.active::after {
+ 
+  content: "/";
+  color: rgb(255, 30, 0);
+  font-weight: 700;
+  font-size: 1.7em;
+  left: 7px;
+  top: -10px;
+}
+
+app-tables-columns-data .fa.fa-keyboard:after {
+  position: absolute;
+  font-weight: 700;
+  font-size: 1.7em;
+  left: 7px;
+  top: -10px;
+
+  
+  
+}
+app-tables-columns-data .hide-keyboard {
+  overflow: hidden;
+  height: 0;
+}
+
+app-tables-columns-data .errspan {
+        float: right;
+        margin-right: 6px;
+        margin-top: -20px;
+        position: relative;
+        z-index: 2;
+    }
+
+    app-tables-columns-data mat-progress-spinner {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 5;
+  }
+
+  app-tables-columns-data .disable-background{
+    position: fixed;
+    top: 0;
+    left: 0;
+    background: #2d2d2d;
+    opacity: 0.8;
+    z-index: 998;
+    height: 100%;
+    width: 100%;
+ }
+

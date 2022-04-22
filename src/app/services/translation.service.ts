@@ -78,5 +78,9 @@ nameTypeColumnData(nameTable,selectedColumn,json,params):Observable<any>{
   
   return this.http.get(`http://localhost:8080/translate/autocomplete/${langue}/${value}`);
  }
+ get_Values_FromSelectedLang(nameTable,selectedColumn,langue):Observable<any>{
+  
+  return this.http.get(`http://localhost:8080/translate/i18n/values/${nameTable}/${selectedColumn}/${langue}`);
+ }
 
 }

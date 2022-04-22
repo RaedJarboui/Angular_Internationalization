@@ -29,58 +29,12 @@ app-virtual-keyboad ul {
   background-color:red;
 }
 
-/* app-virtual-keyboad .crossicon:after {
-  position: absolute;
-  transform: rotate(45deg);
-  content: "|";
-  color: red;
-  font-weight: 700;
-  font-size: 1.7em;
-  left: 1rem;
-  top: 0rem;
-} */
-
-
-/* app-virtual-keyboad .notavailable {
-  position: relative;
-} */
-
-/* app-virtual-keyboad .notavailable:after {
-  content: " ";
-  position: absolute;
-  left: 8%;
-  top: -6%;
-  width: 88%;
-  height: 110%;
-  clip-path: polygon(0 0, 12% 0, 100% 100%, 88% 100%);
-  background-color: rgba(150, 2, 2, 0.9);
-} */
-
 i{ margin:15px; }
 
-/* app-virtual-keyboad .fa-keyboard {
-  color: #ccc;
-  cursor: pointer;
-} */
 
-/* app-virtual-keyboad .fa.fa-keyboard:after {
-  
-  content: "/";
-  color: rgb(255, 30, 0);
-  font-weight: 700;
-  font-size: 1.7em;
-  left: 7px;
-  top: -10px;
-} */
 
 app-virtual-keyboad .fa.fa-keyboard.active::after {
  
-  /* position: absolute;
-  font-weight: 700;
-  font-size: 1.7em;
-  left: 7px;
-  top: -10px; */
-
   content: "/";
   color: rgb(255, 30, 0);
   font-weight: 700;

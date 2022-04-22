@@ -1,93 +1,4 @@
-<!-- <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet"/>
-<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet"/>
-
-<div style="text-align:center">
-	<input (input)="onInputChange($event)" class="input" value={{value}} placeholder="Tap on the virtual keyboard to start" />
-	<div class="simple-keyboard"></div>
-	<div class="select-container">
-		<select class='select-option' required (change)="onSelectChange($event)">
-			<option class='option' [selected]="layout.name == selectedLayout" *ngFor='let layout of layouts' [value]="layout.name">{{layout.name}}</option>
-		</select>
-		<p>hii 1</p>
-	</div>
-</div>
-<button type="button" class="btn btn-outline-primary">
-    <i class="fa fa-arrow-left"></i>
-  </button>
-
-
-Use Class <i class="dripicons-alarm"></i>
-
-<i class="fas fa-home"></i>
-<i class="fas fa-check"></i>
-<i class="fas fa-keyboard"></i>
-
-
-  <i class="fa fa-signal fa-2x"></i>
-  <i class="fas fa-keyboard notavailable"></i>
-  <div (click)="onClick()">
-	<i class="fas fa-home"></i>
-
-  </div>
-
-
-  <div class="col-md-6">
-	<div class="position-relative mb-3">
-	  <label for="exampleCity" class="form-label">City</label>
-	  <input name="city" id="exampleCity" type="text" class="form-control">
-	  <span >
-		<div (click)="onClick()">
-			<i class="fa fa-keyboard errspan" [ngClass]="{'active': !isActive}">	
-			</i>
-			
-		
-		  </div>
-			
-
-
-	  </span>
-	</div>
-  </div> -->
- 
-
-  
-
-
-
-
-
-  <!-- <div style="text-align:center"  >
-    <input #input  class="input" value={{value}} placeholder="Tap on the virtual keyboard to start" />
-	<span >
-		<div (click)="onClick($event)">
-			<i class="fa fa-keyboard errspan" [ngClass]="{'active': !isActive}">	
-			</i>
-			<div class="simple-keyboard"></div>
-			
-
-
-		  </div>
-	  </span>
-	 <div class="select-container">
-		<select class='select-option' required (change)="onSelectChange($event)">
-			<option class='option' [selected]="layout.name == selectedLayout" *ngFor='let layout of layouts' [value]="layout.name">{{layout.name}}</option>
-		</select>
-	</div>
-</div> -->
-
-<!-- <div style="text-align:center" [ngClass]="isActive ? 'hide-keyboard' : ''">
-	<input
-	  (input)="onInputChange($event)"
-	  class="input"
-	  value="{{value}}"
-	  placeholder="Tap on the virtual keyboard to start"
-	/>
-	
-
-	<div class="simple-keyboard"></div>
-  </div> -->
-
-  <input
+ <input
   (input)="onInputChange($event)"
   class="input"
   value="{{value}}"
@@ -97,22 +8,11 @@ Use Class <i class="dripicons-alarm"></i>
 	<div (click)="isActive = !isActive">
 		<i class="fa fa-keyboard errspan" [ngClass]="{'active': !isActive}">	
 		</i>
-		<!-- <div class="simple-keyboard"></div> -->
-		
-
-
 	  </div>
   </span>
+ 
 
   <div style="text-align:center" [ngClass]="!isActive ? 'hide-keyboard' : ''">
-	<!-- <input
-	  (input)="onInputChange($event)"
-	  class="input"
-	  value="{{value}}"
-	  placeholder="Tap on the virtual keyboard to start"
-	/> -->
-	
-
 	<div class="simple-keyboard"></div>
 	<div class="select-container">
 		<select class='select-option' required (change)="onSelectChange($event)">
@@ -120,3 +20,11 @@ Use Class <i class="dripicons-alarm"></i>
 		</select>
 	</div>
   </div>
+
+ 
+
+
+
+
+
+  
