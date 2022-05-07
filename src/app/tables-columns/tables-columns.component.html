@@ -1,36 +1,43 @@
-<!-- <app-page-title [heading]="heading" [subheading]="subheading" [icon]="icon"></app-page-title> -->
-<table class="table table-bordered">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<a routerLink="/tabs"><i class="fa fa-solid fa-arrow-left"></i></a>
+<!-- <table class="table table-bordered">
     <thead>
       <tr>
-        <th scope="col">#</th>
-        <th scope="col">name_column</th>
-        <th scope="col">type_column</th>
-        <th scope="col">show translation</th>
+        <th scope="col">name</th>
+        <th scope="col">type</th>
+        <th scope="col">actions</th>
 
       </tr>
     </thead>
     <tbody *ngIf="!value_json">
-      <tr [ngStyle]="{'backgroundColor': c.type_column !== 'varchar' ? 'red' : 'green'}" *ngFor="let c of col;index as i">
-        <th scope="row">{{i}}</th>
+      <tr *ngFor="let c of col;index as i">
         <td>{{c.name_column}}</td>
         <td>{{c.type_column}}</td>
         <td>
+          <div class="form-control-wrapper" *ngIf="c.type_column !== 'varchar'">
+            <mat-icon [ngStyle]="{'color':'#dc3545'}" class="error-icon"
+            data-placement="right" matTooltip="column type not varchar">error</mat-icon>
+           
+          </div>
             <div *ngIf="c.type_column === 'varchar'">
               <button class="mb-2 me-2 btn btn-focus" (click) ="show(i)">show translation</button>
-            </div>
-           
+            </div>       
         </td>
-
       </tr>
-     
     </tbody>
 
     <tbody *ngIf="value_json">
-      <tr [ngStyle]="{'backgroundColor': c.name_column !== 'VALUE_JSON' ? 'red' : 'green'}" *ngFor="let c of col;index as i">
-        <th scope="row">{{i}}</th>
+      <tr *ngFor="let c of col;index as i">
         <td>{{c.name_column}}</td>
         <td>{{c.type_column}}</td>
         <td>
+
+          <div *ngIf="c.name_column !== 'VALUE_JSON'">
+              <mat-icon [ngStyle]="{'color':'#dc3545'}" class="error-icon"
+              data-placement="right" matTooltip="column values cannot be translated">error</mat-icon>
+             
+          </div>
+        
             <div *ngIf="c.name_column === 'VALUE_JSON'">
               <button class="mb-2 me-2 btn btn-focus" (click) ="show(i)">show translation</button>
             </div>
@@ -39,4 +46,91 @@
       </tr>
      
     </tbody>
-  </table>
+  </table> -->
+
+
+
+  <p-table *ngIf="!value_json" [columns]="cols" [value]="col"  sortMode="multiple" #dt  >
+    <ng-template pTemplate="caption">
+  Languages List
+    </ng-template>
+    <ng-template pTemplate="header" let-columns>
+        <tr>
+            <th *ngFor="let col of columns" [pSortableColumn]="col.field">
+                {{col.header}}
+                <p-sortIcon [field]="col.field"></p-sortIcon>
+            </th>
+
+        </tr>
+        <tr>
+            <th *ngFor="let col of columns" [ngSwitch]="col.field">
+            <input pInputText type="text" (input)="dt.filter($event.target.value, col.field, col.filterMatchMode)">
+            </th>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-c let-rowIndex="rowIndex">
+        <tr>
+            <td>
+              {{c.name_column}}
+              </td>
+            <td>
+              {{c.type_column}}          
+              </td>
+            <td>
+              <div class="form-control-wrapper" *ngIf="c.type_column !== 'varchar'">
+                <mat-icon [ngStyle]="{'color':'#dc3545'}" class="error-icon"
+                data-placement="right" matTooltip="column type not varchar">error</mat-icon>
+               
+              </div>
+                <div *ngIf="c.type_column === 'varchar'">
+                  <button class="mb-2 me-2 btn btn-focus" (click) ="show(rowIndex)">show translation</button>
+                </div>    
+                </td>
+               
+        </tr>
+    </ng-template>
+  </p-table>
+
+
+
+  <p-table *ngIf="value_json" [columns]="cols" [value]="col"  sortMode="multiple" #dt  >
+    <ng-template pTemplate="caption">
+  Languages List
+    </ng-template>
+    <ng-template pTemplate="header" let-columns>
+        <tr>
+            <th *ngFor="let col of columns" [pSortableColumn]="col.field">
+                {{col.header}}
+                <p-sortIcon [field]="col.field"></p-sortIcon>
+            </th>
+
+        </tr>
+        <tr>
+            <th *ngFor="let col of columns" [ngSwitch]="col.field">
+            <input pInputText type="text" (input)="dt.filter($event.target.value, col.field, col.filterMatchMode)">
+            </th>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-c let-rowIndex="rowIndex">
+        <tr>
+            <td>
+              {{c.name_column}}
+              </td>
+            <td>
+              {{c.type_column}}          
+              </td>
+            <td>
+              <div *ngIf="c.name_column !== 'VALUE_JSON'">
+                <mat-icon [ngStyle]="{'color':'#dc3545'}" class="error-icon"
+                data-placement="right" matTooltip="column values cannot be translated">error</mat-icon>
+               
+            </div>
+          
+              <div *ngIf="c.name_column === 'VALUE_JSON'">
+                <button class="mb-2 me-2 btn btn-focus" (click) ="show(i)">show translation</button>
+              </div>  
+                </td>
+               
+        </tr>
+    </ng-template>
+  </p-table>

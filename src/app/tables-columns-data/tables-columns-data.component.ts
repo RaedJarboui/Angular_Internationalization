@@ -11,6 +11,7 @@ import { Observable } from 'rxjs';
 import Keyboard from "simple-keyboard";
 import KeyboardLayouts from "simple-keyboard-layouts";
 import { decodedTextSpanIntersectsWith } from 'typescript';
+import { ToastrService } from 'ngx-toastr';
 
 
 
@@ -90,6 +91,8 @@ export class TablesColumnsDataComponent implements OnInit {
   selectedInput:any;
   columns_exists :Boolean =false
   select2_array_exists :Boolean =false
+  page_change_paginate :Boolean 
+
 
 
  
@@ -100,6 +103,7 @@ export class TablesColumnsDataComponent implements OnInit {
     private eventService: EventService,
     private modalService: NgbModal,
     public dataDialogHandler: MatDialog,
+    private toast: ToastrService
   ) {
 
     this.keyboardLayouts = new KeyboardLayouts();
@@ -210,12 +214,18 @@ export class TablesColumnsDataComponent implements OnInit {
 
 
   handlePageChange(event) {
+    this.page_change_paginate = false
     console.log(event)
     this.page=event
+    if(this.page) {
+      this.page_change_paginate = true
+      this.select2_array_exists =false
+
+    } else this.page_change_paginate = false
+    console.log("page_change_paginate",this.page_change_paginate)
     const params = this.getRequestParams(this.page+1, this.pageSize);
     console.log(params)
     if(this.boolValue == false){
-
       console.log("trueeeeeeeee")
       this.translationService.nameTypeColumnData(this.selected_table,this.selected_column,this.IsJson,params).subscribe((data)=>{
         console.log(data);
@@ -235,15 +245,20 @@ export class TablesColumnsDataComponent implements OnInit {
       })
     }else{
       console.log("falseeeeeeeeeeeee")
-
       this.translationService.nameTypeColumnDatajson(this.selected_table,this.selected_column,this.IsJson).subscribe((data)=>{
         console.log(data)
         this.last_array = data
+        if(this.last_array) {
+          this.page_change_paginate = true
+          this.select2_array_exists =false
+
+        } else this.page_change_paginate = false
         console.log("last_array",this.last_array)
         this.eventService.getTableData(this.selected_table).subscribe((data) => {
           this.tables = data;
           console.log(this.selected_tab)
           this.select2(this.selected_col)
+
 
         })
 
@@ -280,6 +295,11 @@ export class TablesColumnsDataComponent implements OnInit {
       this.translationService.nameTypeColumnDatajson(this.selected_table,this.selected_column,this.IsJson).subscribe((data)=>{
         console.log(data)
         this.last_array = data
+        if(this.last_array) {
+          this.page_change_paginate = true
+          this.select2_array_exists =false
+
+        } else this.page_change_paginate = false
         console.log("last_array",this.last_array)
         this.eventService.getTableData(this.selected_table).subscribe((data) => {
           this.tables = data;
@@ -557,6 +577,11 @@ console.log(this.global_langues[j].locale)
         )
         .subscribe((data) => {
           console.log(data);
+          this.toast.success("I'm a toast!", "Translation edited succesfully!");
+
+        },error=>{
+          this.toast.error("I'm a toast!", "Translation not edited succesfully!");
+
         });
     } else {
       console.log('add');
@@ -568,6 +593,11 @@ console.log(this.global_langues[j].locale)
       };
       this.eventService.addTranslation(object1).subscribe((data) => {
         console.log(data);
+        this.toast.success("I'm a toast!", "Translation added succesfully!");
+        
+      },error=>{
+        this.toast.error("I'm a toast!", "Translation not added succesfully!");
+
       });
     }
     console.log(this.values);
@@ -690,6 +720,11 @@ this.keyboard = new Keyboard({
       onKeyPress: button => this.onKeyPress(button)
     });
 }
+copyInputMessage(inputElement){
+  inputElement.select();
+  document.execCommand('copy');
+  inputElement.setSelectionRange(0, 0);
+}
 
 public isActive:boolean = false;
 public test:boolean = true;  
@@ -733,6 +768,8 @@ row:number
 cell:number
 valeur = "a"
 }
+
+
 
 
 export interface DialogData {

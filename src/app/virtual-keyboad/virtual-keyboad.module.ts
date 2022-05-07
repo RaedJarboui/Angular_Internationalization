@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { VirtualKeyboadRoutingModule } from './virtual-keyboad-routing.module';
 import { VirtualKeyboadComponent } from './virtual-keyboad.component';
 import { SharedModule } from '../shared/shared.module';
+import {ToastrModule} from 'ngx-toastr';
 
 
 @NgModule({
@@ -11,7 +12,11 @@ import { SharedModule } from '../shared/shared.module';
   imports: [
     CommonModule,
     VirtualKeyboadRoutingModule,
-    SharedModule
+    SharedModule,
+    ToastrModule.forRoot({
+      timeOut: 1000,
+      positionClass: 'toast-bottom-right'
+    }),
   ]
 })
 export class VirtualKeyboadModule { }

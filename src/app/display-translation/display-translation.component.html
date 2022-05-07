@@ -1,10 +1,7 @@
 <h2>{{ 'home.pageTitle' | translate }}</h2>
-
 Select Language :<select #langSelect (change)="translate.use(langSelect.value)" [(ngModel)]="selectedlang" (ngModelChange)="select($event)">
   <option *ngFor="let lang of translate.getLangs()" [value]="lang" [selected]="lang === translate.currentLang">{{ lang }}</option>
 </select>
-
-
 Translation values : <select>
   <option *ngFor="let t of translations" [value]="t" [selected]="t">{{ t }}</option>
 </select>

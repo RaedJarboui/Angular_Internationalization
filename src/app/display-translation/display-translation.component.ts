@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
-import { TranslationService } from 'src/app/services/translation.service';
+import { TranslationService } from '../services/translation.service';
 
 @Component({
   selector: 'app-display-translation',
@@ -36,7 +36,5 @@ select(value){
     this.translations=data
   })
 }
-
-
 
 }

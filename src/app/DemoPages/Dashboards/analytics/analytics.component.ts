@@ -15,8 +15,8 @@ export class AnalyticsComponent implements OnInit {
   faAngleDown = faAngleDown;
   faAngleUp = faAngleUp;
 
-  heading = 'Analytics Dashboard';
-  subheading = 'This is an example dashboard created using build-in elements and components.';
+  heading = 'Translation Module';
+  subheading = 'This is an example for Translation Module for data stored in database.';
   icon = 'pe-7s-plane icon-gradient bg-tempting-azure';
 
   slideConfig6 = {

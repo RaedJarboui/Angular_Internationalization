@@ -6,9 +6,15 @@ import { AppComponent } from "../app.component";
 import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
 import { CommonModule } from "@angular/common";
 import { FontAwesomeModule, FaIconLibrary  } from '@fortawesome/angular-fontawesome';
+import {MatTooltipModule} from '@angular/material/tooltip';
+import {MatIconModule} from '@angular/material/icon';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
-
+import {TableModule} from 'primeng/table';
+import {PaginatorModule} from 'primeng/paginator';
+import {TranslateModule} from '@ngx-translate/core';
 import { faCoffee, fas } from '@fortawesome/free-solid-svg-icons';
+import { HttpClient } from "@angular/common/http";
+// import {ToastrModule} from 'ngx-toastr';
 
 
 
@@ -24,7 +30,19 @@ import { faCoffee, fas } from '@fortawesome/free-solid-svg-icons';
     NgbModule,
     FontAwesomeModule,
     ReactiveFormsModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    TranslateModule,
+    MatTooltipModule,
+    MatIconModule,
+    TableModule,
+    PaginatorModule
+    
+    // ToastrModule.forRoot({
+    //   timeOut: 1000,
+    //   positionClass: 'toast-bottom-right'
+    // })
+    
+    
    
 
 
@@ -39,7 +57,13 @@ import { faCoffee, fas } from '@fortawesome/free-solid-svg-icons';
     MatAutocompleteModule,
     FontAwesomeModule,
     ReactiveFormsModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    TranslateModule,
+    MatTooltipModule,
+    MatIconModule,
+    TableModule,
+    PaginatorModule
+    
 
     
    ],bootstrap: [AppComponent]

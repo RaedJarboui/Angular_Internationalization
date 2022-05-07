@@ -17,6 +17,15 @@ export class TablesColumnsComponent implements OnInit {
   heading = 'Bootstrap 5 Tables';
   subheading = 'Tables are the backbone of almost all web applications.';
   icon = 'pe-7s-drawer icon-gradient bg-happy-itmeo';
+
+  cols = [
+    { field: 'name_column', header: 'name' },
+    { field: 'type_column', header: 'type' },
+    { field: 'actions', header: 'actions' },
+
+];
+
+
   constructor(public translationService:TranslationService,private route:ActivatedRoute, private router:Router) { }
 
   ngOnInit(): void {
@@ -24,7 +33,7 @@ export class TablesColumnsComponent implements OnInit {
     console.log(this.name_table)
     this.translationService.name_type_column(this.name_table).subscribe((data)=>{
       console.log(data);
-      this.col =data ;
+      this.col = data ;
       console.log(this.col)
       if(this.col.some(e=>e.name_column.includes("JSON"))){
         console.log("true")

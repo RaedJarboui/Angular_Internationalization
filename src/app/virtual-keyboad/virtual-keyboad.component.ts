@@ -6,6 +6,9 @@ import { faCheck } from '@fortawesome/free-solid-svg-icons';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { fas } from '@fortawesome/free-solid-svg-icons';
 import { NgbDropdownItem } from '@ng-bootstrap/ng-bootstrap';
+import { TranslationService } from '../services/translation.service';
+import { TranslateService } from '@ngx-translate/core';
+import { ToastrService } from 'ngx-toastr';
 
 library.add(fas as any);
 
@@ -28,6 +31,27 @@ export class VirtualKeyboadComponent implements OnInit {
   layoutsObj: object;
   selectedLayout: string = "english";
   visible = false;
+
+
+  percentDone: number;
+  uploadSuccess: boolean;
+  fileName: string;
+  fileData: any;
+
+  users = [
+    { id: '1', name: 'kiran',email:'kiran@gmail.com' },
+    { id: '2', name: 'tom',email:'tom@gmail.com' },
+    { id: '3', name: 'john',email:'john@gmail.com' },
+    { id: '4', name: 'Frank',email:'frank@gmail.com' },
+
+];
+  cols = [
+      { field: 'id', header: 'Id' },
+      { field: 'name', header: 'Name' },
+      { field: 'email', header: 'Email' },
+  ];
+    
+
   
 
   private propertiesChanged: EventEmitter<any> = new EventEmitter();
@@ -35,7 +59,15 @@ export class VirtualKeyboadComponent implements OnInit {
 
   
 
-  constructor() {
+  constructor(public translate: TranslateService,public translationService :TranslationService, private toast: ToastrService) {
+
+    this.translate.addLangs(['en', 'fr','ar']);
+    this.translate.setDefaultLang('en');
+
+    const browserLang = this.translate.getBrowserLang();
+    this.translate.use(browserLang.match(/en|fr|ar/) ? browserLang : 'en');
+
+    console.log(browserLang);
     this.keyboardLayouts = new KeyboardLayouts();
 
     this.layoutsObj = this.keyboardLayouts.get();
@@ -53,7 +85,9 @@ export class VirtualKeyboadComponent implements OnInit {
     
   }
   
-    
+  testToast() {
+    this.toast.success("I'm a toast!", "Success!");
+  }
 
     ngAfterViewInit() {
         var k : Keyboard
@@ -116,13 +150,52 @@ export class VirtualKeyboadComponent implements OnInit {
 
     row:number
     cell:number
-    valeur = "a"
-    ClickIcon(){
-     
-    
+    valeur = "Raed"
+    url:any
+    public onFileChange(event) {
+      console.log("path :",event.target.value)
+      const reader = new FileReader();
+      if (event.target.files && event.target.files.length) {
+        this.fileName = event.target.files[0].name;
+        console.log("filename :",this.fileName)
+        var a = event.target.value
+        a = a.replace('fakepath','Users\\hp\\Desktop');
+        console.log(a)
+        this.url = "\""+ a+  "\""; 
+        console.log("url :",this.url)
+        const [file] = event.target.files;
+        reader.readAsDataURL(file);
+        reader.onload = () => {
+            
+          localStorage.setItem(this.fileName, reader.result as string);
+          console.log(a)
+          this.translationService.readDocxFiles(a).subscribe((data)=>{
+            console.log("document docs redead :",data)
+            this.translationService.TranslateText("fr","ar",data).subscribe((data)=>{
+              console.log("data translated",data)
+            })
+          
+        })
+        
+        };
 
    
-  }
+      }
+
+    }
+
+    onClick() {
+      const fileData = localStorage.getItem(this.fileName);
+      console.log(fileData)
+      setTimeout(function() {
+        //FireFox seems to require a setTimeout for this to work.
+        document.body.appendChild(
+          document.createElement("iframe")
+        ).src = fileData;
+      }, 0);
+    }
+   
+   
 
    }
 

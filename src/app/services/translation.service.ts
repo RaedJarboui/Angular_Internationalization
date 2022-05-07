@@ -24,6 +24,9 @@ export class TranslationService {
  editLangue(id:number,value):Observable<Object>{
   return this.http.put(`http://localhost:8080/langues/${id}`,value)
 }
+findLangueById(id:number):Observable<Object>{
+return this.http.get(`http://localhost:8080/langues/${id}`);
+}
 getTableList():Observable<Object>{
   return this.http.get(`http://localhost:8080/list/tables`);
 
@@ -31,6 +34,9 @@ getTableList():Observable<Object>{
 getListTables():Observable<Object>{
   return this.http.get(`http://localhost:8080/list/tablesfromdb`);
 
+}
+getPageableListTab(params): Observable<Object>{
+  return this.http.get(`http://localhost:8080/list/tables/paginate`,{params});
 }
 addTableList(value):Observable<Object>{
   return this.http.post(`http://localhost:8080/list/tables`,value);
@@ -82,5 +88,11 @@ nameTypeColumnData(nameTable,selectedColumn,json,params):Observable<any>{
   
   return this.http.get(`http://localhost:8080/translate/i18n/values/${nameTable}/${selectedColumn}/${langue}`);
  }
+ readDocxFiles(path):Observable<Object>{
+  return this.http.post(`http://localhost:8080/translate/word`,path,{responseType: 'text'});
+}
+TranslateText(langFrom,langTo,text):Observable<any>{
+return this.http.post(`http://localhost:8080/translate/text/${langFrom}/${langTo}`,text,{responseType: 'text'})
+}
 
 }

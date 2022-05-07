@@ -2,6 +2,7 @@ import {BrowserModule} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {ToastrModule} from 'ngx-toastr';
 import {NgReduxModule} from '@angular-redux/store';
 import {NgRedux, DevToolsExtension} from '@angular-redux/store';
 import {rootReducer, ArchitectUIState} from './ThemeOptions/store';
@@ -13,7 +14,7 @@ import {HttpClient, HttpClientModule} from '@angular/common/http';
 import {AppComponent} from './app.component';
 import { FontAwesomeModule, FaIconLibrary  } from '@fortawesome/angular-fontawesome';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
-
+import {TableModule} from 'primeng/table';
 import { faCoffee, fas } from '@fortawesome/free-solid-svg-icons';
 
 // BOOTSTRAP COMPONENTS
@@ -107,9 +108,6 @@ import {BubbleChartComponent} from './DemoPages/Charts/chartjs/examples/bubble-c
 import {DynamicChartComponent} from './DemoPages/Charts/chartjs/examples/dynamic-chart/dynamic-chart.component';
 import {DoughnutChartComponent} from './DemoPages/Charts/chartjs/examples/doughnut-chart/doughnut-chart.component';
 import {PieChartComponent} from './DemoPages/Charts/chartjs/examples/pie-chart/pie-chart.component';
-import { SharedModule } from './shared/shared.module';
-import { DisplayTranslationComponent } from './display-translation/display-translation.component';
-
 import {TranslateModule, TranslateLoader} from '@ngx-translate/core';
 import {TranslateHttpLoader} from '@ngx-translate/http-loader';
 import { AngularSpinnerComponent } from './angular-spinner/angular-spinner.component';
@@ -206,7 +204,6 @@ export function HttpLoaderFactory(http: HttpClient) {
     DynamicChartComponent,
     BubbleChartComponent,
     ScatterChartComponent,
-    DisplayTranslationComponent,
     AngularSpinnerComponent,
     
 
@@ -218,6 +215,11 @@ export function HttpLoaderFactory(http: HttpClient) {
     AppRoutingModule,
     BrowserAnimationsModule,
     FontAwesomeModule ,
+    ToastrModule.forRoot({
+      timeOut: 1000,
+      positionClass: 'toast-top-right'
+    }),
+    TableModule,
     
     //TablesColumnsComponent,
     NgReduxModule,

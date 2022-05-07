@@ -77,3 +77,10 @@ app-tables-columns-data .errspan {
     width: 100%;
  }
 
+ app-tables-columns-data div i {
+  font-size: 16px;
+  margin-left: -25px;
+  cursor: pointer;
+}
+
+

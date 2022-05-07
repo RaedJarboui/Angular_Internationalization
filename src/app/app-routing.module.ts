@@ -53,7 +53,6 @@ import {LayoutComponent} from './DemoPages/Forms/Elements/layout/layout.componen
 
 import {ChartjsComponent} from './DemoPages/Charts/chartjs/chartjs.component';
 import { AuthGuard } from './guards/AuthGuard';
-import { DisplayTranslationComponent } from './display-translation/display-translation.component';
 import { AngularSpinnerComponent } from './angular-spinner/angular-spinner.component';
 
 const routes: Routes = [
@@ -77,6 +76,9 @@ loadChildren: () => import(`./tables-columns-data/tables-columns-data.module`)
 {  path: 'keyboard',canActivate: [AuthGuard], data: {extraParameter: 'dashboardsMenu'},
 loadChildren: () => import(`./virtual-keyboad/virtual-keyboad.module`)
 .then(m => m.VirtualKeyboadModule)},
+{  path: 'translation',canActivate: [AuthGuard], data: {extraParameter: 'dashboardsMenu'},
+loadChildren: () => import(`./display-translation/display-translation.module`)
+.then(m => m.DisplayTranslationModule)},
 
 
 
@@ -87,7 +89,6 @@ loadChildren: () => import(`./virtual-keyboad/virtual-keyboad.module`)
 
       //Page
 
-      {path: 'translation', component: DisplayTranslationComponent,canActivate: [AuthGuard], data: {extraParameter: 'dashboardsMenu'}},
       {path: 'spinner', component: AngularSpinnerComponent,canActivate: [AuthGuard], data: {extraParameter: 'dashboardsMenu'}},
 
 
@@ -144,6 +145,7 @@ loadChildren: () => import(`./virtual-keyboad/virtual-keyboad.module`)
     ]
   },
   { path: 'Virtual-Keyboard', loadChildren: () => import('./virtual-keyboad/virtual-keyboad.module').then(m => m.VirtualKeyboadModule) },
+  { path: 'display-translation', loadChildren: () => import('./display-translation/display-translation.module').then(m => m.DisplayTranslationModule) },
   {path: '**', redirectTo: ''}
 ];
 
