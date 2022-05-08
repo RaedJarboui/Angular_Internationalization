@@ -70,8 +70,8 @@
   <p-table [columns]="cols" [value]="langues" 
   [lazy]="true" sortMode="multiple" #dt (onLazyLoad)="handlePageChange($event)" [paginator]="true"
     [rows]="2" [totalRecords]="count"  [currentPageReportTemplate]="'page of count'"
-     [showCurrentPageReport]=true [rowsPerPageOptions]="[1,2,5,10]"
-     
+     [showCurrentPageReport]=true [rowsPerPageOptions]="[1,2,5,10]" 
+     filterDelay="500" [sortOrder]="1"    
   >
 
   
@@ -80,14 +80,14 @@
     </ng-template>
     <ng-template pTemplate="header" let-columns>
         <tr>
-            <th *ngFor="let col of columns" [pSortableColumn]="col.field">
+            <th *ngFor="let col of columns" [pSortableColumn]="col.field" >
                 {{col.header}}
                 <p-sortIcon [field]="col.field"></p-sortIcon>
             </th>
 
         </tr>
         <tr>
-            <th *ngFor="let col of columns" [ngSwitch]="col.field">
+            <th *ngFor="let col of columns" [ngSwitch]="col.field" [sortable]="true">
             <input pInputText type="text" (input)="dt.filter($event.target.value, col.field, col.filterMatchMode)">
             </th>
         </tr>

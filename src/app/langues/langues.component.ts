@@ -38,6 +38,8 @@ export class LanguesComponent implements OnInit {
   filteredLangue:any
   langueName=''
 
+  myObjArray=[]
+
   cols = [
     { field: 'locale', header: 'Code' },
     { field: 'languageName', header: 'Name' },
@@ -233,8 +235,13 @@ export class LanguesComponent implements OnInit {
 ];
   
 
+loading = true;
 
   text = ''; //initialised the text variable
+  filteredRows: any;
+  allRows: any;
+  sortedField: any;
+  order: any;
 
   constructor(public translationService:TranslationService,public dataDialogHandler: MatDialog,private modalService: NgbModal,
     private toast: ToastrService ) {
@@ -289,6 +296,7 @@ export class LanguesComponent implements OnInit {
   }
   
   handlePageChange(event) {
+    this.myObjArray=[]
     console.log(event)
     let currentPage = event.first / event.rows + 1;
   console.log('currentPage = ' + currentPage);
@@ -296,18 +304,70 @@ export class LanguesComponent implements OnInit {
     const params = this.getRequestParams(this.page+1,  event.rows);
     console.log(params)
     console.log(event)
-    console.log(params)
+   
+    //console.log("sort :", event.multiSortMeta[0].field)
     this.translationService.getLangues().subscribe((data)=>{
         this.paginated_langues=data;
         this.count = this.paginated_langues.length
         console.log(this.count)
       this.translationService.getPageableLangues(params).subscribe((data)=>{
+        
         this.langues=data;
         console.log(data)
-  
+        console.log("filter :", event.filters)
+        const isEmpty = Object.keys(event.filters).length === 0;
+        var keys = Object.keys(event.filters)
+        console.log("keys :",keys[0])
+
+    if(event.multiSortMeta != undefined && event.multiSortMeta.length>0){
+       console.log("multiSortMeta :", event.multiSortMeta)
+       console.log("multiSortMeta value :", event.multiSortMeta[0].field)
+       this.sortedField = event.multiSortMeta[0].field
+       this.order = event.multiSortMeta[0].order
+       const list = [
+        { color: 'white', size: 'XXL' },
+        { color: 'red', size: 'XL' },
+        { color: 'black', size: 'M' }
+      ]
+      if(this.order == 1){
+      var a =this.langues.sort((a, b) => (a[this.sortedField] > b[this.sortedField]) ? 1 : -1)
+      console.log(a)
+      console.log("asc")
+      }else{
+        var a =this.langues.sort((a, b) => (b[this.sortedField] > a[this.sortedField]) ? 1 : -1)
+        console.log(a)
+        console.log("desc")
+      }
+
+    }
+
+
+        if(!isEmpty){
+          console.log("filter 222 :", event.filters.locale)
+          console.log("keys 22 :",keys[0])
+        console.log("filter value :", event.filters[keys[0]])
+          var item = this.langues.find(item => item[keys[0]].startsWith(event.filters[keys[0]].value));
+          console.log("item :",item)
+          this.myObjArray.push(item)
+          this.langues=this.myObjArray
+
+        }
       })
     })
   }
+
+  sortByType(langues): void {
+    console.log(this.sortedField)
+    langues.sort(function(a, b) {
+      console.log(a)
+      console.log(b.locale)
+
+      return a[this.sortedField] - b[this.sortedField];
+    });
+this.langues = langues 
+console.log("this sorted langues :",this.langues)
+ }
+
 
   columnFilter(event: any, field) {
     this.dataTable.filter(event.target.value, field, 'contains');
