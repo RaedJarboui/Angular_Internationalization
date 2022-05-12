@@ -111,6 +111,7 @@ import {PieChartComponent} from './DemoPages/Charts/chartjs/examples/pie-chart/p
 import {TranslateModule, TranslateLoader} from '@ngx-translate/core';
 import {TranslateHttpLoader} from '@ngx-translate/http-loader';
 import { AngularSpinnerComponent } from './angular-spinner/angular-spinner.component';
+import { VariablesGlobales } from './services/VariablesGlobales ';
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true
 };
@@ -250,6 +251,7 @@ export function HttpLoaderFactory(http: HttpClient) {
   
   ],
   providers: [
+    VariablesGlobales ,
     {
       provide:
       PERFECT_SCROLLBAR_CONFIG,

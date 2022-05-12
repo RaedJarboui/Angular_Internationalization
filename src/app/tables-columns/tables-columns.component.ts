@@ -17,6 +17,8 @@ export class TablesColumnsComponent implements OnInit {
   heading = 'Bootstrap 5 Tables';
   subheading = 'Tables are the backbone of almost all web applications.';
   icon = 'pe-7s-drawer icon-gradient bg-happy-itmeo';
+  pageSize = 5
+  count : number
 
   cols = [
     { field: 'name_column', header: 'name' },
@@ -34,6 +36,7 @@ export class TablesColumnsComponent implements OnInit {
     this.translationService.name_type_column(this.name_table).subscribe((data)=>{
       console.log(data);
       this.col = data ;
+      this.count = this.col.length
       console.log(this.col)
       if(this.col.some(e=>e.name_column.includes("JSON"))){
         console.log("true")

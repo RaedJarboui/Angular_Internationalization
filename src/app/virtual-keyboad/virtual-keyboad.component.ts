@@ -38,19 +38,12 @@ export class VirtualKeyboadComponent implements OnInit {
   fileName: string;
   fileData: any;
 
-  users = [
-    { id: '1', name: 'kiran',email:'kiran@gmail.com' },
-    { id: '2', name: 'tom',email:'tom@gmail.com' },
-    { id: '3', name: 'john',email:'john@gmail.com' },
-    { id: '4', name: 'Frank',email:'frank@gmail.com' },
+  langues=["ar","fr","en"]
+  from_lang
+  to_lang
+  translation_doc:any
 
-];
-  cols = [
-      { field: 'id', header: 'Id' },
-      { field: 'name', header: 'Name' },
-      { field: 'email', header: 'Email' },
-  ];
-    
+  
 
   
 
@@ -152,10 +145,13 @@ export class VirtualKeyboadComponent implements OnInit {
     cell:number
     valeur = "Raed"
     url:any
+    e:any
     public onFileChange(event) {
+      this.e=event;
+      console.log(this.e)
       console.log("path :",event.target.value)
       const reader = new FileReader();
-      if (event.target.files && event.target.files.length) {
+      /*if (event.target.files && event.target.files.length) {
         this.fileName = event.target.files[0].name;
         console.log("filename :",this.fileName)
         var a = event.target.value
@@ -180,7 +176,7 @@ export class VirtualKeyboadComponent implements OnInit {
         };
 
    
-      }
+      }*/
 
     }
 
@@ -193,6 +189,41 @@ export class VirtualKeyboadComponent implements OnInit {
           document.createElement("iframe")
         ).src = fileData;
       }, 0);
+    }
+
+    Download(){
+      const reader = new FileReader();
+      if (this.e.target.files && this.e.target.files.length) {
+        this.fileName = this.e.target.files[0].name;
+        console.log("filename :",this.fileName)
+        var a = this.e.target.value
+        a = a.replace('fakepath','Users\\hp\\Desktop');
+        console.log(a)
+        this.url = "\""+ a+  "\""; 
+        console.log("url :",this.url)
+        const [file] = this.e.target.files;
+        reader.readAsDataURL(file);
+        console.log("from langue :",this.from_lang)
+        console.log("to langue :",this.to_lang)
+
+        reader.onload = () => {
+            
+          localStorage.setItem(this.fileName, reader.result as string);
+          console.log(a)
+          this.translationService.readDocxFiles(a).subscribe((data)=>{
+            console.log("document docs redead :",data)
+            this.translationService.TranslateText(this.from_lang,this.to_lang,data).subscribe((data)=>{
+              console.log("data translated",data)
+              this.translation_doc=data
+            })
+          
+        })
+        
+        };
+
+   
+      }
+
     }
    
    

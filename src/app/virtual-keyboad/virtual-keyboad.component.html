@@ -30,51 +30,32 @@
 
   <h2>Upload File</h2>
   <input type="file" (change)="onFileChange($event)" name="file" />
+
+  From Language : <select [(ngModel)]="from_lang" class="browser-default custom-select">
+    <option value="Select one" selected>Select one</option>
+    <option *ngFor="let l of langues">{{ l }}</option>
+  </select>
+
+
+  <select [(ngModel)]="to_lang" class="browser-default custom-select">
+    <option value="Select one" selected>Select one</option>
+    <option *ngFor="let l of langues">{{ l }}</option>
+  </select>
+  <button (click)="Download()">Download File</button> 
+
+<br>
+<br>
+<br>
+<textarea placeholder="document translated here" class = "valid" rows = "30" cols = "60">{{translation_doc}}</textarea> 
+
+   
+    
+
   <!-- <button (click)="onClick()">Show File</button> -->
-  <button (click)="testToast()">Make a toast!</button>
+  <!-- <button (click)="testToast()">Make a toast!</button> -->
 
 
-  <p-table [columns]="cols" [value]="users"  sortMode="multiple" #dt  >
-    <ng-template pTemplate="caption">
-  Users List
-    </ng-template>
-    <ng-template pTemplate="header" let-columns>
-        <tr>
-            <th *ngFor="let col of columns" [pSortableColumn]="col.field">
-                {{col.header}}
-                <p-sortIcon [field]="col.field"></p-sortIcon>
-            </th>
-        </tr>
-        <tr>
-            <th *ngFor="let col of columns" [ngSwitch]="col.field">
-                <input pInputText type="text" (input)="dt.filter($event.target.value, col.field, col.filterMatchMode)">
-            </th>
-        </tr>
-    </ng-template>
-    <ng-template pTemplate="body" let-user>
-        <tr>
-            <td>
-              {{user.id}}
-            </td>
-            <td>
-              {{user.name}}
-            </td><td>
-              {{user.email}}
-            </td>
-        </tr>
-    </ng-template>
-  </p-table>
   
-
-
-
-
-
-
- 
-
-	 
-
  
 
 

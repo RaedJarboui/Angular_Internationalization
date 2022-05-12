@@ -29,9 +29,20 @@
             </div>
 
           </div>
+
         </div>
+        <i class="fas fa-globe" >
+        <select #langSelect (change)="translate.use(langSelect.value)" [(ngModel)]="selected_lang" (ngModelChange)="select($event)">
+         <option *ngFor="let lang of translate.getLangs()" [value]="lang" [selected]="lang === translate.currentLang">{{ lang }}</option>
+
+        </select>
+      </i>
+
+
       </div>
+
     </div>
+
   </div>
 </div>
 

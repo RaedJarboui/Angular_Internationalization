@@ -11,6 +11,10 @@ export class TranslationService {
   getLangues(): Observable<Object>{
     return this.http.get(`http://localhost:8080/langues`);
  }
+ getSortedLangues(value):Observable<any>{
+  return this.http.post(`http://localhost:8080/langues/find`,value);
+
+ }
  getPageableLangues(params): Observable<Object>{
   return this.http.get(`http://localhost:8080/paginated/langues`,{params});
 }
@@ -35,6 +39,10 @@ getListTables():Observable<Object>{
   return this.http.get(`http://localhost:8080/list/tablesfromdb`);
 
 }
+getSortedListTab(value):Observable<any>{
+  return this.http.post(`http://localhost:8080/list/tables/find`,value);
+
+ }
 getPageableListTab(params): Observable<Object>{
   return this.http.get(`http://localhost:8080/list/tables/paginate`,{params});
 }

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { TranslationService } from '../services/translation.service';
+import { VariablesGlobales } from '../services/VariablesGlobales ';
 
 @Component({
   selector: 'app-display-translation',
@@ -14,14 +15,15 @@ export class DisplayTranslationComponent implements OnInit {
   nameTable="product"
   selectedColumn="name"
   translations:any
-  constructor(public translate: TranslateService,public translationService :TranslationService) {
+  constructor(public translate: TranslateService,public translationService :TranslationService,public variablesGlobales: VariablesGlobales) {
     this.translate.addLangs(['en', 'fr','ar']);
     this.translate.setDefaultLang('en');
 
-    const browserLang = this.translate.getBrowserLang();
+    const browserLang = this.variablesGlobales.langue
     this.translate.use(browserLang.match(/en|fr|ar/) ? browserLang : 'en');
 
     console.log(browserLang);
+    console.log("langue value in display translation comp :",this.variablesGlobales.langue)
   }
 
   ngOnInit(): void {

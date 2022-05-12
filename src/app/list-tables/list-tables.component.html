@@ -40,7 +40,10 @@
   </table> -->
 
 
-  <p-table [columns]="cols" [value]="tab_list"  sortMode="multiple" #dt  >
+  <p-table [columns]="cols" [value]="tab_list" 
+  [lazy]="true" sortMode="multiple" #dt (onLazyLoad)="handlePageChange($event)" [paginator]="true"
+  [rows]="pageSize" [totalRecords]="count"  [currentPageReportTemplate]="'page of count'"
+   [showCurrentPageReport]=true [rowsPerPageOptions]="[1,2,5,10]"  [responsive]="true"  >
     <ng-template pTemplate="caption">
   Tabs List
     </ng-template>
@@ -66,7 +69,7 @@
           <td>
               <div class="row">
                   <label class="switch">
-                  <input type="checkbox" [(ngModel)]="t.translate" (change)="toggleVisibility(i,$event)" >                
+                  <input type="checkbox" [(ngModel)]="t.translate" (change)="toggleVisibility(rowIndex,$event)" >                
                   <span class="slider round"></span>
                   </label>
           </div>
@@ -81,7 +84,7 @@
   </p-table>
 
 
-  <div class="col-md-12">
+  <!-- <div class="col-md-12">
     <pagination-controls
       previousLabel="Prev"
       nextLabel="Next"
@@ -94,4 +97,4 @@
     <option *ngFor="let size of pageSizes" [ngValue]="size">
       {{ size }}
     </option>
-  </select>
+  </select> -->

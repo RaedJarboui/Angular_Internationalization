@@ -8,6 +8,27 @@
 body {
   font-family: Roboto, Arial, sans-serif;
   margin: 0;
-  padding: 30px;
 }
 
+.active, .inactive {
+  font-size: 26px;
+  cursor: pointer;
+}
+
+.active, .inactive {
+  font-size: 26px;
+  cursor: pointer;
+}
+
+i.active {
+  color: #5cb85c;
+}
+
+i.inactive {
+  color: #d9534f;
+}
+
+.close-modale {
+  border: none !important;
+  background: none !important;
+}

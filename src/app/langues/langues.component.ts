@@ -8,6 +8,9 @@ import { map, startWith } from 'rxjs/operators';
 import { data } from 'jquery';
 import { ToastrService } from 'ngx-toastr';
 import { Table } from 'primeng/table';
+import { stringify } from 'querystring';
+import { VariablesGlobales } from '../services/VariablesGlobales ';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-langues',
@@ -242,11 +245,19 @@ loading = true;
   allRows: any;
   sortedField: any;
   order: any;
+  filterField: string;
 
-  constructor(public translationService:TranslationService,public dataDialogHandler: MatDialog,private modalService: NgbModal,
-    private toast: ToastrService ) {
+  constructor(public translate: TranslateService,public translationService:TranslationService,public dataDialogHandler: MatDialog,private modalService: NgbModal,
+    private toast: ToastrService,public variablesGlobales: VariablesGlobales ) {
 
-
+      this.translate.addLangs(['en', 'fr','ar']);
+      this.translate.setDefaultLang('en');
+  
+      const browserLang = this.variablesGlobales.langue
+      this.translate.use(browserLang.match(/en|fr|ar/) ? browserLang : 'en');
+  
+      console.log(browserLang);
+      console.log("langue value in langue comp :",this.variablesGlobales.langue)
    }
 
    value:string
@@ -254,26 +265,6 @@ loading = true;
  
 
   ngOnInit(): void {
-
-   
-
-
-
-    // const params = this.getRequestParams(this.page, this.pageSize);
-    // console.log(params)
-    // this.translationService.getLangues().subscribe((data)=>{
-    //     this.paginated_langues=data;
-    //     this.count = this.paginated_langues.length
-    //     console.log(this.count)
-    //   this.translationService.getPageableLangues(params).subscribe((data)=>{
-    //     this.langues=data;
-    //     console.log(data)
-  
-    //   })
-    // })
-
-   
-
     
   }
  
@@ -294,66 +285,76 @@ loading = true;
 
     return params;
   }
+  e:any
   
   handlePageChange(event) {
-    this.myObjArray=[]
-    console.log(event)
+    this.e=event
+    console.log("event :", event)
     let currentPage = event.first / event.rows + 1;
-  console.log('currentPage = ' + currentPage);
-    this.page=currentPage
-    const params = this.getRequestParams(this.page+1,  event.rows);
-    console.log(params)
-    console.log(event)
-   
-    //console.log("sort :", event.multiSortMeta[0].field)
-    this.translationService.getLangues().subscribe((data)=>{
-        this.paginated_langues=data;
-        this.count = this.paginated_langues.length
-        console.log(this.count)
-      this.translationService.getPageableLangues(params).subscribe((data)=>{
-        
-        this.langues=data;
-        console.log(data)
-        console.log("filter :", event.filters)
-        const isEmpty = Object.keys(event.filters).length === 0;
-        var keys = Object.keys(event.filters)
-        console.log("keys :",keys[0])
+    console.log('currentPage = ' + currentPage);
+    const isEmpty = Object.keys(event.filters).length === 0;
+if(event.multiSortMeta && isEmpty){
+  console.log("yes sorting and no filter")
+    let object = {"pageNumber":currentPage-1,"pageSize":event.rows,"sortDirection":event.multiSortMeta[0].order.toString(),"sortField": event.multiSortMeta[0].field}
+    this.translationService.getSortedLangues(object).subscribe((data)=>{
+      console.log("SortedLangues :",data)
+      this.langues=data.languages;
+      this.count = data.totalElements
+      this.pageSize=data.pageSize
 
-    if(event.multiSortMeta != undefined && event.multiSortMeta.length>0){
-       console.log("multiSortMeta :", event.multiSortMeta)
-       console.log("multiSortMeta value :", event.multiSortMeta[0].field)
-       this.sortedField = event.multiSortMeta[0].field
-       this.order = event.multiSortMeta[0].order
-       const list = [
-        { color: 'white', size: 'XXL' },
-        { color: 'red', size: 'XL' },
-        { color: 'black', size: 'M' }
-      ]
-      if(this.order == 1){
-      var a =this.langues.sort((a, b) => (a[this.sortedField] > b[this.sortedField]) ? 1 : -1)
-      console.log(a)
-      console.log("asc")
-      }else{
-        var a =this.langues.sort((a, b) => (b[this.sortedField] > a[this.sortedField]) ? 1 : -1)
-        console.log(a)
-        console.log("desc")
-      }
-
-    }
-
-
-        if(!isEmpty){
-          console.log("filter 222 :", event.filters.locale)
-          console.log("keys 22 :",keys[0])
-        console.log("filter value :", event.filters[keys[0]])
-          var item = this.langues.find(item => item[keys[0]].startsWith(event.filters[keys[0]].value));
-          console.log("item :",item)
-          this.myObjArray.push(item)
-          this.langues=this.myObjArray
-
-        }
-      })
     })
+  }else if(!event.multiSortMeta && isEmpty){
+    console.log("no sorting and no filter")
+    let object1 = {"pageNumber":currentPage-1,"pageSize":event.rows,"sortDirection":"1","sortField": "locale"}
+    this.translationService.getSortedLangues(object1).subscribe((data)=>{
+      console.log("SortedLangues :",data)
+      this.langues=data.languages;
+      this.count = data.totalElements
+      this.pageSize=data.pageSize
+
+    })
+
+  }else if(!isEmpty && !event.multiSortMeta){
+    console.log("yes filter and no sort")
+    console.log("filter :", event.filters)
+    var keys = Object.keys(event.filters)
+    console.log("keys :",keys[0])
+     this.filterField = keys[0]
+     console.log("filter fielterfield:", event.filters[this.filterField].value)
+     var obj = {};
+     obj[this.filterField] = event.filters[this.filterField].value;
+     console.log(obj)
+  
+     let object = {"pageNumber":currentPage-1,"pageSize":event.rows,"params":obj}
+     this.translationService.getSortedLangues(object).subscribe((data)=>{
+       console.log("SortedLangues :",data)
+       this.langues=data.languages;
+       this.count = data.totalElements
+       this.pageSize=data.pageSize
+  
+     })
+
+  }else if(!isEmpty && event.multiSortMeta){
+    console.log("yes sorting and yes filter")
+    console.log("filter :", event.filters)
+    var keys = Object.keys(event.filters)
+    console.log("keys :",keys[0])
+     this.filterField = keys[0]
+     console.log("filter fielterfield:", event.filters[this.filterField].value)
+     var obj = {};
+     obj[this.filterField] = event.filters[this.filterField].value;
+     console.log(obj)
+    let object = {"pageNumber":currentPage-1,"pageSize":event.rows,"sortDirection":event.multiSortMeta[0].order.toString(),"sortField": event.multiSortMeta[0].field,"params":obj}
+    this.translationService.getSortedLangues(object).subscribe((data)=>{
+      console.log("SortedLangues :",data)
+      this.langues=data.languages;
+      this.count = data.totalElements
+      this.pageSize=data.pageSize
+
+    })
+  }
+
+
   }
 
   sortByType(langues): void {
@@ -442,7 +443,7 @@ select(value){
 
     this.translationService.deleteLangue(this.deleteId)
       .subscribe((results) => {
-        this.ngOnInit();
+        this.handlePageChange(this.e)
         this.modalService.dismissAll();
         this.toast.success("I'm a toast!", "language deleted succesfully!");
 
@@ -467,7 +468,7 @@ select(value){
     console.log(f.value)
 
     this.translationService.addLangue(f.value).subscribe((data)=>{
-      this.ngOnInit();
+      this.handlePageChange(this.e)
       console.log(f.value)
       this.modalService.dismissAll();
       this.toast.success("I'm a toast!", "language added succesfully!");
@@ -484,7 +485,7 @@ select(value){
     console.log(f.value)
     console.log(this.langueId)
     this.translationService.editLangue(this.langueId,f.value).subscribe((data)=>{
-      this.ngOnInit();
+      this.handlePageChange(this.e)
       console.log(f.value)
       this.modalService.dismissAll();
       this.toast.success("I'm a toast!", "language edited succesfully!");

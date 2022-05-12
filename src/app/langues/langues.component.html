@@ -1,27 +1,12 @@
 <h3>Settings Languages</h3>
-<style>
-  .active, .inactive {
-         font-size: 26px;
-         cursor: pointer;
-     }
-
-     .active, .inactive {
-         font-size: 26px;
-         cursor: pointer;
-     }
-
-     i.active {
-         color: #5cb85c;
-     }
-
-     i.inactive {
-         color: #d9534f;
-     }
- </style> 
 <div class="border">
-  <button class="btn btn-md btn-outline-primary ml-auto pull-right" (click)="open(content)">
-    <i class="fa fa-user"></i>Add</button>
-</div>
+  </div>
+  <div class="pt-2">
+    <button class="btn btn-md btn-outline-primary ml-auto pull-right" (click)="open(content)">
+      <i class="fa fa-user px-1"></i>Add</button>
+  </div>
+ 
+
 
   <!-- <table class="table table-striped">
     <thead>
@@ -69,9 +54,9 @@
   <div style = "margin-top: 40px">
   <p-table [columns]="cols" [value]="langues" 
   [lazy]="true" sortMode="multiple" #dt (onLazyLoad)="handlePageChange($event)" [paginator]="true"
-    [rows]="2" [totalRecords]="count"  [currentPageReportTemplate]="'page of count'"
-     [showCurrentPageReport]=true [rowsPerPageOptions]="[1,2,5,10]" 
-     filterDelay="500" [sortOrder]="1"    
+    [rows]="pageSize" [totalRecords]="count"  [currentPageReportTemplate]="'page of count'"
+     [showCurrentPageReport]=true [rowsPerPageOptions]="[1,2,5,10]"  [responsive]="true"
+        
   >
 
   
@@ -88,7 +73,7 @@
         </tr>
         <tr>
             <th *ngFor="let col of columns" [ngSwitch]="col.field" [sortable]="true">
-            <input pInputText type="text" (input)="dt.filter($event.target.value, col.field, col.filterMatchMode)">
+            <input type="text" pInputText (input)="dt.filter($event.target.value, col.field, col.filterMatchMode)">
             </th>
         </tr>
     </ng-template>
@@ -101,12 +86,20 @@
               {{langue.languageName}}
             </td>
             <td>
-              <div class="row">
+              <!-- <div class="row">
                 <label class="switch">
-                <input type="checkbox" [(ngModel)]="langue.global" (change)="toggleVisibility($event,i)" [disabled]="true">
+                <input type="checkbox" [(ngModel)]="langue.global" 
+                (change)="toggleVisibility($event,i)" [disabled]="true">
+                
+                
+                
                 <span class="slider round"></span>
                 </label>
-                </div>
+              </div> -->
+
+              <p class="text-success m-0" *ngIf="langue.global">Enable</p>
+              <p class="text-danger m-0" *ngIf="!langue.global">Disable</p>
+
                 </td>
                 <td>
                   <button class="mb-2 me-2 btn btn-danger" (click)="openDelete(contentDelete, langue)">Delete</button>
@@ -196,12 +189,12 @@
     <ng-template #contentEdit let-modal>
       <div class="modal-header">
         <h4 class="modal-title" id="modal-basic-title">Edit Langue</h4>
-        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <button type="button" class="close close-modale" aria-label="Close" (click)="modal.dismiss('Cross click')">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <div class="modal-body">
         <form #f="ngForm" (ngSubmit)="onSubmitEdit(f)" novalidate>
+          <div class="modal-body">
           <div class="form-group">
               <label for="locale">Locale</label>
               <div class="input-group" >
@@ -221,14 +214,12 @@
               <span class="slider round"></span>
               </label> -->
               <i class="fa fa-toggle-on" id="global" name="global" [(ngModel)]="langue.global" ngModel [ngClass]="langue.global?'active':'fa-rotate-180 inactive'" (click)="langue.global=!langue.global" ></i> 
-
               </div>
-            <div class="border text-center">
-              <button data-dismiss="modal" class="btn btn-info">Submit</button>
-              </div>
-        </form>
       </div>
-     
+      <div class="modal-footer">
+        <button data-dismiss="modal" class="btn btn-info">Submit</button>
+      </div>
+      </form>
     </ng-template>
 
    
