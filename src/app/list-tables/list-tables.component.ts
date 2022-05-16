@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
 import { TranslationService } from 'src/app/services/translation.service';
+import { VariablesGlobales } from '../services/VariablesGlobales ';
 
 @Component({
   selector: 'app-list-tables',
@@ -30,81 +32,19 @@ export class ListTablesComponent implements OnInit {
 
 ];
 
-  constructor(private translationService : TranslationService,private router: Router) { }
+  constructor(public translate: TranslateService,private translationService : TranslationService,private router: Router,public variablesGlobales: VariablesGlobales) {
+    this.translate.addLangs(['en', 'fr','ar']);
+    this.translate.setDefaultLang('en');
+
+    const browserLang = this.variablesGlobales.langue
+    this.translate.use(browserLang.match(/en|fr|ar/) ? browserLang : 'en');
+
+    console.log(browserLang);
+    console.log("langue value in list tables comp :",this.variablesGlobales.langue)
+   }
 
   ngOnInit(): void {
-    // const params = this.getRequestParams(this.page+1, this.pageSize);
-    // console.log(params)
-    // this.translationService.getTableList().subscribe((data)=>{
-    //   this.tables=data;
-    //   console.log(this.tables);
-     
-    // })
-    // this.translationService.getListTables().subscribe((data)=>{
-    //   this.tables_list=data;
-    //   console.log(this.tables_list)
-    //   this.count = this.tables_list.length
-    //   console.log(this.count)
-    // this.translationService.getPageableListTab(params).subscribe((data)=>{
-    //   this.tab_list=data;
-    //   console.log(data)
-    //   if(this.tables_list.length == 0){
-    //     console.log("condition 0")
-    //     for(var i=0;i<this.tables.length;i++){
-    //       console.log(this.tables[i])
-    //       var obj1 = { a: this.tables[i] };
-    //       var obj2 = { b: false };
-    //       var merged = Object.assign(obj1, obj2);
-    //       if(!this.selectedIds.find(o=>o.tableName === this.tables[i])){
-    //         this.selectedIds.push({tableName:this.tables[i],translate:false});
-    
-    //       }
-    
-    //     }
-    //     console.log(this.selectedIds)
-    //     this.translationService.addTableList(this.selectedIds).subscribe((data)=>{
-    //       console.log(data)
-    //       this.ngOnInit();
-    //     })
-    //   }
-    //   else if(this.tables_list.length < this.tables.length){
-    //     console.log("condition 1")
-    //     for(var j=0;j<this.tables.length;j++){
-    //       if(this.tables_list.some(e => e.tableName === this.tables[j])){
-    //         console.log(this.tables[j])
-    //       } else{
-    //         console.log(this.tables[j])
-    //         var obj1 = { a: this.tables[j] };
-    //       var obj2 = { b: false };
-    //       var merged = Object.assign(obj1, obj2);
-    //       if(!this.selectedIds.find(o=>o.tableName === this.tables[j])){
-    //         this.selectedIds.push({tableName:this.tables[j],translate:false});
-    
-    //       }
-    //       console.log(this.selectedIds);
-    //       }
-          
-
-    //     }
-    //     if(this.selectedIds.length == 1){
-    //       this.translationService.addTableList(this.selectedIds).subscribe((data)=>{
-    //         console.log(data)
-    //         this.ngOnInit();
-    //       })
-    //     }else if(this.selectedIds.length > 1){
-    //        this.translationService.addTableList(this.selectedIds).subscribe((data)=>{
-    //            console.log(data)
-    //            this.ngOnInit();
-
-    //          })
-    //     }
-    //   }else if(this.tables_list.length > this.tables.length){
-    //     console.log("condition2")
-    //   }
-    //   console.log(this.tables_list)
-    
-    // }) 
-    // })
+   
     
   }
 
@@ -212,8 +152,9 @@ export class ListTablesComponent implements OnInit {
 
   details(i){
 console.log(i);
-console.log(this.tab_list[i])
-this.router.navigate(['tabscolumns',this.tab_list[i].tableName])
+console.log(this.tab_list)
+let tab =  this.tab_list.find(t=>t.id ===i);
+this.router.navigate(['tabscolumns',tab.tableName])
   }
 
   checkArrays( arrA, arrB ){

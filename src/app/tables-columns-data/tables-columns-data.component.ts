@@ -92,6 +92,14 @@ export class TablesColumnsDataComponent implements OnInit {
   columns_exists :Boolean =false
   select2_array_exists :Boolean =false
   page_change_paginate :Boolean 
+  cols=[]
+  ArrayString: any[];
+  tab: any[];
+  ascending: any[];
+  descending: any;
+  ArrayString1: any;
+ 
+ 
 
 
 
@@ -121,14 +129,15 @@ export class TablesColumnsDataComponent implements OnInit {
   ngOnInit(): void {   
     this.array_string=[]
     this.db_data=[]
+    this.cols =[]
     this.selected_table = this.route.snapshot.params['name'];
     this.selected_column = this.route.snapshot.params['col'];
     this.IsJson = this.route.snapshot.params['json'];
     this.boolValue = this.getBoolean(this.IsJson); 
-    console.log(this.boolValue);
-    console.log(this.selected_table);
-    console.log(this.selected_column);
-    console.log(this.IsJson);
+    //console.log(this.boolValue);
+    //console.log(this.selected_table);
+    //console.log(this.selected_column);
+    //console.log(this.IsJson);
     this.translationService.getLangues().subscribe((data) => {
       this.langues = data;
       for (var i = 0; i < this.langues.length; i++) {
@@ -137,11 +146,10 @@ export class TablesColumnsDataComponent implements OnInit {
           this.global_langues.push(this.langues[i]);
         }
       }
-      console.log(this.count);
-      console.log(this.langues);
-      console.log(this.global_langues);
-
-      console.log("trueeeeeeeee")
+      //console.log("count :",this.count);
+      //console.log(this.langues);
+      //console.log(this.global_langues);
+      //console.log("trueeeeeeeee")
       this.eventService
         .getListColumns(this.selected_table)
         .subscribe((data) => {
@@ -152,12 +160,17 @@ export class TablesColumnsDataComponent implements OnInit {
 
     });  
   }
+  public trackItem (index, item) {
+    console.log(index)
+    console.log(item)
+    return item;
+  }
   
   getRequestParams(page, size) {
     let params = {};
 
     if (page) {
-      params[`page`] = page - 1;
+      params[`page`] = page;
     }
 
     if (size) {
@@ -166,9 +179,36 @@ export class TablesColumnsDataComponent implements OnInit {
 
     return params;
   }
+    index :any
+  /*trackByFunction = (index, item) => {
+
+    console.log("index : ",index)
+    this.index = index
+    return index // O index
+}*/
   
   retrieveTranslation() {
-    const params = this.getRequestParams(this.page+1, this.pageSize);
+
+    for(var i=0;i<this.global_langues.length;i++){
+      this.col.push(
+        { field: 'fieldValue', header: 'Column value' },  
+        { field: this.global_langues[i].locale, header: this.global_langues[i].locale },
+        { field: 'Actions', header: 'Actions' }
+    
+      );
+    }
+
+  
+    const arr1 = this.getUniqueListBy(this.col, 'field')
+
+    this.col=arr1
+    let index = this.col.findIndex(item => item.field == 'Actions')
+    console.log("index : ",index)
+    this.col.push(this.col.splice(index, 1)[0]);
+    console.log("cols : ",this.col)
+
+
+    const params = this.getRequestParams(1, this.pageSize);
     console.log(params)
     if(this.boolValue == false){
 
@@ -176,12 +216,14 @@ export class TablesColumnsDataComponent implements OnInit {
       this.translationService.nameTypeColumnData(this.selected_table,this.selected_column,this.IsJson,params).subscribe((data)=>{
         console.log(data);
          this.array_string = data.arrayString;
+         this.ArrayString = data.ArrayString
          this.db_data = data.db_data
          this.db1_data = data.db1_data
          this.missing = data.missing
          this.missing_lang= data.missing_lang
-         this.count = 3
+         this.count = data.count
          console.log("array_string",this.array_string)
+         console.log("ArrayString",this.ArrayString)
         console.log("db_data",this.db_data)
         console.log("db1_data",this.db1_data)
         console.log("missing",this.missing)
@@ -203,7 +245,6 @@ export class TablesColumnsDataComponent implements OnInit {
         console.log("last_array",this.last_array)
         this.eventService.getTableData(this.selected_table).subscribe((data) => {
           this.tables = data;
-          //console.log("tables",this.tables)
 
         })
 
@@ -212,104 +253,568 @@ export class TablesColumnsDataComponent implements OnInit {
     
   }
 
-
+  e:any
+  filterField:any
   handlePageChange(event) {
-    this.page_change_paginate = false
-    console.log(event)
-    this.page=event
-    if(this.page) {
-      this.page_change_paginate = true
-      this.select2_array_exists =false
 
-    } else this.page_change_paginate = false
-    console.log("page_change_paginate",this.page_change_paginate)
-    const params = this.getRequestParams(this.page+1, this.pageSize);
-    console.log(params)
-    if(this.boolValue == false){
-      console.log("trueeeeeeeee")
+    const list = ['apple', 'banana', 'orange', 'strawberry']
+    const items = list.slice(2, 4)
+    console.log("items : ",items)
+    this.e=event
+    console.log("event :", event)
+    let currentPage = event.first / event.rows + 1;
+    console.log('currentPage = ' + currentPage);
+    const isEmpty = Object.keys(event.filters).length === 0;
+    if(event.multiSortMeta && isEmpty){
+    console.log("yes sorting and no filter")
+    let object = {"pageNumber":currentPage-1,"pageSize":event.rows,"sortDirection":event.multiSortMeta[0].order.toString(),"sortField": event.multiSortMeta[0].field}
+    this.translationService.getSortedTranslation(object).subscribe((data)=>{
+      console.log("getSortedTranslation :",data)
+      this.pageSize=data.pageSize
+      this.tab=[]
+
+      if(data.sortDirection == -1){
+        this.descending= this.ArrayString.sort((a,b) => (a > b ? -1 : 1))
+        console.log("descending",this.descending)
+        this.array_string=[]
+        for(var i=0 ; i<this.pageSize;i++){
+          this.array_string.push(this.descending[i])
+          this.tab.push(this.descending[i])
+
+        }
+        console.log("tab descending",this.tab)
+
+
+
+      }else if (data.sortDirection == 1){
+        this.ascending= this.ArrayString.sort((a,b) =>  (a > b ? 1 : -1))
+        console.log("ascending",this.ascending)
+        this.array_string=[]
+        for(var i=0 ; i<this.pageSize;i++){
+          this.array_string.push(this.ascending[i])
+          this.tab.push(this.ascending[i])
+
+        }
+        console.log("tab ascending",this.tab)
+
+      }
+     
+
+      const params = this.getRequestParams(currentPage, event.rows);
+
       this.translationService.nameTypeColumnData(this.selected_table,this.selected_column,this.IsJson,params).subscribe((data)=>{
+           this.array_string = data.arrayString;
+           console.log("array_string namecoltype",this.array_string)
+           console.log(this.ascending)
+           console.log("currentPage",currentPage)
+           console.log("pageSize",this.pageSize)
+           console.log("ascending slice :",this.ascending.slice((currentPage - 1) * this.pageSize, currentPage * this.pageSize))
+           if (this.ascending.length>0){
+            this.array_string=this.ascending.slice((currentPage - 1) * this.pageSize, currentPage * this.pageSize)
+
+           }else if(this.descending.length>0){
+            this.array_string=this.descending.slice((currentPage - 1) * this.pageSize, currentPage * this.pageSize)
+           }
+      })
+     
+    
+
+    })
+
+
+
+
+
+  }else if(!event.multiSortMeta && isEmpty){
+    console.log("no sort and no filter")
+      const params = this.getRequestParams(currentPage, event.rows);
+      let object1 = {"pageNumber":currentPage-1,"pageSize":event.rows,"sortDirection":"1","sortField": "fieldValue"}
+      this.translationService.getSortedTranslation(object1).subscribe((data)=>{
+       console.log("getSortedTranslation :",data)
+       this.pageSize=data.pageSize
+       this.translationService.nameTypeColumnData(this.selected_table,this.selected_column,this.IsJson,params).subscribe((data)=>{
         console.log(data);
          this.array_string = data.arrayString;
-         this.db_data = data.db_data
-         this.db1_data = data.db1_data
-         this.missing = data.missing
-         this.missing_lang= data.missing_lang
-         this.count = data.count
-         console.log("array_string",this.array_string)
-        console.log("db_data",this.db_data)
-        console.log("db1_data",this.db1_data)
-        console.log("missing",this.missing)
-        console.log("missing_lang",this.missing_lang)
-      },err=>{
-        console.log(err)
+         this.count =data.count
+          console.log("array string",this.array_string )
+
+   })
+
+    })
+
+
+
+
+  }else if(!isEmpty && !event.multiSortMeta){
+    console.log("yes filter and no sort")
+    console.log("filter :", event.filters)
+    var keys = Object.keys(event.filters)
+    console.log("keys :",keys[0])
+     this.filterField = keys[0]
+     console.log("filter fielterfield:", event.filters[this.filterField].value)
+     var obj = {};
+     obj[this.filterField] = event.filters[this.filterField].value;
+     console.log(obj)
+  
+     let object = {"pageNumber":currentPage-1,"pageSize":event.rows,"params":obj}
+     this.translationService.getSortedTranslation(object).subscribe((data)=>{
+       console.log("getSortedTranslation :",data)
+       this.array_string=[]
+       for(var i=0;i<data.translations.length;i++){
+        this.array_string.push(data.translations[i].fieldValue);
+      }
+       this.pageSize=data.pageSize
+       console.log("array string",this.array_string )
+       console.log("Arraaaaay string",this.ArrayString )
+       console.log("value of found contains : ",this.ArrayString.filter(v => v.includes(event.filters[this.filterField].value)))
+       const result = this.ArrayString.filter(v => v.includes(event.filters[this.filterField].value))
+
+       if (this.array_string.length == 0 && this.ArrayString.filter(v => v.includes(event.filters[this.filterField].value))){
+        for(var i=0;i<result.length;i++){
+          this.array_string.push(result[i])
+        }
+        console.log("array string true found : ", this.array_string)
+        if(data.sortDirection == -1){
+          this.descending= this.array_string.sort((a,b) => (a > b ? -1 : 1))
+          console.log("descending",this.descending)
+        }else if(data.sortDirection == -1){
+          this.ascending= this.array_string.sort((a,b) => (a > b ? 1 : -1))
+          console.log("ascending",this.ascending)
+        }
+        
+        console.log("true found ")
+
+      }else {
+        console.log("not found ")
+        console.log("ArrayString",this.ArrayString)
+        
+      } 
+
+
+  
+     })
+
+  }else if(!isEmpty && event.multiSortMeta){
+    console.log("yes sorting and yes filter")
+    let object = {"pageNumber":currentPage-1,"pageSize":event.rows,"sortDirection":event.multiSortMeta[0].order.toString(),"sortField": event.multiSortMeta[0].field}
+    this.translationService.getSortedTranslation(object).subscribe((data)=>{
+      console.log("getSortedTranslation :",data)
+      this.pageSize=data.pageSize
+      this.tab=[]
+      if(data.sortDirection == -1){
+        this.descending= this.ArrayString.sort((a,b) => (a > b ? -1 : 1))
+        console.log("descending",this.descending)
+        this.array_string=[]
+        for(var i=0 ; i<this.pageSize;i++){
+          this.array_string.push(this.descending[i])
+          this.tab.push(this.descending[i])
+
+        }
+        console.log("tab descending",this.tab)
+
+      }else if (data.sortDirection == 1){
+        this.ascending= this.ArrayString.sort((a,b) =>  (a > b ? 1 : -1))
+        console.log("ascending",this.ascending)
+        this.array_string=[]
+        for(var i=0 ; i<this.pageSize;i++){
+          this.array_string.push(this.ascending[i])
+          this.tab.push(this.ascending[i])
+
+        }
+        console.log("tab ascending",this.tab)
+
+      }
+     
+      const params = this.getRequestParams(currentPage, event.rows);
+      this.translationService.nameTypeColumnData(this.selected_table,this.selected_column,this.IsJson,params).subscribe((data)=>{
+           this.array_string = data.arrayString;
+           console.log("array_string namecoltype",this.array_string)
+           console.log(this.ascending)
+           console.log("currentPage",currentPage)
+           console.log("pageSize",this.pageSize)
+           console.log("ascending slice :",this.ascending.slice((currentPage - 1) * this.pageSize, currentPage * this.pageSize))
+           if (this.ascending.length>0){
+            this.array_string=this.ascending.slice((currentPage - 1) * this.pageSize, currentPage * this.pageSize)
+            console.log("filter :", event.filters)
+            var keys = Object.keys(event.filters)
+            console.log("keys :",keys[0])
+             this.filterField = keys[0]
+             console.log("filter fielterfield:", event.filters[this.filterField].value)
+             var obj = {};
+             obj[this.filterField] = event.filters[this.filterField].value;
+             console.log(obj)
+//filter     let object = {"pageNumber":currentPage-1,"pageSize":event.rows,"params":obj}
+     this.translationService.getSortedTranslation(object).subscribe((data)=>{
+      console.log("getSortedTranslation :",data)
+      this.pageSize=data.pageSize
+      console.log("array string",this.array_string )
+      console.log("Arraaaaay string",this.ArrayString )
+      console.log("value of found contains : ",this.ArrayString.filter(v => v.includes(event.filters[this.filterField].value)))
+      const result = this.ArrayString.filter(v => v.includes(event.filters[this.filterField].value))
+      if (this.ArrayString.filter(v => v.includes(event.filters[this.filterField].value))){
+        // this.array_string=this.ascending.slice((currentPage - 1) * this.pageSize, currentPage * this.pageSize)
+        // console.log("array string true found : ", this.array_string)
+        this.array_string=[]
+       for(var i=0;i<result.length;i++){
+         this.array_string.push(result[i])
+       }
+       this.array_string=this.array_string.slice((currentPage - 1) * this.pageSize, currentPage * this.pageSize)
+        console.log("array string true found : ", this.array_string)
+
+
+      }
+    })
+
+
+
+
+
+
+
+
+
+
+
+
+
+             
+             
+           }
+          //  else if(this.descending.length>0){
+          //   this.array_string=this.descending.slice((currentPage - 1) * this.pageSize, currentPage * this.pageSize)
+          //  }
       })
-    }else{
-      console.log("falseeeeeeeeeeeee")
-      this.translationService.nameTypeColumnDatajson(this.selected_table,this.selected_column,this.IsJson).subscribe((data)=>{
-        console.log(data)
-        this.last_array = data
-        if(this.last_array) {
-          this.page_change_paginate = true
-          this.select2_array_exists =false
+     
+    
 
-        } else this.page_change_paginate = false
-        console.log("last_array",this.last_array)
-        this.eventService.getTableData(this.selected_table).subscribe((data) => {
-          this.tables = data;
-          console.log(this.selected_tab)
-          this.select2(this.selected_col)
+    })
 
 
-        })
+  }
 
-      })
-    }
      }
 
-  handlePageSizeChange(event) {
-    this.pageSize = event.target.value;
-    const params = this.getRequestParams(this.page+1, this.pageSize);
-    console.log(params)
-    if(this.boolValue == false){
 
-      console.log("trueeeeeeeee")
-      this.translationService.nameTypeColumnData(this.selected_table,this.selected_column,this.IsJson,params).subscribe((data)=>{
-        console.log(data);
-         this.array_string = data.arrayString;
-         this.db_data = data.db_data
-         this.db1_data = data.db1_data
-         this.missing = data.missing
-         this.missing_lang= data.missing_lang
-         this.count = data.count
-         console.log("array_string",this.array_string)
-        console.log("db_data",this.db_data)
-        console.log("db1_data",this.db1_data)
-        console.log("missing",this.missing)
-        console.log("missing_lang",this.missing_lang)
-      },err=>{
-        console.log(err)
+
+
+     handlePageChangee(event) {
+      this.e=event
+      console.log("event :", event)
+      let currentPage = event.first / event.rows + 1;
+      console.log('currentPage = ' + currentPage);
+      const isEmpty = Object.keys(event.filters).length === 0;
+      if(event.multiSortMeta && isEmpty){
+      console.log("yes sorting and no filter table json")
+    let object = {"pageNumber":currentPage-1,"pageSize":event.rows,"sortDirection":event.multiSortMeta[0].order.toString(),"sortField": event.multiSortMeta[0].field}
+    this.translationService.getSortedTranslation(object).subscribe((data)=>{
+      console.log("getSortedTranslation :",data)
+      this.pageSize=data.pageSize
+      this.tab=[]
+
+      if(data.sortDirection == -1){
+        this.descending= this.ArrayString1.sort((a,b) => (a > b ? -1 : 1))
+        console.log("descending",this.descending)
+        this.select2_array=[]
+        for(var i=0 ; i<this.pageSize;i++){
+          this.select2_array.push(this.descending[i])
+          this.tab.push(this.descending[i])
+
+        }
+        console.log("tab descending",this.tab)
+
+
+
+      }else if (data.sortDirection == 1){
+        this.ascending= this.ArrayString1.sort((a,b) =>  (a > b ? 1 : -1))
+        console.log("ascending",this.ascending)
+        this.select2_array=[]
+        for(var i=0 ; i<this.pageSize;i++){
+          this.select2_array.push(this.ascending[i])
+          this.tab.push(this.ascending[i])
+
+        }
+        console.log("tab ascending",this.tab)
+
+      }
+     
+
+      const params = this.getRequestParams(currentPage, event.rows);
+      this.translationService.select2(this.selected_table,this.selected_column,this.IsJson,this.columnsdto,params).subscribe((data)=>{
+          console.log(data);
+        this.select2_array = data.select2_array;   
+           console.log("select2_array namecoltype",this.select2_array)
+           console.log(this.ascending)
+           console.log("currentPage",currentPage)
+           console.log("pageSize",this.pageSize)
+           console.log("ascending slice :",this.ascending.slice((currentPage - 1) * this.pageSize, currentPage * this.pageSize))
+           if (this.ascending.length>0){
+            this.select2_array=this.ascending.slice((currentPage - 1) * this.pageSize, currentPage * this.pageSize)
+
+           }else if(this.descending.length>0){
+            this.select2_array=this.descending.slice((currentPage - 1) * this.pageSize, currentPage * this.pageSize)
+           }
       })
-    }else{
-      console.log("falseeeeeeeeeeeee")
+     
+    
 
-      this.translationService.nameTypeColumnDatajson(this.selected_table,this.selected_column,this.IsJson).subscribe((data)=>{
-        console.log(data)
-        this.last_array = data
-        if(this.last_array) {
-          this.page_change_paginate = true
-          this.select2_array_exists =false
+    })
 
-        } else this.page_change_paginate = false
-        console.log("last_array",this.last_array)
-        this.eventService.getTableData(this.selected_table).subscribe((data) => {
-          this.tables = data;
-          console.log(this.selected_tab)
-          this.select2(this.selected_col)
 
+    //No sort no filter json
+
+
+    }else if(!event.multiSortMeta && isEmpty){
+      console.log("no sort and no filter table json")
+     
+        const params = this.getRequestParams(currentPage, event.rows);
+       
+        let object1 = {"pageNumber":currentPage-1,"pageSize":event.rows,"sortDirection":"1","sortField": "fieldValue"}
+        this.translationService.getSortedTranslation(object1).subscribe((data)=>{
+         console.log("getSortedTranslation table json :",data)
+         this.pageSize=data.pageSize
+
+
+         this.translationService.select2(this.selected_table,this.selected_column,this.IsJson,this.columnsdto,params).subscribe((data)=>{
+          console.log(data);
+          this.select2_array = data.select2_array;
+          this.ArrayString1 = data.ArrayString1
+             this.db_data_json = data.db_data_json
+             this.db1_data_json = data.db1_data_json
+             this.missing = data.missing
+             this.missing_lang= data.missing_lang
+             this.count=data.count;
+             console.log("select2_array",this.select2_array)
+             console.log("ArrayString1",this.ArrayString1)
+             console.log("db_data_json",this.db_data_json)
+             console.log("db1_data_json",this.db1_data_json)
+             console.log("missing",this.missing)
+             console.log("missing_lang",this.missing_lang)
+             console.log("count",this.count)
+             const expected = new Set();
+             this.missing_lang = this.missing_lang.filter(item => !expected.has(JSON.stringify(item)) ? expected.add(JSON.stringify(item)) : false);
+            console.log("unique values :",this.missing_lang)
+             if(this.select2_array){
+               this.select2_array_exists=true
+               console.log("this.select2_array_exists",this.select2_array_exists)
+             }
+    
+    
+        },err=>{
+          console.log(err);
+    
         })
+
+         
+  
       })
-    }
-  }
+  
+    }          // filter and no sort json
+  
+  
+  
+    else if(!isEmpty && !event.multiSortMeta){
+      console.log("yes filter and no sort table json")
+      
+
+      console.log("filter :", event.filters)
+      var keys = Object.keys(event.filters)
+      console.log("keys :",keys[0])
+       this.filterField = keys[0]
+       console.log("filter fielterfield:", event.filters[this.filterField].value)
+       var obj = {};
+       obj[this.filterField] = event.filters[this.filterField].value;
+       console.log(obj)
+    
+       let object = {"pageNumber":currentPage-1,"pageSize":event.rows,"params":obj}
+       this.translationService.getSortedTranslation(object).subscribe((data)=>{
+         console.log("getSortedTranslation :",data)
+         this.select2_array=[]
+         for(var i=0;i<data.translations.length;i++){
+          this.select2_array.push(data.translations[i].fieldValue);
+        }
+         this.pageSize=data.pageSize
+         console.log("array string",this.select2_array )
+         console.log("Arraaaaay1 string",this.ArrayString1 )
+         console.log("value of found contains : ",this.ArrayString1.filter(v => v.includes(event.filters[this.filterField].value)))
+         const result = this.ArrayString1.filter(v => v.includes(event.filters[this.filterField].value))
+  
+         if (this.select2_array.length == 0 && this.ArrayString1.filter(v => v.includes(event.filters[this.filterField].value))){
+          for(var i=0;i<result.length;i++){
+            this.select2_array.push(result[i])
+          }
+          console.log("select2 array true found : ", this.select2_array)
+          if(data.sortDirection == -1){
+            this.descending= this.select2_array.sort((a,b) => (a > b ? -1 : 1))
+            console.log("descending",this.descending)
+          }else if(data.sortDirection == -1){
+            this.ascending= this.select2_array.sort((a,b) => (a > b ? 1 : -1))
+            console.log("ascending",this.ascending)
+          }
+          
+          console.log("true found ")
+  
+        }else {
+          console.log("not found ")
+          console.log("ArrayString1",this.ArrayString1)
+          
+        } 
+  
+  
+    
+       })
+
+
+      }else if(!isEmpty && event.multiSortMeta){    // yes sort yes filter json
+        console.log("yes sorting and yes filter")
+        let object = {"pageNumber":currentPage-1,"pageSize":event.rows,"sortDirection":event.multiSortMeta[0].order.toString(),"sortField": event.multiSortMeta[0].field}
+        this.translationService.getSortedTranslation(object).subscribe((data)=>{
+          console.log("getSortedTranslation :",data)
+          this.pageSize=data.pageSize
+          this.tab=[]
+          if(data.sortDirection == -1){
+            this.descending= this.ArrayString1.sort((a,b) => (a > b ? -1 : 1))
+            console.log("descending",this.descending)
+            this.select2_array=[]
+            for(var i=0 ; i<this.pageSize;i++){
+              this.select2_array.push(this.descending[i])
+              this.tab.push(this.descending[i])
+    
+            }
+            console.log("tab descending",this.tab)
+    
+          }else if (data.sortDirection == 1){
+            this.ascending= this.ArrayString1.sort((a,b) =>  (a > b ? 1 : -1))
+            console.log("ascending",this.ascending)
+            this.select2_array=[]
+            for(var i=0 ; i<this.pageSize;i++){
+              this.select2_array.push(this.ascending[i])
+              this.tab.push(this.ascending[i])
+    
+            }
+            console.log("tab ascending",this.tab)
+    
+          }
+         
+          const params = this.getRequestParams(currentPage, event.rows);
+          this.translationService.select2(this.selected_table,this.selected_column,this.IsJson,this.columnsdto,params).subscribe((data)=>{
+            console.log(data);
+            this.select2_array = data.select2_array;
+            this.ArrayString1 = data.ArrayString1
+               console.log(this.ascending)
+               console.log("currentPage",currentPage)
+               console.log("pageSize",this.pageSize)
+               console.log("ascending slice :",this.ascending.slice((currentPage - 1) * this.pageSize, currentPage * this.pageSize))
+               if (this.ascending.length>0){
+                this.select2_array=this.ascending.slice((currentPage - 1) * this.pageSize, currentPage * this.pageSize)
+                console.log("filter :", event.filters)
+                var keys = Object.keys(event.filters)
+                console.log("keys :",keys[0])
+                 this.filterField = keys[0]
+                 console.log("filter fielterfield:", event.filters[this.filterField].value)
+                 var obj = {};
+                 obj[this.filterField] = event.filters[this.filterField].value;
+                 console.log(obj)
+    //filter     let object = {"pageNumber":currentPage-1,"pageSize":event.rows,"params":obj}
+         this.translationService.getSortedTranslation(object).subscribe((data)=>{
+          console.log("getSortedTranslation :",data)
+          this.pageSize=data.pageSize
+          console.log("select2_array",this.select2_array )
+          console.log("Arraaaaay1 string",this.ArrayString1 )
+          console.log("value of found contains : ",this.ArrayString1.filter(v => v.includes(event.filters[this.filterField].value)))
+          const result = this.ArrayString1.filter(v => v.includes(event.filters[this.filterField].value))
+          if (this.ArrayString1.filter(v => v.includes(event.filters[this.filterField].value))){
+            // this.array_string=this.ascending.slice((currentPage - 1) * this.pageSize, currentPage * this.pageSize)
+            // console.log("array string true found : ", this.array_string)
+            this.select2_array=[]
+           for(var i=0;i<result.length;i++){
+             this.select2_array.push(result[i])
+           }
+           this.count = this.select2_array.length
+           this.select2_array=this.select2_array.slice((currentPage - 1) * this.pageSize, currentPage * this.pageSize)
+            console.log("array string true found : ", this.select2_array)
+    
+    
+          }
+        })
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+                 
+                 
+               }
+              //  else if(this.descending.length>0){
+              //   this.array_string=this.descending.slice((currentPage - 1) * this.pageSize, currentPage * this.pageSize)
+              //  }
+          })
+         
+        
+    
+        })
+    
+    
+      }
+    
+  
+    
+
+  }  
+
+
+
+  // handlePageSizeChange(event) {
+  //   this.pageSize = event.target.value;
+  //   const params = this.getRequestParams(this.page, this.pageSize);
+  //   console.log(params)
+  //   if(this.boolValue == false){
+
+  //     console.log("trueeeeeeeee")
+  //     this.translationService.nameTypeColumnData(this.selected_table,this.selected_column,this.IsJson,params).subscribe((data)=>{
+  //       console.log(data);
+  //        this.array_string = data.arrayString;
+  //        this.db_data = data.db_data
+  //        this.db1_data = data.db1_data
+  //        this.missing = data.missing
+  //        this.missing_lang= data.missing_lang
+  //        this.count = data.count
+  //        console.log("array_string",this.array_string)
+  //       console.log("db_data",this.db_data)
+  //       console.log("db1_data",this.db1_data)
+  //       console.log("missing",this.missing)
+  //       console.log("missing_lang",this.missing_lang)
+  //     },err=>{
+  //       console.log(err)
+  //     })
+  //   }else{
+  //     console.log("falseeeeeeeeeeeee")
+
+  //     this.translationService.nameTypeColumnDatajson(this.selected_table,this.selected_column,this.IsJson).subscribe((data)=>{
+  //       console.log(data)
+  //       this.last_array = data
+  //       if(this.last_array) {
+  //         this.page_change_paginate = true
+  //         this.select2_array_exists =false
+
+  //       } else this.page_change_paginate = false
+  //       console.log("last_array",this.last_array)
+  //       this.eventService.getTableData(this.selected_table).subscribe((data) => {
+  //         this.tables = data;
+  //         console.log(this.selected_tab)
+  //         this.select2(this.selected_col)
+
+  //       })
+  //     })
+  //   }
+  // }
 
   setActiveTutorial(tutorial, index) {
     this.currentTutorial = tutorial;
@@ -330,7 +835,6 @@ export class TablesColumnsDataComponent implements OnInit {
   }
 
   open(content) {
-    // this.tables=[]
     for(var i=0;i<this.list_columns.length;i++){
             if(this.list_columns[i].includes("id")){
             console.log("true")
@@ -382,7 +886,6 @@ export class TablesColumnsDataComponent implements OnInit {
       console.log(data);
       
       this.select_array=data
-      //console.log(this.tables);
       console.log(this.select_array)
       
       console.log(this.select_array[0].VALUE_JSON)
@@ -412,6 +915,7 @@ export class TablesColumnsDataComponent implements OnInit {
    
    
   }
+  columnsdto:any
   select2(value) {
     this.select2_array = [];
     this.db_data_json=[]
@@ -430,39 +934,40 @@ export class TablesColumnsDataComponent implements OnInit {
       "column":this.selected_tab,
       "col":this.selected_col
   }
+  this.columnsdto=obj
   console.log(this.selected_table);
   console.log(this.selected_column);
   console.log(this.IsJson);
-  const params = this.getRequestParams(this.page+1, this.pageSize);
-  console.log(params)
+  //const params = this.getRequestParams(this.page, this.pageSize);
+  //console.log(params)
 
-    this.translationService.select2(this.selected_table,this.selected_column,this.IsJson,obj,params).subscribe((data)=>{
-      console.log(data);
-      this.select2_array = data.select2_array;
-         this.db_data_json = data.db_data_json
-         this.db1_data_json = data.db1_data_json
-         this.missing = data.missing
-         this.missing_lang= data.missing_lang
-         this.count=data.count;
-         console.log("select2_array",this.select2_array)
-         console.log("db_data_json",this.db_data_json)
-         console.log("db1_data_json",this.db1_data_json)
-         console.log("missing",this.missing)
-         console.log("missing_lang",this.missing_lang)
-         console.log("count",this.count)
-         const expected = new Set();
-         this.missing_lang = this.missing_lang.filter(item => !expected.has(JSON.stringify(item)) ? expected.add(JSON.stringify(item)) : false);
-        console.log("unique values :",this.missing_lang)
-         if(this.select2_array){
-           this.select2_array_exists=true
-           console.log("this.select2_array_exists",this.select2_array_exists)
-         }
+    // this.translationService.select2(this.selected_table,this.selected_column,this.IsJson,obj,params).subscribe((data)=>{
+    //   console.log(data);
+    //   this.select2_array = data.select2_array;
+    //      this.db_data_json = data.db_data_json
+    //      this.db1_data_json = data.db1_data_json
+    //      this.missing = data.missing
+    //      this.missing_lang= data.missing_lang
+    //      this.count=data.count;
+    //      console.log("select2_array",this.select2_array)
+    //      console.log("db_data_json",this.db_data_json)
+    //      console.log("db1_data_json",this.db1_data_json)
+    //      console.log("missing",this.missing)
+    //      console.log("missing_lang",this.missing_lang)
+    //      console.log("count",this.count)
+    //      const expected = new Set();
+    //      this.missing_lang = this.missing_lang.filter(item => !expected.has(JSON.stringify(item)) ? expected.add(JSON.stringify(item)) : false);
+    //     console.log("unique values :",this.missing_lang)
+    //      if(this.select2_array){
+    //        this.select2_array_exists=true
+    //        console.log("this.select2_array_exists",this.select2_array_exists)
+    //      }
 
 
-    },err=>{
-      console.log(err);
+    // },err=>{
+    //   console.log(err);
 
-    })
+    // })
   
   }
   getUniqueListBy(arr, key) {
@@ -516,16 +1021,20 @@ console.log(this.global_langues[j].locale)
   
 }
 
-  addTranslation(i) {
-    console.log(i);
+  addTranslation() {
     this.values = [];
     var values = [];
     $("input[name='items[]']").each(function () {
       values.push($(this).val());
     });
+    console.log(this.array_string);
+    //console.log(i);
+    console.log("index : ",this.index)
+
     console.log(values);
     console.log(values.length);
-    console.log(this.array_string[i]);
+   
+    console.log(this.array_string[this.index]);
     console.log(this.list_columns);
     console.log(this.list_columns.indexOf(this.selected_column));
     this.column_index = this.list_columns.indexOf(this.selected_column);
@@ -534,10 +1043,10 @@ console.log(this.global_langues[j].locale)
     var num2 = 0;
     while (num < this.global_langues.length) {
       this.values.push({
-        value: this.array_string[i],
+        value: this.array_string[this.index],
         translation: {
           langue: this.global_langues[num].locale,
-          value: values[i * this.global_langues.length + num],
+          value: values[this.index * this.global_langues.length + num],
         },
       });
       num++;
@@ -556,7 +1065,7 @@ console.log(this.global_langues[j].locale)
     console.log(result[0]);
     console.log(this.missing);
     for (var j = 0; j < this.missing.length; j++) {
-      if (this.array_string[i] == this.missing[j]) {
+      if (this.array_string[this.index] == this.missing[j]) {
         this.add_edit = true;
         break;
       } else this.add_edit = false;
@@ -570,7 +1079,7 @@ console.log(this.global_langues[j].locale)
       const object2 = { translations: result[0].data };
       this.eventService
         .editTranslation(
-          this.array_string[i],
+          this.array_string[this.index],
           this.selected_column,
           this.selected_table,
           object2
@@ -587,8 +1096,8 @@ console.log(this.global_langues[j].locale)
       console.log('add');
       const object1 = {
         name_table: this.selected_table,
-        field_value: result[0].value,
-        selected_column: this.selected_column,
+        fieldValue: result[0].value,
+        selectedColumn: this.selected_column,
         translations: result[0].data,
       };
       this.eventService.addTranslation(object1).subscribe((data) => {
@@ -673,10 +1182,11 @@ console.log(this.global_langues[j].locale)
       console.log('add');
       const object4 = {
         name_table: this.selected_table,
-        field_value: result[0].value,
-        selected_column: this.selected_column,
+        fieldValue: result[0].value,
+        selectedColumn: this.selected_column,
         translations: result[0].data,
       };
+      console.log("object4 :",object4)
       this.eventService.addTranslation(object4).subscribe((data) => {
         console.log(data);
       });
@@ -736,9 +1246,6 @@ console.log("Input changed", input);
 onKeyPress = (button: string) => {
 console.log("Button pressed", button);
 
-/**
- * If you want to handle the shift and caps lock buttons
- */
 if (button === "{shift}" || button === "{lock}") this.handleShift();
 };
 

@@ -1,55 +1,10 @@
-<h3>Settings Languages</h3>
+<h2>{{ 'home.LanguageTitle' | translate }}</h2>
 <div class="border">
   </div>
   <div class="pt-2">
     <button class="btn btn-md btn-outline-primary ml-auto pull-right" (click)="open(content)">
       <i class="fa fa-user px-1"></i>Add</button>
   </div>
- 
-
-
-  <!-- <table class="table table-striped">
-    <thead>
-      <tr>
-        <th scope="col" sortable="name">Code</th>
-        <th scope="col" sortable="area">Name</th>
-        <th scope="col" sortable="area">Status</th>
-        <th scope="col">Actions</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr
-        *ngFor="let l of langues| paginate : {
-          itemsPerPage: pageSize,
-          currentPage: page,
-          totalItems: count
-        };
-  let i = index
-  "
-  [class.active]="i == currentIndex">
-       
-        <td>{{ l.locale }}</td>
-        <td>{{ l.languageName }}</td>
-        <td >
-          <div class="row">
-            <label class="switch">
-            <input type="checkbox" [(ngModel)]="l.global" (change)="toggleVisibility($event,i)" [disabled]="true">
-            <span class="slider round"></span>
-            </label>
-    </div>
-    
-        </td>
-        <td>
-          <button class="mb-2 me-2 btn btn-danger" (click)="openDelete(contentDelete, l)">Delete</button>
-          <button class="mb-2 me-2 btn btn-success" (click)="openEdit(contentEdit,l.id)">Edit</button>
-
-          
-        </td>
-      </tr>
-    </tbody>
-  </table>
-   -->
-
 
   <div style = "margin-top: 40px">
   <p-table [columns]="cols" [value]="langues" 
@@ -58,8 +13,6 @@
      [showCurrentPageReport]=true [rowsPerPageOptions]="[1,2,5,10]"  [responsive]="true"
         
   >
-
-  
     <ng-template pTemplate="caption">
   Languages List
     </ng-template>
@@ -86,16 +39,6 @@
               {{langue.languageName}}
             </td>
             <td>
-              <!-- <div class="row">
-                <label class="switch">
-                <input type="checkbox" [(ngModel)]="langue.global" 
-                (change)="toggleVisibility($event,i)" [disabled]="true">
-                
-                
-                
-                <span class="slider round"></span>
-                </label>
-              </div> -->
 
               <p class="text-success m-0" *ngIf="langue.global">Enable</p>
               <p class="text-danger m-0" *ngIf="!langue.global">Disable</p>
@@ -109,34 +52,6 @@
     </ng-template>
   </p-table>
   </div>
-  <!-- <p-paginator (onPageChange)="handlePageChange($event)"
-  previousLabel="Prev"
-  nextLabel="Next"
-  responsive="true"
-  [rows]="pageSize"
-  
-
-  >
-    
-  </p-paginator>   -->
-  
-  <!-- <div class="col-md-12">
-    <pagination-controls
-      previousLabel="Prev"
-      nextLabel="Next"
-      responsive="true"
-      (pageChange)="handlePageChange($event)"
-    ></pagination-controls>
-  </div> 
-  Items per Page:
-  <select (change)="handlePageSizeChange($event)">
-    <option *ngFor="let size of pageSizes" [ngValue]="size">
-      {{ size }}
-    </option>
-  </select> -->
-
-
-
   <ng-template #content let-modal>
       <div class="modal-header">
         <h4 class="modal-title" id="modal-basic-title">New Langue</h4>
@@ -209,10 +124,7 @@
             </div>
 
             <div class="form-group">
-              <!-- <label class="switch">
-              <input id="global" name="global" type="checkbox" ngModel [(ngModel)]="langue.global"  (change)="toggleVisibility($event,langue.id)" >
-              <span class="slider round"></span>
-              </label> -->
+             
               <i class="fa fa-toggle-on" id="global" name="global" [(ngModel)]="langue.global" ngModel [ngClass]="langue.global?'active':'fa-rotate-180 inactive'" (click)="langue.global=!langue.global" ></i> 
               </div>
       </div>

@@ -112,10 +112,6 @@ export class VirtualKeyboadComponent implements OnInit {
   
     onKeyPress = (button: string) => {
       console.log("Button pressed", button);
-  
-      /**
-       * If you want to handle the shift and caps lock buttons
-       */
       if (button === "{shift}" || button === "{lock}") this.handleShift();
     };
   
@@ -151,40 +147,12 @@ export class VirtualKeyboadComponent implements OnInit {
       console.log(this.e)
       console.log("path :",event.target.value)
       const reader = new FileReader();
-      /*if (event.target.files && event.target.files.length) {
-        this.fileName = event.target.files[0].name;
-        console.log("filename :",this.fileName)
-        var a = event.target.value
-        a = a.replace('fakepath','Users\\hp\\Desktop');
-        console.log(a)
-        this.url = "\""+ a+  "\""; 
-        console.log("url :",this.url)
-        const [file] = event.target.files;
-        reader.readAsDataURL(file);
-        reader.onload = () => {
-            
-          localStorage.setItem(this.fileName, reader.result as string);
-          console.log(a)
-          this.translationService.readDocxFiles(a).subscribe((data)=>{
-            console.log("document docs redead :",data)
-            this.translationService.TranslateText("fr","ar",data).subscribe((data)=>{
-              console.log("data translated",data)
-            })
-          
-        })
-        
-        };
-
-   
-      }*/
-
     }
 
     onClick() {
       const fileData = localStorage.getItem(this.fileName);
       console.log(fileData)
       setTimeout(function() {
-        //FireFox seems to require a setTimeout for this to work.
         document.body.appendChild(
           document.createElement("iframe")
         ).src = fileData;

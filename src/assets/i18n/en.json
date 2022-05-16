@@ -1,5 +1,7 @@
 {
     "home": {
-      "pageTitle": "English"
+      "pageTitle": "English",
+      "LanguageTitle":"Settings Languages",
+      "TranslationTitle":"Settings Translation "
     }
   }

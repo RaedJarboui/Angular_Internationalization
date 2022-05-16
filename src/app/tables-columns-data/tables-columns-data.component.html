@@ -1,4 +1,3 @@
-<!-- <a routerLink="/tabscolumns/acm_address_setting"><button class="btn btn-success pull-left">Previous</button></a> -->
 <a routerLink="/tabscolumns/{{selected_table}}"><i class="fa fa-solid fa-arrow-left"></i></a>
 <span >
 	<div (click)="isActive = !isActive">
@@ -7,107 +6,98 @@
 	  </div>
   </span>
  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+ count : {{count}}
 
 <div *ngIf="!boolValue; else notInclude ">
 
-   <table class="table table-bordered" #ITable>
-    <thead>
-      <tr>
-        <th scope="col">Column value</th>
-        <th *ngFor="let l of global_langues" scope="col">{{ l.locale }}</th>
-        <th scope="col">Actions</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let s of array_string | paginate : {
-        itemsPerPage: pageSize,
-        currentPage: page,
-        totalItems: count
-      };
-let i = index
-"
-[class.active]="i == currentIndex"
->
-
-        <td>{{ s }}</td>
-        <td *ngFor="let l of global_langues;let j = index;trackBy: trackByFn">
-            <div *ngFor="let d of db_data">
-              <div *ngFor="let dd of d.translations">
-                <div *ngIf="dd.langue === l.locale && s === d.field_value">
-                  <input type="text" name="items[]" value="{{dd.value}}" [matAutocomplete]="auto"
-                  (keyup)="onKeyUp($event,j)" (click)="myClickFunction(j)"
-                  />   
-
+  <div style = "margin-top: 40px">
+    <p-table [columns]="col" [value]="array_string"  sortMode="multiple"
+    [lazy]="true" sortMode="multiple" #dt (onLazyLoad)="handlePageChange($event)" [paginator]="true"
+      [rows]="pageSize" [totalRecords]="count"  [currentPageReportTemplate]="'page of count'"
+       [showCurrentPageReport]=true [rowsPerPageOptions]="[1,2,5,10]"  [responsive]="true"
+       [rowTrackBy]="trackByFunction"
+    >
+      <ng-template pTemplate="caption">
+    Tables Columns Data List
+      </ng-template>
+      <ng-template pTemplate="header" let-columns>
+          <tr>
+              <th *ngFor="let col of columns" [pSortableColumn]="col.field" >
+                  {{col.header}}
+                  <p-sortIcon [field]="col.field"></p-sortIcon>
+              </th>
+  
+          </tr>
+          <tr>
+              <th *ngFor="let col of columns" [ngSwitch]="col.field" [sortable]="true">
+              <input type="text" pInputText (input)="dt.filter($event.target.value, col.field, col.filterMatchMode)">
+              </th>
+          </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-s let-rowIndex="rowIndex" |trackBy: trackItem >
+          <tr>
+              <td>
+                {{s}}
+              </td>
+              <td *ngFor="let l of global_langues;let j = index;trackBy: trackByFn">
+                <div *ngFor="let d of db_data">
+                  <div *ngFor="let dd of d.translations">
+                    <div *ngIf="dd.langue === l.locale && s === d.fieldValue">
+                      <input type="text" name="items[]" value="{{dd.value}}" [matAutocomplete]="auto"
+                      (keyup)="onKeyUp($event,j)" (click)="myClickFunction(j)"
+                      />     
+                      <mat-autocomplete #auto="matAutocomplete">
+                        <mat-option *ngFor="let f of filteredTranslation " [value]="f">
+                          {{f}}
+                        </mat-option>
+                      </mat-autocomplete>
+                      </div>
+                    </div>
+                    </div>
+    
+    
+                    <div *ngFor="let m of missing">
+                    <div *ngIf="s === m">
+                      <input type="text" name="items[]" [matAutocomplete]="auto"
+                      (keyup)="onKeyUp($event,j)" (click)="myClickFunction(j)"
+                     
+    
+                       />
+    
+                     
+                    
+                      <mat-autocomplete #auto="matAutocomplete">
+                        <mat-option *ngFor="let f of filteredTranslation " [value]="f">
+                          {{f}}
+                        </mat-option>
+                      </mat-autocomplete>
+                    </div>               
+                  </div> 
                   
-               
-                  <mat-autocomplete #auto="matAutocomplete">
-                    <mat-option *ngFor="let f of filteredTranslation " [value]="f">
-                      {{f}}
-                    </mat-option>
-                  </mat-autocomplete>
-                  </div>
-                </div>
-                </div>
-
-
-                <div *ngFor="let m of missing">
-                <div *ngIf="s === m">
-                  <input type="text" name="items[]" [matAutocomplete]="auto"
-                  (keyup)="onKeyUp($event,j)" (click)="myClickFunction(j)"
+                  
+                  <div *ngFor="let m of missing_lang">
+                      <div *ngIf="m.langue === l.locale && s === m.fieldValue ">
+                      <input type="text" name="items[]" [matAutocomplete]="auto"
+                      (keyup)="onKeyUp($event,j)" (click)="myClickFunction(j)"
+                     
+                     />    
+                      <mat-autocomplete #auto="matAutocomplete">
+                        <mat-option *ngFor="let f of filteredTranslation " [value]="f">
+                          {{f}}
+                        </mat-option>
+                      </mat-autocomplete>
+                      </div>
+                     
+                    </div>      
+            </td>
+            <td>
+              <button class="btn-wide mb-2 me-2 btn btn-primary btn-sm" (click)="addTranslation()">save</button>
+            </td>
                  
-
-                   />
-
-                 
-                
-                  <mat-autocomplete #auto="matAutocomplete">
-                    <mat-option *ngFor="let f of filteredTranslation " [value]="f">
-                      {{f}}
-                    </mat-option>
-                  </mat-autocomplete>
-                </div>               
-              </div> 
-              
-              
-              <div *ngFor="let m of missing_lang">
-                  <div *ngIf="m.langue === l.locale && s === m.field_value ">
-                  <input type="text" name="items[]" [matAutocomplete]="auto"
-                  (keyup)="onKeyUp($event,j)" (click)="myClickFunction(j)"
-                 
-                 />
-
-                 
-                 
-                  <mat-autocomplete #auto="matAutocomplete">
-                    <mat-option *ngFor="let f of filteredTranslation " [value]="f">
-                      {{f}}
-                    </mat-option>
-                  </mat-autocomplete>
-                  </div>
-                 
-                </div>      
-        </td>
-        <td>
-          <button class="btn-wide mb-2 me-2 btn btn-primary btn-sm" (click)="addTranslation(i)">save</button>
-        </td>
-      </tr>
-    </tbody>
-  </table>
-  <div class="col-md-12">
-    <pagination-controls
-      previousLabel="Prev"
-      nextLabel="Next"
-      responsive="true"
-      (pageChange)="handlePageChange($event)"
-    ></pagination-controls>
-  </div>
-  <div align="right">
-    Items per Page :<select (change)="handlePageSizeChange($event)" >
-  <option *ngFor="let size of pageSizes" [ngValue]="size">
-    {{ size }}
-  </option>
-</select>
-</div>
+          </tr>
+      </ng-template>
+    </p-table>
+    </div>
 </div>
 
 
@@ -123,16 +113,98 @@ let i = index
     <option value="Select one" selected>Select one</option>
     <option *ngFor="let c of columns">{{ c }}</option>
   </select>
-  <div *ngIf="!columns_exists && selected_tab ||!select2_array_exists && selected_col || page_change_paginate && !select2_array_exists">
+  <!-- <div *ngIf="!columns_exists && selected_tab ||!select2_array_exists && selected_col || page_change_paginate && !select2_array_exists">
     <div class="disable-background">
       <mat-progress-spinner [mode]="'indeterminate'" >
 </mat-progress-spinner>
     </div> 
-  </div>  
+  </div>   -->
   <br />
   <br />
  <div *ngIf="selected_tab && selected_col">
-  <table class="table table-bordered">
+
+
+  <div style = "margin-top: 40px">
+    <p-table [columns]="col" [value]="select2_array" 
+    [lazy]="true" sortMode="multiple" #dt (onLazyLoad)="handlePageChangee($event)" [paginator]="true"
+      [rows]="pageSize" [totalRecords]="count"  [currentPageReportTemplate]="'page of count'"
+       [showCurrentPageReport]=true [rowsPerPageOptions]="[1,2,5,10]"  [responsive]="true"
+       [rowTrackBy]="trackByFunction"
+    >
+      <ng-template pTemplate="caption">
+    Languages List
+      </ng-template>
+      <ng-template pTemplate="header" let-columns>
+          <tr>
+              <th *ngFor="let col of columns" [pSortableColumn]="col.field" >
+                  {{col.header}}
+                  <p-sortIcon [field]="col.field"></p-sortIcon>
+              </th>
+  
+          </tr>
+          <tr>
+              <th *ngFor="let col of columns" [ngSwitch]="col.field" [sortable]="true">
+              <input type="text" pInputText (input)="dt.filter($event.target.value, col.field, col.filterMatchMode)">
+              </th>
+          </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-c let-rowIndex="rowIndex" |trackBy: trackItem >
+          <tr>
+            <td>{{ c }}</td>
+            <td *ngFor="let l of global_langues; index as j">
+              <div *ngFor="let d of db_data_json">
+                <div *ngFor="let dd of d.translations">             
+                  <div *ngIf="dd.langue === l.locale && c === d.fieldValue">
+              <input type="text" name="items[]" value="{{dd.value}}" [matAutocomplete]="auto"
+              (keyup)="onKeyUp($event,j)" (click)="myClickFunction(j)" />
+             
+              <mat-autocomplete #auto="matAutocomplete">
+                <mat-option *ngFor="let f of filteredTranslation " [value]="f">
+                  {{f}}
+                </mat-option>
+              </mat-autocomplete>
+              </div>
+              </div>
+              </div>
+              <div *ngFor="let m of missing">
+                <div *ngIf="c === m">
+                  <input type="text" name="items[]" [matAutocomplete]="auto"
+                  (keyup)="onKeyUp($event,j)" (click)="myClickFunction(j)"  />
+                  
+                  <mat-autocomplete #auto="matAutocomplete">
+                    <mat-option *ngFor="let f of filteredTranslation " [value]="f">
+                      {{f}}
+                    </mat-option>
+                  </mat-autocomplete>
+                  </div>
+                </div>
+                <div *ngFor="let m of missing_lang">
+                  <div *ngIf="m.langue === l.locale && c === m.fieldValue ">
+                  <input type="text" name="items[]" [matAutocomplete]="auto"
+                  (keyup)="onKeyUp($event,j)" (click)="myClickFunction(j)" (input)="onInputChange($event)" />
+                 
+                  <mat-autocomplete #auto="matAutocomplete">
+                    <mat-option *ngFor="let f of filteredTranslation " [value]="f">
+                      {{f}}
+                    </mat-option>
+                  </mat-autocomplete>
+                  </div>
+                </div>    
+            </td>
+            <td>
+              <button class="btn-wide mb-2 me-2 btn btn-primary btn-sm" (click)="addTranslation1(i)">save</button>
+            </td>
+                 
+          </tr>
+      </ng-template>
+    </p-table>
+    </div>
+
+
+
+
+
+  <!-- <table class="table table-bordered">
     <thead>
       <tr>
         <th scope="col">Column value</th>
@@ -195,23 +267,7 @@ let i = index"
         </td>
       </tr>
     </tbody>
-  </table>
-  <div class="col-md-12">
-    <pagination-controls
-      previousLabel="Prev"
-      nextLabel="Next"
-      responsive="true"
-      (pageChange)="handlePageChange($event)"
-    ></pagination-controls>
-  </div> 
-  <div align="right">
-    Items per Page:
-<select (change)="handlePageSizeChange($event)">
-  <option *ngFor="let size of pageSizes" [ngValue]="size">
-    {{ size }}
-  </option>
-</select>
-  </div>
+  </table> -->
   </div>
   
 </ng-template>
@@ -255,7 +311,6 @@ placeholder="Tap on the virtual keyboard to start"
 <button (click)="copyInputMessage(userinput)" value="click to copy" >Copy from Textbox</button>
 
 
-<!-- <i (click)="copyInputMessage(userinput)" class="material-icons">search</i> -->
 
 	<div class="simple-keyboard"></div>
 	<div class="select-container">

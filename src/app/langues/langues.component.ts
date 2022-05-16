@@ -373,25 +373,12 @@ console.log("this sorted langues :",this.langues)
   columnFilter(event: any, field) {
     this.dataTable.filter(event.target.value, field, 'contains');
   }
-  // handlePageSizeChange(event) {
-  //   this.pageSize = event.target.value;
-  //   const params = this.getRequestParams(this.page+1, this.pageSize);
-  //   console.log(params)
-  //   this.ngOnInit()
-
-  // }
+  
   toggleVisibility(event,id){
    
     console.log(event.target.checked);
     console.log(id)
-    //console.log(this.langues[index])
-    //const obj = this.langues[index]
-    //const id = this.langues[index].id
-    //console.log(id)
-   /* this.translationService.editLangue(id,this.langues[index]).subscribe((data)=>{
-      console.log(data);
-      this.ngOnInit()
-    })*/
+  
 
 }
 select(value){
@@ -506,14 +493,6 @@ export interface DialogData {
 
 
 
-// @Component({
-//     selector: 'data-dialog',
-//     templateUrl: './data-dialog.html'
-// })
-// export class DataDialogComponent {
-
-//     constructor(@Inject(MAT_DIALOG_DATA) public data: DialogData) {}
-// }
 
 
 

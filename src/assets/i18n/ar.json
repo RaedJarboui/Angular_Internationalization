@@ -1,5 +1,7 @@
 {
     "home": {
-      "pageTitle": "Arabic"
+      "pageTitle": "العربية",
+      "LanguageTitle":"اعدادات اللغة",
+      "TranslationTitle":"إعدادات الترجمة"
     }
   }

@@ -15,6 +15,10 @@ export class TranslationService {
   return this.http.post(`http://localhost:8080/langues/find`,value);
 
  }
+ getSortedTranslation(value):Observable<any>{
+  return this.http.post(`http://localhost:8080/translation/find`,value);
+
+ }
  getPageableLangues(params): Observable<Object>{
   return this.http.get(`http://localhost:8080/paginated/langues`,{params});
 }

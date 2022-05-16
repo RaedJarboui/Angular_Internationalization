@@ -20,14 +20,6 @@
 	</div>
   </div>
 
-  <!-- Source Language :<select #langSelect (change)="translate.use(langSelect.value)" [(ngModel)]="selectedlang" (ngModelChange)="select($event)">
-    <option *ngFor="let lang of translate.getLangs()" [value]="lang" [selected]="lang === translate.currentLang">{{ lang }}</option>
-  </select>
-
-  Destination Language :<select #langSelect (change)="translate.use(langSelect.value)" [(ngModel)]="selectedlang" (ngModelChange)="select($event)">
-    <option *ngFor="let lang of translate.getLangs()" [value]="lang" [selected]="lang === translate.currentLang">{{ lang }}</option>
-  </select> -->
-
   <h2>Upload File</h2>
   <input type="file" (change)="onFileChange($event)" name="file" />
 
@@ -51,8 +43,7 @@
    
     
 
-  <!-- <button (click)="onClick()">Show File</button> -->
-  <!-- <button (click)="testToast()">Make a toast!</button> -->
+
 
 
   
