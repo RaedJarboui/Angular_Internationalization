@@ -15,7 +15,8 @@ import {MatAutocompleteModule} from '@angular/material/autocomplete';
     FormsModule,
     ReactiveFormsModule,
     SharedModule,
-    MatAutocompleteModule
-  ]
+    MatAutocompleteModule,
+  ],
+
 })
 export class LanguesModule { }

@@ -58,10 +58,11 @@ import { AngularSpinnerComponent } from './angular-spinner/angular-spinner.compo
 const routes: Routes = [
   {
     path: '',
+ 
     component: BaseLayoutComponent,
     //
     children: [
-      {  path: 'langues',canActivate: [AuthGuard], data: {extraParameter: 'dashboardsMenu'},
+      {  path: '', data: {extraParameter: 'dashboardsMenu'},
       loadChildren: () => import(`./langues/langues.module`)
     .then(m => m.LanguesModule)},
     {  path: 'tabs',canActivate: [AuthGuard], data: {extraParameter: 'dashboardsMenu'},
@@ -85,7 +86,7 @@ loadChildren: () => import(`./display-translation/display-translation.module`)
 
       // Dashboads
 
-      {path: '', component: AnalyticsComponent,canActivate: [AuthGuard], data: {extraParameter: 'dashboardsMenu'}},
+      {path: '' , component: AnalyticsComponent,canActivate: [AuthGuard], data: {extraParameter: 'dashboardsMenu'}},
 
       //Page
 

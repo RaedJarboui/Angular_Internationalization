@@ -3,6 +3,7 @@ import {NgModule} from '@angular/core';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {ToastrModule} from 'ngx-toastr';
+import { SlickCarouselModule } from 'ngx-slick-carousel';
 import {NgReduxModule} from '@angular-redux/store';
 import {NgRedux, DevToolsExtension} from '@angular-redux/store';
 import {rootReducer, ArchitectUIState} from './ThemeOptions/store';
@@ -15,14 +16,15 @@ import {AppComponent} from './app.component';
 import { FontAwesomeModule, FaIconLibrary  } from '@fortawesome/angular-fontawesome';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import {TableModule} from 'primeng/table';
+
 import { faCoffee, fas } from '@fortawesome/free-solid-svg-icons';
 
 // BOOTSTRAP COMPONENTS
-
+import { PERFECT_SCROLLBAR_CONFIG, PerfectScrollbarConfigInterface, PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
-import {PerfectScrollbarModule} from 'ngx-perfect-scrollbar';
-import {PERFECT_SCROLLBAR_CONFIG} from 'ngx-perfect-scrollbar';
-import {PerfectScrollbarConfigInterface} from 'ngx-perfect-scrollbar';
+import { DrawerComponent } from './Layout/Components/header/elements/drawer/drawer.component';
+import { MegamenuComponent } from './Layout/Components/header/elements/mega-menu/mega-menu.component';
+import { MegapopoverComponent } from './Layout/Components/header/elements/mega-menu/elements/megapopover/megapopover.component';
 import {ChartsModule} from 'ng2-charts';
 import { MatDialogModule } from '@angular/material/dialog';
 
@@ -70,7 +72,7 @@ import {TimelineComponent} from './DemoPages/Elements/timeline/timeline.componen
 import {IconsComponent} from './DemoPages/Elements/icons/icons.component';
 
 // Components
-
+import { DotsComponent } from './Layout/Components/header/elements/dots/dots.component';
 import {AccordionsComponent} from './DemoPages/Components/accordions/accordions.component';
 import {TabsComponent} from './DemoPages/Components/tabs/tabs.component';
 import {CarouselComponent} from './DemoPages/Components/carousel/carousel.component';
@@ -112,6 +114,9 @@ import {TranslateModule, TranslateLoader} from '@ngx-translate/core';
 import {TranslateHttpLoader} from '@ngx-translate/http-loader';
 import { AngularSpinnerComponent } from './angular-spinner/angular-spinner.component';
 import { VariablesGlobales } from './services/VariablesGlobales ';
+import { SharedModule } from './shared/shared.module';
+
+
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true
 };
@@ -124,17 +129,21 @@ export function HttpLoaderFactory(http: HttpClient) {
   declarations: [
 
     // LAYOUT
-
     AppComponent,
     BaseLayoutComponent,
     PagesLayoutComponent,
     PageTitleComponent,
-
+   
     // HEADER
 
     HeaderComponent,
     SearchBoxComponent,
     UserBoxComponent,
+    DotsComponent,
+    DrawerComponent,
+    MegamenuComponent,
+    MegapopoverComponent,
+
 
     // SIDEBAR
 
@@ -205,7 +214,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     DynamicChartComponent,
     BubbleChartComponent,
     ScatterChartComponent,
-    AngularSpinnerComponent,
+    
+    //AngularSpinnerComponent,
     
 
 
@@ -213,9 +223,12 @@ export function HttpLoaderFactory(http: HttpClient) {
   imports: [
     
     BrowserModule,
+    PerfectScrollbarModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     FontAwesomeModule ,
+    SharedModule,
+    SlickCarouselModule,
     ToastrModule.forRoot({
       timeOut: 1000,
       positionClass: 'toast-top-right'
@@ -228,7 +241,6 @@ export function HttpLoaderFactory(http: HttpClient) {
     LoadingBarRouterModule,
 
     // Angular Bootstrap Components
-
     PerfectScrollbarModule,
     NgbModule,
     MatDialogModule,

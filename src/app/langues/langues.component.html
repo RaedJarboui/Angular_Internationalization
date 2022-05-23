@@ -1,4 +1,15 @@
 <h2>{{ 'home.LanguageTitle' | translate }}</h2>
+
+
+
+<div *ngIf="loading">
+  <app-angular-spinner></app-angular-spinner>
+
+</div>
+
+
+
+
 <div class="border">
   </div>
   <div class="pt-2">
@@ -25,7 +36,7 @@
 
         </tr>
         <tr>
-            <th *ngFor="let col of columns" [ngSwitch]="col.field" [sortable]="true">
+            <th *ngFor="let col of columns" [ngSwitch]="col.field" >
             <input type="text" pInputText (input)="dt.filter($event.target.value, col.field, col.filterMatchMode)">
             </th>
         </tr>
@@ -42,7 +53,6 @@
 
               <p class="text-success m-0" *ngIf="langue.global">Enable</p>
               <p class="text-danger m-0" *ngIf="!langue.global">Disable</p>
-
                 </td>
                 <td>
                   <button class="mb-2 me-2 btn btn-danger" (click)="openDelete(contentDelete, langue)">Delete</button>

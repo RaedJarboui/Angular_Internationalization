@@ -2,6 +2,16 @@
     "home": {
       "pageTitle": "Français",
       "LanguageTitle":"parametres des langues",
-      "TranslationTitle":"parametres des traduction "
+      "TranslationTitle":"parametres des traduction ",
+      "add":"Ajouter",
+      "LanguageList":"liste des langues",
+      "enable":"permettre",
+      "disable":"desactiver",
+      "delete":"supprimer",
+      "edit":"modifier"
+
+
+
+
     }
   }

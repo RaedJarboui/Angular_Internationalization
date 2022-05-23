@@ -2,6 +2,16 @@
     "home": {
       "pageTitle": "English",
       "LanguageTitle":"Settings Languages",
-      "TranslationTitle":"Settings Translation "
+      "TranslationTitle":"Settings Translation ",
+      "add":"Add",
+      "LanguageList":"Languages List",
+      "enable":"enable",
+      "disable":"disable",
+      "delete":"delete",
+      "edit":"edit"
+
+
+
+
     }
   }

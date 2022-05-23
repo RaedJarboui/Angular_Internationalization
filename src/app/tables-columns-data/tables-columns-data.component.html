@@ -6,16 +6,18 @@
 	  </div>
   </span>
  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
- count : {{count}}
+ <div *ngIf="loading">
+  <div class="disable-background">
+  <app-angular-spinner></app-angular-spinner>
+  </div>
 
+</div>
 <div *ngIf="!boolValue; else notInclude ">
-
   <div style = "margin-top: 40px">
     <p-table [columns]="col" [value]="array_string"  sortMode="multiple"
     [lazy]="true" sortMode="multiple" #dt (onLazyLoad)="handlePageChange($event)" [paginator]="true"
       [rows]="pageSize" [totalRecords]="count"  [currentPageReportTemplate]="'page of count'"
-       [showCurrentPageReport]=true [rowsPerPageOptions]="[1,2,5,10]"  [responsive]="true"
-       [rowTrackBy]="trackByFunction"
+       [showCurrentPageReport]=true [rowsPerPageOptions]="[1,2,5,10]"  [responsive]="true" 
     >
       <ng-template pTemplate="caption">
     Tables Columns Data List
@@ -29,13 +31,13 @@
   
           </tr>
           <tr>
-              <th *ngFor="let col of columns" [ngSwitch]="col.field" [sortable]="true">
+              <th *ngFor="let col of columns" [ngSwitch]="col.field" >
               <input type="text" pInputText (input)="dt.filter($event.target.value, col.field, col.filterMatchMode)">
               </th>
           </tr>
       </ng-template>
-      <ng-template pTemplate="body" let-s let-rowIndex="rowIndex" |trackBy: trackItem >
-          <tr>
+      <ng-template pTemplate="body" let-s let-rowIndex="rowIndex" >
+          <tr >
               <td>
                 {{s}}
               </td>
@@ -91,7 +93,7 @@
                     </div>      
             </td>
             <td>
-              <button class="btn-wide mb-2 me-2 btn btn-primary btn-sm" (click)="addTranslation()">save</button>
+              <button class="btn-wide mb-2 me-2 btn btn-primary btn-sm" (click)="addTranslation(array_string.indexOf(s))">save</button>
             </td>
                  
           </tr>
@@ -113,12 +115,7 @@
     <option value="Select one" selected>Select one</option>
     <option *ngFor="let c of columns">{{ c }}</option>
   </select>
-  <!-- <div *ngIf="!columns_exists && selected_tab ||!select2_array_exists && selected_col || page_change_paginate && !select2_array_exists">
-    <div class="disable-background">
-      <mat-progress-spinner [mode]="'indeterminate'" >
-</mat-progress-spinner>
-    </div> 
-  </div>   -->
+ 
   <br />
   <br />
  <div *ngIf="selected_tab && selected_col">
@@ -129,7 +126,7 @@
     [lazy]="true" sortMode="multiple" #dt (onLazyLoad)="handlePageChangee($event)" [paginator]="true"
       [rows]="pageSize" [totalRecords]="count"  [currentPageReportTemplate]="'page of count'"
        [showCurrentPageReport]=true [rowsPerPageOptions]="[1,2,5,10]"  [responsive]="true"
-       [rowTrackBy]="trackByFunction"
+       
     >
       <ng-template pTemplate="caption">
     Languages List
@@ -143,12 +140,12 @@
   
           </tr>
           <tr>
-              <th *ngFor="let col of columns" [ngSwitch]="col.field" [sortable]="true">
+              <th *ngFor="let col of columns" [ngSwitch]="col.field" >
               <input type="text" pInputText (input)="dt.filter($event.target.value, col.field, col.filterMatchMode)">
               </th>
           </tr>
       </ng-template>
-      <ng-template pTemplate="body" let-c let-rowIndex="rowIndex" |trackBy: trackItem >
+      <ng-template pTemplate="body" let-c let-rowIndex="rowIndex"  >
           <tr>
             <td>{{ c }}</td>
             <td *ngFor="let l of global_langues; index as j">
@@ -192,7 +189,7 @@
                 </div>    
             </td>
             <td>
-              <button class="btn-wide mb-2 me-2 btn btn-primary btn-sm" (click)="addTranslation1(i)">save</button>
+              <button class="btn-wide mb-2 me-2 btn btn-primary btn-sm" (click)="addTranslation1(select2_array.indexOf(c))">save</button>
             </td>
                  
           </tr>

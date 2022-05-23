@@ -1,11 +1,13 @@
 <h2>{{ 'home.TranslationTitle' | translate }}</h2>
-
+<div *ngIf="loading">
+  <app-angular-spinner></app-angular-spinner>
+</div>
   <p-table [columns]="cols" [value]="tab_list" 
   [lazy]="true" sortMode="multiple" #dt (onLazyLoad)="handlePageChange($event)" [paginator]="true"
   [rows]="pageSize" [totalRecords]="count"  [currentPageReportTemplate]="'page of count'"
    [showCurrentPageReport]=true [rowsPerPageOptions]="[1,2,5,10]"  [responsive]="true"  >
     <ng-template pTemplate="caption">
-  Tabs List
+    Tabs List
     </ng-template>
     <ng-template pTemplate="header" let-columns>
         <tr>

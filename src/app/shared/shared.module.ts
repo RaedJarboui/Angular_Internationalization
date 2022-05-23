@@ -14,7 +14,8 @@ import {PaginatorModule} from 'primeng/paginator';
 import {TranslateModule} from '@ngx-translate/core';
 import { faCoffee, fas } from '@fortawesome/free-solid-svg-icons';
 import { HttpClient } from "@angular/common/http";
-// import {ToastrModule} from 'ngx-toastr';
+import {AngularSpinnerComponent} from '../angular-spinner/angular-spinner.component'
+
 
 
 
@@ -24,6 +25,7 @@ import { HttpClient } from "@angular/common/http";
 
   imports: [
      CommonModule,
+     NgbModule,
      FormsModule,
      NgxPaginationModule ,
     MatAutocompleteModule,
@@ -35,20 +37,13 @@ import { HttpClient } from "@angular/common/http";
     MatTooltipModule,
     MatIconModule,
     TableModule,
-    PaginatorModule
+    PaginatorModule,
     
-    // ToastrModule.forRoot({
-    //   timeOut: 1000,
-    //   positionClass: 'toast-bottom-right'
-    // })
-    
-    
-   
-
 
 
    ],
    declarations: [
+    AngularSpinnerComponent
    ],
    exports: [
      CommonModule,
@@ -62,11 +57,13 @@ import { HttpClient } from "@angular/common/http";
     MatTooltipModule,
     MatIconModule,
     TableModule,
-    PaginatorModule
+    PaginatorModule,
+    AngularSpinnerComponent
     
 
     
-   ],bootstrap: [AppComponent]
+   ]
+   ,bootstrap: [AppComponent]
  })
  export class SharedModule {
   

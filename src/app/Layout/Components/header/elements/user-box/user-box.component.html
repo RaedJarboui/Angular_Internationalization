@@ -1,48 +1,109 @@
 <div class="d-flex">
-  <div class="header-btn-lg pe-0">
+  <div class="header-btn-lg pr-0 ml-0">
     <div class="widget-content p-0">
       <div class="widget-content-wrapper">
         <div class="widget-content-left">
-          <div class="btn-group" ngbDropdown placement="bottom-right">
-            <button type="button" class="btn btn-link p-0 me-2" ngbDropdownToggle>
+          <div class="btn-group" ngbDropdown placement="{{ngbDropdownMenu.placement}}">
+            <button type="button" class="btn btn-link p-0 mr-2 text-white" ngbDropdownToggle>
               <span>
                 <div class="icon-wrapper icon-wrapper-alt rounded-circle">
-                  {{currentUser.username}}
+                  <img width="42" height="42" src="./assets/images/avatars/user.jpg" alt="" class="rounded-circle">
                 </div>
               </span>
             </button>
-            <div ngbDropdownMenu *ngIf="!currentUser?.id">
-              <button class="dropdown-item">Menus</button>
-              <button class="dropdown-item">Settings</button>
-              <h6 class="dropdown-header">Header</h6>
-              <button class="dropdown-item">Actions</button>
-              <div class="dropdown-divider"></div>
-              <button class="dropdown-item">Dividers</button>
+            <div ngbDropdownMenu>
+              <div class="dropdown-menu-header">
+                <div class="dropdown-menu-header-inner bg-info">
+                  <div class="menu-header-image opacity-2 dd-header-bg-6"></div>
+                  <div class="menu-header-content text-left">
+                    <div class="widget-content p-0">
+                      <div class="widget-content-wrapper">
+                        <div class="widget-content-left mr-3">
+                          <img width="50" height="50" src="./assets/images/avatars/user.jpg" alt=""
+                               class="rounded-circle">
+                        </div>
+                        <div class="widget-content">
+                          <div class="widget-heading">
+                            {{currentUser?.username}} 
+
+                          </div>
+                          <div class="widget-subheading opacity-8">
+                            {{currentUser?.email}} 
+
+                          </div>
+                          <div class="widget-subheading opacity-8">
+                           
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <perfect-scrollbar [autoPropagation]="true" class="pl-2">
+                <div [ngClass]="{'text-right': translate.currentLang === 'ar'}">
+                  <ul class="nav flex-column row no-gutters">
+                    <li class="nav-item row no-gutters center-elem ml-0" >
+                      <div class="col-xl-1-align-right ml-2 pr-2 ">
+                        <i class="lnr-cog text-primary"></i>
+                        <button
+                          class="mb-2 mr-2 border-0 btn-transition btn btn-outline-primary" [routerLink]="['/setting']" routerLinkActive="Active">
+                          settings
+                        </button>
+                      </div>
+                    </li>
+                  </ul>
+                  <ul class="nav flex-column row no-gutters">
+                    <li class="nav-item row no-gutters center-elem ml-0">
+                      <div class="col-xl-1-align-right ml-2 pr-2 ">
+                        <i class="lnr-lock text-primary"></i>
+                        <button class="border-0 btn-transition btn btn-outline-primary" (click)="changePwdComponent()">
+                          change password </button>
+                      </div>
+                    </li>
+                  </ul>
+                  <ul class="nav flex-column row no-gutters">
+                    <li class="nav-item row no-gutters center-elem ml-0">
+                      <div class="col-xl-1-align-right ml-2 pr-2 ">
+                        <i class="lnr-exit text-primary"></i>
+                        <button class="mb-2 mr-2 border-0 btn-transition btn btn-outline-primary" (click)="logout()">
+                          Logout </button>
+                      </div>
+                    </li>
+                  </ul>
+                </div>
+                <hr>
+                <div [ngClass]="{'text-right': translate.currentLang === 'ar'}">
+                  <div class="col-xl-12">
+                    <a>Prefered Language</a>
+                  </div>
+                  <div class="col-xl-12">
+                    <button class="mb-2 mr-2 border-0 btn-transition btn btn-outline-primary" (click)="langFR()"
+                            [disabled]="translate.currentLang === 'fr'">Français
+                    </button>
+                  </div>
+                  <div class="col-xl-12">
+                    <button class="mb-2 mr-2 border-0 btn-transition btn btn-outline-primary" (click)="langEN()"
+                            [disabled]="translate.currentLang === 'en'">English
+                    </button>
+                  </div>
+                  <div class="col-xl-12">
+                    <button class="mb-2 mr-2 border-0 btn-transition btn btn-outline-primary" (click)="langAR()"
+                            [disabled]="translate.currentLang === 'ar'">عربية
+                    </button>
+                  </div>
+                </div>
+              </perfect-scrollbar>
             </div>
-            <div ngbDropdownMenu *ngIf="currentUser?.id">
-              <button class="dropdown-item">Menus</button>
-              <button class="dropdown-item">Settings</button>
-              <h6 class="dropdown-header">Header</h6>
-              <button class="dropdown-item">Actions</button>
-              <div class="dropdown-divider"></div>
-              <button class="dropdown-item" (click)="logout()">Logout</button>
-            </div>
+          </div>
+        </div>
+        <div class="widget-content-left ml-3 header-user-info">
+          <div class="ACM_widget-heading">
+            {{currentUser?.username}} 
 
           </div>
-
         </div>
-        <i class="fas fa-globe" >
-        <select #langSelect (change)="translate.use(langSelect.value)" [(ngModel)]="selected_lang" (ngModelChange)="select($event)">
-         <option *ngFor="let lang of translate.getLangs()" [value]="lang" [selected]="lang === translate.currentLang">{{ lang }}</option>
-
-        </select>
-      </i>
-
-
       </div>
-
     </div>
-
   </div>
 </div>
-

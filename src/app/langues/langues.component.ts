@@ -11,6 +11,8 @@ import { Table } from 'primeng/table';
 import { stringify } from 'querystring';
 import { VariablesGlobales } from '../services/VariablesGlobales ';
 import { TranslateService } from '@ngx-translate/core';
+import { LoadingService } from '../services/loading.service';
+import {delay} from 'rxjs/operators';
 
 @Component({
   selector: 'app-langues',
@@ -238,7 +240,6 @@ export class LanguesComponent implements OnInit {
 ];
   
 
-loading = true;
 
   text = ''; //initialised the text variable
   filteredRows: any;
@@ -246,9 +247,11 @@ loading = true;
   sortedField: any;
   order: any;
   filterField: string;
+  loading = true;
 
   constructor(public translate: TranslateService,public translationService:TranslationService,public dataDialogHandler: MatDialog,private modalService: NgbModal,
-    private toast: ToastrService,public variablesGlobales: VariablesGlobales ) {
+    private toast: ToastrService,public variablesGlobales: VariablesGlobales , private _loading: LoadingService
+    ) {
 
       this.translate.addLangs(['en', 'fr','ar']);
       this.translate.setDefaultLang('en');
@@ -294,28 +297,55 @@ loading = true;
     console.log('currentPage = ' + currentPage);
     const isEmpty = Object.keys(event.filters).length === 0;
 if(event.multiSortMeta && isEmpty){
+  
   console.log("yes sorting and no filter")
+  this.loading = true;
+
     let object = {"pageNumber":currentPage-1,"pageSize":event.rows,"sortDirection":event.multiSortMeta[0].order.toString(),"sortField": event.multiSortMeta[0].field}
     this.translationService.getSortedLangues(object).subscribe((data)=>{
       console.log("SortedLangues :",data)
       this.langues=data.languages;
       this.count = data.totalElements
       this.pageSize=data.pageSize
+      if(data)
+      this.loading = false;
+
+
+      // this._loading.loadingSub
+      // .pipe(delay(0)) // This prevents a ExpressionChangedAfterItHasBeenCheckedError for subsequent requests
+      // .subscribe(() => {
+      //   console.log("loading :",this.loading)
+      // });
+  
+
+      
 
     })
   }else if(!event.multiSortMeta && isEmpty){
     console.log("no sorting and no filter")
+    this.loading = true;
+
     let object1 = {"pageNumber":currentPage-1,"pageSize":event.rows,"sortDirection":"1","sortField": "locale"}
     this.translationService.getSortedLangues(object1).subscribe((data)=>{
       console.log("SortedLangues :",data)
       this.langues=data.languages;
       this.count = data.totalElements
       this.pageSize=data.pageSize
+      if(data)
+      this.loading = false;
+
+
+      // this._loading.loadingSub
+      // .pipe(delay(0)) // This prevents a ExpressionChangedAfterItHasBeenCheckedError for subsequent requests
+      // .subscribe((loading) => {
+      //   this.loading = loading;
+      // });
 
     })
 
   }else if(!isEmpty && !event.multiSortMeta){
     console.log("yes filter and no sort")
+    this.loading = true;
     console.log("filter :", event.filters)
     var keys = Object.keys(event.filters)
     console.log("keys :",keys[0])
@@ -331,11 +361,16 @@ if(event.multiSortMeta && isEmpty){
        this.langues=data.languages;
        this.count = data.totalElements
        this.pageSize=data.pageSize
+       if(data)
+      this.loading = false;
+
+      
   
      })
 
   }else if(!isEmpty && event.multiSortMeta){
     console.log("yes sorting and yes filter")
+    this.loading = true;
     console.log("filter :", event.filters)
     var keys = Object.keys(event.filters)
     console.log("keys :",keys[0])
@@ -350,6 +385,8 @@ if(event.multiSortMeta && isEmpty){
       this.langues=data.languages;
       this.count = data.totalElements
       this.pageSize=data.pageSize
+      if(data)
+      this.loading = false;
 
     })
   }
@@ -410,11 +447,15 @@ select(value){
       this.langue=data
       this.langueId = this.langue.id
       console.log(this.langue)
+      
       this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
         this.closeResult = `Closed with: ${result}`;
       }, (reason) => {
         this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
       });
+
+   
+
     })
    
   }
@@ -433,6 +474,7 @@ select(value){
         this.handlePageChange(this.e)
         this.modalService.dismissAll();
         this.toast.success("I'm a toast!", "language deleted succesfully!");
+    
 
       },
       error => {
@@ -459,7 +501,7 @@ select(value){
       console.log(f.value)
       this.modalService.dismissAll();
       this.toast.success("I'm a toast!", "language added succesfully!");
-
+    
     },
     error=>{
       console.log(error)
@@ -476,6 +518,7 @@ select(value){
       console.log(f.value)
       this.modalService.dismissAll();
       this.toast.success("I'm a toast!", "language edited succesfully!");
+     
 
     },error=>{
       console.log(error)

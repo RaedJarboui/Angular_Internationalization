@@ -9,4 +9,6 @@ export class ThemeOptions {
   toggleSidebarMobile = false;
   toggleHeaderMobile = false;
   toggleFixedFooter = false;
+  toggleThemeOptions: boolean;
+  toggleDrawer: boolean;
 }

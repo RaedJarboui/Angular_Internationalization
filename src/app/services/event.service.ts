@@ -40,8 +40,8 @@ export class EventService {
   return this.http.put(`http://localhost:8080/translate/edit/${id}`,value);
 
  }
- editTranslation(field_value,column,tableName,value):Observable<Object>{
-  return this.http.put(`http://localhost:8080/translate/edit/${field_value}/${column}/${tableName}`,value);
+ editTranslation(field_value,column,tableName,tblabacusName,tblabacusNameColumn,value):Observable<Object>{
+  return this.http.put(`http://localhost:8080/translate/edit/${field_value}/${column}/${tableName}/${tblabacusName}/${tblabacusNameColumn}`,value);
 
  }
  deleteTranslation(id,value):Observable<Object>{

@@ -6,6 +6,7 @@ import { ListTablesComponent } from './list-tables.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 
 import { SharedModule } from '../shared/shared.module';
+import {AngularSpinnerComponent} from '../angular-spinner/angular-spinner.component'
 
 @NgModule({
   declarations: [ListTablesComponent],

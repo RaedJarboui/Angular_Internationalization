@@ -1,4 +1,4 @@
-<div class="h-100 bg-plum-plate bg-animation">
+<!-- <div class="h-100 bg-plum-plate bg-animation">
   <div class="d-flex h-100 justify-content-center align-items-center">
     <div class="mx-auto app-login-box col-md-8">
       <div class="app-logo-inverse mx-auto mb-3"></div>
@@ -24,16 +24,7 @@
                   aria-required="true" class="form-control" aria-describedby="exampleInputGroup1__BV_description_" [(ngModel)]="form.username"
                   #username="ngModel"
                   >
-                  <!-- <div
-            class="alert alert-danger"
-            role="alert"
-            *ngIf="f.submitted && username.invalid"
-          >
-            Username is required!
-          </div> -->
-                <!-- <small tabindex="-1" id="exampleInputGroup1__BV_description_" class="form-text text-muted">We'll never
-                  share your email with anyone else.
-                </small> -->
+                
               </div>
             </div>
             <div id="exampleInputGroup2" role="group" class="mb-3">
@@ -78,6 +69,88 @@
       </div>
       <div class="text-center text-white opacity-8 mt-3">
         Copyright © ArchitectUI 2019
+      </div>
+    </div>
+  </div>
+</div> -->
+
+
+
+<div class="ACM-h-100">
+  <div class="row no-gutters">
+    <div class="d-none d-lg-block col-lg-4">
+      <div class="slider-light">
+        <div class="slick-slider slick-dotted">
+          <ngx-slick-carousel #slickModal='slick-carousel' (init)="slickInit($event)" [config]="slideConfig">
+            <div ngxSlickItem [ngClass]="{'ACM-h-100' : true}">
+              <div
+                [ngClass]="{'position-relative h-100 d-flex justify-content-center align-items-center bg-plum-plate': true}">
+                <div [ngClass]="{'slide-img-bg': true }"></div>
+                <div [ngClass]="{'slider-content text-light': true }">
+                  <h3>TALYS - THE HOUSE OF DIGITAL EXPERTS</h3>
+                </div>
+              </div>
+            </div>
+          </ngx-slick-carousel>
+        </div>
+      </div>
+    </div>
+    <div class="ACM-h-100 col-md-12 col-lg-8">
+      <div class="text-right pt-3 pr-5">
+        <button class="mb-2 mx-2 border-0 btn-transition btn btn-outline-primary" (click)="langFR()"
+          [disabled]="translate.currentLang === 'fr'">Français
+        </button>
+        <button class="mb-2 mx-2 border-0 btn-transition btn btn-outline-primary" (click)="langEN()"
+          [disabled]="translate.currentLang === 'en'">English
+        </button>
+        <button class="mb-2 mx-2 border-0 btn-transition btn btn-outline-primary" (click)="langAR()"
+          [disabled]="translate.currentLang === 'ar'">عربية
+        </button>
+      </div>
+      <div class="ACM-h-100 d-flex bg-white justify-content-center align-items-center">
+        <div class="mx-auto app-login-box col-sm-12 col-md-10 col-lg-9">
+          <h4 class="mb-0">
+            <div>welcome</div>
+            <span>please_sign_in</span>
+          </h4>
+          <div class="divider"></div>
+          <div>
+            <form class="form" [formGroup]="loginForm">
+              <div class="row">
+                <div class="col-md-6">
+                  <fieldset class="form-group">
+                    <div tabindex="-1" role="group">
+                      <label> username</label>
+                      <input type="text" placeholder="enter username" class="form-control"
+                        formControlName="username">
+                    </div>
+                  </fieldset>
+                </div>
+                <div class="col-md-6">
+                  <fieldset class="form-group">
+                    <div tabindex="-1" role="group">
+                      <label>password</label>
+                      <input type="password" placeholder="enter password" class="form-control"
+                        formControlName="password">
+                    </div>
+                  </fieldset>
+                </div>
+              </div>
+           
+              <div class="text-danger">{{ error | translate }}</div>
+              <div class="divider"></div>
+              <div class="d-flex align-items-center">
+                <div class="ml-auto">
+                  <button type="submit" (click)="onSubmit()" class="btn btn-primary btn-lg">login</button>
+                  <button class="btn btn-link" >forget password?</button>
+                  <a [routerLink]="['/pages/register-boxed']" routerLinkActive="active" class="btn-lg btn btn-link">
+                    <button class="btn btn-link" >Register</button>
+                  </a>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
       </div>
     </div>
   </div>

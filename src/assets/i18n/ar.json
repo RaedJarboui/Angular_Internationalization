@@ -2,6 +2,16 @@
     "home": {
       "pageTitle": "العربية",
       "LanguageTitle":"اعدادات اللغة",
-      "TranslationTitle":"إعدادات الترجمة"
+      "TranslationTitle":"إعدادات الترجمة",
+      "add":"إضافة",
+      "LanguageList":"قائمة اللغات",
+      "enable":"ممكن",
+      "disable":"إبطال",
+      "delete":"حذف",
+      "edit":"تعديل"
+
+
+
+
     }
   }

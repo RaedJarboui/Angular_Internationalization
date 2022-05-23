@@ -1,0 +1,38 @@
+<div class="header-btn-lg pr-0 ml-0">
+  <div class="header-dots">
+    <div class="btn-group" ngbDropdown autoClose="true" placement="bottom">
+      <button type="button" class="btn btn-link mr-2 " ngbDropdownToggle>
+        <span>
+          <button class="btn-icon btn-icon-only btn d-flex justify-items-center p-0">
+            <i class="fa fa-bell btn-icon-wrapper text-white  pt-2 font-size-xlg"></i>
+            <span class="badge badge-danger ml-0 mb-3">{{totalElements}}</span>
+          </button>
+        </span>
+      </button>
+      <div class="dropdown-menu" ngbDropdownMenu ngbDropdownToggle>
+        <div class="card-tabbed-header">
+          <div class="scroll-area-sm shadow-overflow">
+            <perfect-scrollbar style="height: 1000px;" class="px-2">
+              <div
+                class="vertical-without-time vertical-timeline vertical-timeline--animate vertical-timeline--one-column">
+                <div style="position: static;" class="ps ps--active-y" ng-reflect-disabled="false">
+                  <div class="ps-content">
+                 
+                  </div>
+                </div>
+              </div>
+            </perfect-scrollbar>
+          </div>
+        </div>
+        <div class="nav-justified">
+          <ul class="nav flex-column">
+            <li class="nav-item-divider nav-item mt-0"></li>
+            <li class="nav-item-btn text-center nav-item">
+              
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

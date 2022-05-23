@@ -1,9 +1,9 @@
-import { ConfigActions } from './config.actions';
+import {ConfigActions} from './config.actions';
 
 const INITIAL_STATE = {
-  headerTheme:  '',
-  sidebarTheme:  '',
-}
+  headerTheme: '',
+  sidebarTheme: '',
+};
 
 export function ConfigReducer(state = INITIAL_STATE, action: any): any {
 
@@ -18,4 +18,3 @@ export function ConfigReducer(state = INITIAL_STATE, action: any): any {
       return state;
   }
 }
-

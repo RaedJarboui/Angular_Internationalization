@@ -24,6 +24,8 @@ export class ListTablesComponent implements OnInit {
   pageSize = 2;
   pageSizes = [1,2, 5, 10];
   tab_list:any
+  loading = true;
+
 
   cols = [
     { field: 'tableName', header: 'TableName' },
@@ -75,27 +77,34 @@ export class ListTablesComponent implements OnInit {
     const isEmpty = Object.keys(event.filters).length === 0;
     if(event.multiSortMeta && isEmpty){
       console.log("yes sorting and no filter")
+      this.loading = true;
         let object = {"pageNumber":currentPage-1,"pageSize":event.rows,"sortDirection":event.multiSortMeta[0].order.toString(),"sortField": event.multiSortMeta[0].field}
         this.translationService.getSortedListTab(object).subscribe((data)=>{
           console.log("SortedLangues :",data)
           this.tab_list=data.tab_list;
           this.count = data.totalElements
           this.pageSize=data.pageSize
+          if(data)
+        this.loading = false;
     
         })
       }else if(!event.multiSortMeta && isEmpty){
         console.log("no sorting and no filter")
+        this.loading = true;
         let object1 = {"pageNumber":currentPage-1,"pageSize":event.rows,"sortDirection":"1","sortField": "tableName"}
         this.translationService.getSortedListTab(object1).subscribe((data)=>{
           console.log("SortedLangues :",data)
           this.tab_list=data.tab_list;
           this.count = data.totalElements
           this.pageSize=data.pageSize
+          if(data)
+      this.loading = false;
     
         })
     
       }else if(!isEmpty && !event.multiSortMeta){
         console.log("yes filter and no sort")
+        this.loading = true;
         console.log("filter :", event.filters)
         var keys = Object.keys(event.filters)
         console.log("keys :",keys[0])
@@ -114,6 +123,8 @@ export class ListTablesComponent implements OnInit {
            this.tab_list=data.tab_list;
            this.count = data.totalElements
            this.pageSize=data.pageSize
+           if(data)
+          this.loading = false;
       
          })
     
@@ -121,7 +132,7 @@ export class ListTablesComponent implements OnInit {
     
       }else if(!isEmpty && event.multiSortMeta){
         console.log("yes sorting and yes filter")
-    
+        this.loading = true;
         console.log("filter :", event.filters)
         var keys = Object.keys(event.filters)
         console.log("keys :",keys[0])
@@ -139,6 +150,8 @@ export class ListTablesComponent implements OnInit {
           this.tab_list=data.tab_list;
           this.count = data.totalElements
           this.pageSize=data.pageSize
+          if(data)
+      this.loading = false;
     
         })
       }
