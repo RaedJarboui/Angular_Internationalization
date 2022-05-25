@@ -1,17 +1,50 @@
 {
     "home": {
       "pageTitle": "Français",
-      "LanguageTitle":"parametres des langues",
-      "TranslationTitle":"parametres des traduction ",
+      "LanguageTitle":"Parametres des langues",
+      "TranslationTitle":"Parametres des traduction ",
       "add":"Ajouter",
-      "LanguageList":"liste des langues",
-      "enable":"permettre",
-      "disable":"desactiver",
-      "delete":"supprimer",
-      "edit":"modifier"
-
-
-
+      "LanguageList":"Liste des langues",
+      "Table List":"Liste des Tables",
+      "Columns List":"Liste des Columns",
+      "enable":"Activé",
+      "disable":"Desactivé",
+      "delete":"Supprimer",
+      "edit":"Modifier",
+      "New Langue":"Nouvelle langue",
+      "Locale":"Locale",
+       "LanguageName":"Nom de langue", 
+       "Submit":"Ajout",
+       "Confirm Delete":"Confirmer Suppression",
+       "Are you sure you want to delete this record.":"Vous etes sure de supprimer cette langue",
+       "Yes, Delete!":"Oui, Effacer!",
+       "Cancel":"Annuler",
+       "Edit Langue":"Modifier Langue",
+       "Details":"Details",
+       "show translation":"Afficher traduction",
+       "Tables Columns Data List":"Tableaux Colonnes Liste de données",
+       "Table Name":"Nom du table",
+       "column":"Nom de column",
+       "Translation List":"Liste des traduction",
+       "save":"Sauvegarder",
+       "Copy from Textbox":"Copier depuis la zone de texte",
+       "Settings Languages":"Paramètres Langues",
+       "Settings Translation":"Parametres des traduction",
+       "List of translation":"Liste de traductions",
+       "Virtual Keyboard":"Clavier virtuel"
+    },
+    "Setting_translate": {
+      "Code":"Code",
+      "Name":"Nom",
+      "Status":"Status",
+      "Actions":"Actions",
+      "Type":"Type",
+      "TableName":"Nom De Table",
+      "Translate":"Traduction",
+      "View Table details":"Details Table",
+      "page of count":"Numero de la page",
+      "Translation values product names":"Traduction des noms des produits",
+      "Translation values event names":"Traduction des noms des evenements"
 
     }
   }

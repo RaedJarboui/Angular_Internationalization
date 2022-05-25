@@ -25,7 +25,7 @@ export class UserBoxComponent implements OnInit {
               public ngbDropdownMenu: NgbDropdownConfig,private authService: AuthService
               ,public variablesGlobales: VariablesGlobales) {
                 const browserLang = this.translate.getBrowserLang();
-    this.translate.use(browserLang.match(/en|fr|ar/) ? browserLang : 'en');
+    this.translate.use(browserLang.match(/en|fr|ar/) ? browserLang : '');
 
     console.log(browserLang);
   }
@@ -35,13 +35,7 @@ export class UserBoxComponent implements OnInit {
       this.currentUser = data;
       console.log(this.currentUser)
     });
-    // this.user.groupes = [];
-    // this.authentificationService.curentUser().subscribe(
-    //   (data) => {
-    //     this.user = data;
-    //   }
-
-    // );
+   
     if (this.translate.currentLang === 'en') {
       this.ngbDropdownMenu.placement = 'bottom-right';
     } else if (this.translate.currentLang === 'fr') {
@@ -52,36 +46,71 @@ export class UserBoxComponent implements OnInit {
   }
 
   logout() {
-    // this.authentificationService.logout().subscribe();
-    // this.loanSharedService.setHabilitationEntitys([]);
-    // this.router.navigate([AcmConstants.LOGIN_URL]);
     this.authService.logOut();
     this.router.navigate(['/pages/login-boxed']);
   }
+
 
   langFR() {
     this.translate.use('fr');
     this.ngbDropdownMenu.placement = 'bottom-right';
     localStorage.setItem('lang', 'fr');
-    
+    this.variablesGlobales.langue='fr'
+
+    console.log("selected langue via service :",this.variablesGlobales.langue)
+    this.translationService.get_Values_FromSelectedLang("product","name",this.variablesGlobales.langue).subscribe((data)=>{
+      this.variablesGlobales.productNames=data
+      console.log("product names :",this.variablesGlobales.productNames)
+
+      this.translationService.get_Values_FromSelectedLang("event","name",this.variablesGlobales.langue).subscribe((data)=>{
+        this.variablesGlobales.eventNames=data
+        console.log("event names :",this.variablesGlobales.eventNames)
+
+      })
+    })
   }
 
   langEN() {
     this.translate.use('en');
     this.ngbDropdownMenu.placement = 'bottom-right';
     localStorage.setItem('lang', 'en');
-  
+    this.variablesGlobales.langue='en'
+
+    console.log("selected langue via service :",this.variablesGlobales.langue)
+    this.translationService.get_Values_FromSelectedLang("product","name",this.variablesGlobales.langue).subscribe((data)=>{
+      this.variablesGlobales.productNames=data
+      console.log("product names :",this.variablesGlobales.productNames)
+
+      this.translationService.get_Values_FromSelectedLang("event","name",this.variablesGlobales.langue).subscribe((data)=>{
+        this.variablesGlobales.eventNames=data
+        console.log("event names :",this.variablesGlobales.eventNames)
+
+      })
+    })
   }
 
   langAR() {
     this.translate.use('ar');
     this.ngbDropdownMenu.placement = 'bottom-left';
     localStorage.setItem('lang', 'ar');
+    this.variablesGlobales.langue='ar'
+
+
+    console.log("selected langue via service :",this.variablesGlobales.langue)
+    this.translationService.get_Values_FromSelectedLang("product","name",this.variablesGlobales.langue).subscribe((data)=>{
+      this.variablesGlobales.productNames=data
+      console.log("product names :",this.variablesGlobales.productNames)
+
+      this.translationService.get_Values_FromSelectedLang("event","name",this.variablesGlobales.langue).subscribe((data)=>{
+        this.variablesGlobales.eventNames=data
+        console.log("event names :",this.variablesGlobales.eventNames)
+
+      })
+    })
+  }
     
-  }
-    /**
-     * changePwdComponent
-     */
-    changePwdComponent() {
-  }
+  changePwdComponent() {
+   
+}
+ 
 }

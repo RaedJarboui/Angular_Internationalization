@@ -1,37 +1,32 @@
 <h2>{{ 'home.LanguageTitle' | translate }}</h2>
-
-
-
 <div *ngIf="loading">
   <app-angular-spinner></app-angular-spinner>
-
 </div>
-
-
-
-
 <div class="border">
   </div>
   <div class="pt-2">
-    <button class="btn btn-md btn-outline-primary ml-auto pull-right" (click)="open(content)">
-      <i class="fa fa-user px-1"></i>Add</button>
+    <button class="btn-shadow d-inline-flex align-items-center btn btn-primary pull-right" (click)="open(content)">
+      <i class="fa fa-user px-1" class="mx-2" name="plus" ng-reflect-name="plus" aria-hidden="true" class="fa fa-plus" ng-reflect-klass="fa fa-plus"></i>{{ 'home.add' | translate }}</button>
   </div>
 
   <div style = "margin-top: 40px">
   <p-table [columns]="cols" [value]="langues" 
   [lazy]="true" sortMode="multiple" #dt (onLazyLoad)="handlePageChange($event)" [paginator]="true"
-    [rows]="pageSize" [totalRecords]="count"  [currentPageReportTemplate]="'page of count'"
+    [rows]="pageSize" [totalRecords]="count"
      [showCurrentPageReport]=true [rowsPerPageOptions]="[1,2,5,10]"  [responsive]="true"
         
   >
     <ng-template pTemplate="caption">
-  Languages List
+      {{ 'home.LanguageList' | translate }}
     </ng-template>
     <ng-template pTemplate="header" let-columns>
         <tr>
             <th *ngFor="let col of columns" [pSortableColumn]="col.field" >
-                {{col.header}}
-                <p-sortIcon [field]="col.field"></p-sortIcon>
+                {{col.header | translate}}
+                <p-sortIcon [field]="col.field">
+                  <input type="text" (click)="$event.stopPropagation()" pInputText (input)="dt.filter($event.target.value, col.field, col.filterMatchMode)">
+                </p-sortIcon>
+
             </th>
 
         </tr>
@@ -51,12 +46,12 @@
             </td>
             <td>
 
-              <p class="text-success m-0" *ngIf="langue.global">Enable</p>
-              <p class="text-danger m-0" *ngIf="!langue.global">Disable</p>
+              <p class="text-success m-0" *ngIf="langue.global">{{ 'home.enable' | translate }}</p>
+              <p class="text-danger m-0" *ngIf="!langue.global">{{ 'home.disable' | translate }}</p>
                 </td>
                 <td>
-                  <button class="mb-2 me-2 btn btn-danger" (click)="openDelete(contentDelete, langue)">Delete</button>
-                  <button class="mb-2 me-2 btn btn-success" (click)="openEdit(contentEdit,langue.id)">Edit</button>            
+                  <button class="mb-2 me-2 btn btn-danger" (click)="openDelete(contentDelete, langue)">{{ 'home.delete' | translate }}</button>
+                  <button class="mb-2 me-2 btn btn-success" (click)="openEdit(contentEdit,langue.id)">{{ 'home.edit' | translate }}</button>            
                 </td>  
         </tr>
     </ng-template>
@@ -64,7 +59,7 @@
   </div>
   <ng-template #content let-modal>
       <div class="modal-header">
-        <h4 class="modal-title" id="modal-basic-title">New Langue</h4>
+        <h4 class="modal-title" id="modal-basic-title">{{ 'home.New Langue' | translate }}</h4>
         <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -72,7 +67,7 @@
       <div class="modal-body">
         <form #f="ngForm" (ngSubmit)="onSubmit(f)" novalidate>
           <div class="form-group">
-              <label for="firstname">Locale</label>
+              <label for="firstname">{{ 'home.Locale' | translate }}</label>
                 <select class="form-control" id="locale" name="locale" class="form-control" ngModel (ngModelChange)="select($event)" >
                   <option value="Select one" selected>Select one</option>
                   <option *ngFor="let c of languages" >{{ c.code }}</option>
@@ -80,13 +75,13 @@
               </div>
             
             <div class="form-group">
-              <label for="lastname">LanguageName</label>
+              <label for="lastname">{{ 'home.LanguageName' | translate }}</label>
               <div class="input-group">
                 <input id="languageName" name="languageName" class="form-control" ngModel [(ngModel)]="langueName">
               </div>
             </div>
             <div class="border text-center">
-              <button data-dismiss="modal" class="btn btn-info">Submit</button>
+              <button data-dismiss="modal" class="btn btn-info">{{ 'home.Submit' | translate }}</button>
               </div>
         </form>
       </div>
@@ -95,25 +90,25 @@
 
     <ng-template #contentDelete let-modal>
       <div class="modal-header">
-        <h4 class="modal-title">Confirm Delete</h4>
+        <h4 class="modal-title">{{ 'home.Confirm Delete' | translate }}</h4>
         <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body">
-        <h2>Are you sure you want to delete this record.</h2>
+        <h2>{{ 'home.Are you sure you want to delete this record.' | translate }}</h2>
         <div class="border text-center"> 
-          <button data-dismiss="modal" class="btn btn-danger" (click)="onDelete()">Yes, Delete!</button> 
+          <button data-dismiss="modal" class="btn btn-danger" (click)="onDelete()">{{ 'home.Yes, Delete!' | translate }}</button> 
         </div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Cancel</button>
+        <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">{{ 'home.Cancel' | translate }}</button>
       </div>
     </ng-template>
 
     <ng-template #contentEdit let-modal>
       <div class="modal-header">
-        <h4 class="modal-title" id="modal-basic-title">Edit Langue</h4>
+        <h4 class="modal-title" id="modal-basic-title">{{ 'home.Edit Langue' | translate }}</h4>
         <button type="button" class="close close-modale" aria-label="Close" (click)="modal.dismiss('Cross click')">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -121,13 +116,13 @@
         <form #f="ngForm" (ngSubmit)="onSubmitEdit(f)" novalidate>
           <div class="modal-body">
           <div class="form-group">
-              <label for="locale">Locale</label>
+              <label for="locale">{{ 'home.Locale' | translate }}</label>
               <div class="input-group" >
                 <input [readonly]="true" id="locale" name="locale" class="form-control" ngModel [(ngModel)]="langue.locale" />
               </div>
             </div>
             <div class="form-group">
-              <label for="languageName">LanguageName</label>
+              <label for="languageName">{{ 'home.LanguageName' | translate }}</label>
               <div class="input-group">
                 <input id="languageName" name="languageName" class="form-control" ngModel [(ngModel)]="langue.languageName">
               </div>
@@ -139,17 +134,22 @@
               </div>
       </div>
       <div class="modal-footer">
-        <button data-dismiss="modal" class="btn btn-info">Submit</button>
+        <button data-dismiss="modal" class="btn btn-success">{{ 'home.Submit' | translate }}</button>
       </div>
       </form>
     </ng-template>
 
+
+
+    <span class="lnr lnr-exit"></span> lnr-exit
+    <i class="lnr lnr-exit"></i> lnr-exit
+
+
    
     
 
 
    
 
-    
    
       

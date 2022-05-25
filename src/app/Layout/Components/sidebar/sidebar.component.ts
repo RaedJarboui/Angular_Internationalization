@@ -64,6 +64,7 @@ import { Observable } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { AppComponent } from '../../../app.component';
+import { VariablesGlobales } from 'src/app/services/VariablesGlobales ';
 
 
 @Component({
@@ -79,7 +80,15 @@ export class SidebarComponent implements OnInit {
    * @param translate TranslateService
    */
   constructor(public globals: ThemeOptions, private activatedRoute: ActivatedRoute, public translate: TranslateService,
-              private router: Router) {
+              private router: Router,public variablesGlobales: VariablesGlobales) {
+      this.translate.addLangs(['en', 'fr','ar']);
+      this.translate.setDefaultLang('en');
+  
+      const browserLang = this.variablesGlobales.langue
+      this.translate.use(browserLang.match(/en|fr|ar/) ? browserLang : 'en');
+  
+      console.log(browserLang);
+      console.log("langue value in langue comp :",this.variablesGlobales.langue)
 
   }
 

@@ -20,21 +20,23 @@
        [showCurrentPageReport]=true [rowsPerPageOptions]="[1,2,5,10]"  [responsive]="true" 
     >
       <ng-template pTemplate="caption">
-    Tables Columns Data List
+        {{ 'home.Tables Columns Data List' | translate }}
       </ng-template>
       <ng-template pTemplate="header" let-columns>
           <tr>
               <th *ngFor="let col of columns" [pSortableColumn]="col.field" >
                   {{col.header}}
                   <p-sortIcon [field]="col.field"></p-sortIcon>
+                  <input type="text" (click)="$event.stopPropagation()" pInputText (input)="dt.filter($event.target.value, col.field, col.filterMatchMode)">
+
               </th>
   
           </tr>
-          <tr>
+          <!-- <tr>
               <th *ngFor="let col of columns" [ngSwitch]="col.field" >
               <input type="text" pInputText (input)="dt.filter($event.target.value, col.field, col.filterMatchMode)">
               </th>
-          </tr>
+          </tr> -->
       </ng-template>
       <ng-template pTemplate="body" let-s let-rowIndex="rowIndex" >
           <tr >
@@ -104,18 +106,22 @@
 
 
  <ng-template #notInclude>
-  Table Name:
-  <select [(ngModel)]="selected_tab" (ngModelChange)="select1($event)" class="browser-default custom-select">
-    <option value="Select one" selected>Select one</option>
-    <option *ngFor="let c of last_array">{{ c.TABLE_ABACUS_NAME }}</option>
-  </select>
+  {{ 'home.Table Name' | translate  }}:
+
+
+  <select style="display: inline-block;" [(ngModel)]="selected_tab" (ngModelChange)="select1($event)" _ngcontent-bpw-c21="" class="form-control ng-pristine ng-invalid ng-touched"  required="">
+    <option _ngcontent-bpw-c21="" value="Select one" selected> -- Select Table -- </option>
+    <option *ngFor="let c of last_array" _ngcontent-bpw-c21=""  >{{ c.TABLE_ABACUS_NAME }}</option>
+  </select>  
+  
  
-  column:
-  <select [(ngModel)]="selected_col" class="browser-default custom-select" (ngModelChange)="select2($event)">
-    <option value="Select one" selected>Select one</option>
-    <option *ngFor="let c of columns">{{ c }}</option>
-  </select>
+
  
+  {{ 'home.column' | translate }}:
+  <select style="display: inline-block;" [(ngModel)]="selected_col" (ngModelChange)="select2($event)" _ngcontent-bpw-c21="" class="form-control ng-pristine ng-invalid ng-touched" required=""  ng-reflect-required=""  >
+    <option _ngcontent-bpw-c21="" value="Select one" selected> -- Select a Column-- </option>
+    <option *ngFor="let c of columns" _ngcontent-bpw-c21="" >{{c}}</option>
+  </select>
   <br />
   <br />
  <div *ngIf="selected_tab && selected_col">
@@ -124,26 +130,25 @@
   <div style = "margin-top: 40px">
     <p-table [columns]="col" [value]="select2_array" 
     [lazy]="true" sortMode="multiple" #dt (onLazyLoad)="handlePageChangee($event)" [paginator]="true"
-      [rows]="pageSize" [totalRecords]="count"  [currentPageReportTemplate]="'page of count'"
+      [rows]="pageSize" [totalRecords]="count"
        [showCurrentPageReport]=true [rowsPerPageOptions]="[1,2,5,10]"  [responsive]="true"
        
     >
+    <app-tables-columns></app-tables-columns>
       <ng-template pTemplate="caption">
-    Languages List
+        {{ 'home.Translation List' | translate }}
       </ng-template>
       <ng-template pTemplate="header" let-columns>
           <tr>
               <th *ngFor="let col of columns" [pSortableColumn]="col.field" >
                   {{col.header}}
                   <p-sortIcon [field]="col.field"></p-sortIcon>
+                  <input type="text" (click)="$event.stopPropagation()" pInputText (input)="dt.filter($event.target.value, col.field, col.filterMatchMode)">
+
               </th>
   
           </tr>
-          <tr>
-              <th *ngFor="let col of columns" [ngSwitch]="col.field" >
-              <input type="text" pInputText (input)="dt.filter($event.target.value, col.field, col.filterMatchMode)">
-              </th>
-          </tr>
+         
       </ng-template>
       <ng-template pTemplate="body" let-c let-rowIndex="rowIndex"  >
           <tr>
@@ -189,7 +194,8 @@
                 </div>    
             </td>
             <td>
-              <button class="btn-wide mb-2 me-2 btn btn-primary btn-sm" (click)="addTranslation1(select2_array.indexOf(c))">save</button>
+              <button class="btn-wide mb-2 me-2 btn btn-primary btn-sm" (click)="addTranslation1(select2_array.indexOf(c))"> {{ 'home.save' | translate }}
+              </button>
             </td>
                  
           </tr>
@@ -197,74 +203,6 @@
     </p-table>
     </div>
 
-
-
-
-
-  <!-- <table class="table table-bordered">
-    <thead>
-      <tr>
-        <th scope="col">Column value</th>
-        <th *ngFor="let l of global_langues" scope="col">{{ l.locale }}</th>
-        <th scope="col">Translation</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let c of select2_array| paginate : {
-        itemsPerPage: pageSize,
-        currentPage: page,
-        totalItems: count
-      };
-let i = index"
-[class.active]="i == currentIndex"
->
-        <td>{{ c }}</td>
-        <td *ngFor="let l of global_langues; index as j">
-          <div *ngFor="let d of db_data_json">
-            <div *ngFor="let dd of d.translations">             
-              <div *ngIf="dd.langue === l.locale && c === d.field_value">
-          <input type="text" name="items[]" value="{{dd.value}}" [matAutocomplete]="auto"
-          (keyup)="onKeyUp($event,j)" (click)="myClickFunction(j)" />
-         
-          <mat-autocomplete #auto="matAutocomplete">
-            <mat-option *ngFor="let f of filteredTranslation " [value]="f">
-              {{f}}
-            </mat-option>
-          </mat-autocomplete>
-          </div>
-          </div>
-          </div>
-          <div *ngFor="let m of missing">
-            <div *ngIf="c === m">
-              <input type="text" name="items[]" [matAutocomplete]="auto"
-              (keyup)="onKeyUp($event,j)" (click)="myClickFunction(j)"  />
-              
-              <mat-autocomplete #auto="matAutocomplete">
-                <mat-option *ngFor="let f of filteredTranslation " [value]="f">
-                  {{f}}
-                </mat-option>
-              </mat-autocomplete>
-              </div>
-            </div>
-            <div *ngFor="let m of missing_lang">
-              <div *ngIf="m.langue === l.locale && c === m.field_value ">
-              <input type="text" name="items[]" [matAutocomplete]="auto"
-              (keyup)="onKeyUp($event,j)" (click)="myClickFunction(j)" (input)="onInputChange($event)" />
-             
-              <mat-autocomplete #auto="matAutocomplete">
-                <mat-option *ngFor="let f of filteredTranslation " [value]="f">
-                  {{f}}
-                </mat-option>
-              </mat-autocomplete>
-              </div>
-            </div>    
-        </td>
-        <td>
-          <button class="btn-wide mb-2 me-2 btn btn-primary btn-sm" (click)="addTranslation1(i)">save</button>
-        </td>
-      </tr>
-    </tbody>
-  </table> -->
   </div>
   
 </ng-template>
@@ -287,7 +225,7 @@ let i = index"
         </div>
        
         <div class="border text-center">
-          <button data-dismiss="modal" class="btn btn-info">Submit</button>
+          <button data-dismiss="modal" class="btn btn-info">{{ 'home.Submit' | translate }}</button>
           </div>
     </form>
   </div>
@@ -305,7 +243,7 @@ value="{{value}}"
 #userinput
 placeholder="Tap on the virtual keyboard to start"
 />
-<button (click)="copyInputMessage(userinput)" value="click to copy" >Copy from Textbox</button>
+<button (click)="copyInputMessage(userinput)" value="click to copy" >{{ 'home.Copy from Textbox' | translate }}</button>
 
 
 

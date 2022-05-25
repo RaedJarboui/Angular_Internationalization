@@ -22,7 +22,7 @@ export class DisplayTranslationComponent implements OnInit {
     this.translate.setDefaultLang('en');
 
     const browserLang = this.variablesGlobales.langue
-    this.translate.use(browserLang.match(/en|fr|ar/) ? browserLang : '');
+    this.translate.use(browserLang.match(/en|fr|ar/) ? browserLang : this.variablesGlobales.langue);
     console.log(browserLang);
     console.log("langue value in display translation comp :",this.variablesGlobales.langue)
   }

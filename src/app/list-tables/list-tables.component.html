@@ -4,16 +4,18 @@
 </div>
   <p-table [columns]="cols" [value]="tab_list" 
   [lazy]="true" sortMode="multiple" #dt (onLazyLoad)="handlePageChange($event)" [paginator]="true"
-  [rows]="pageSize" [totalRecords]="count"  [currentPageReportTemplate]="'page of count'"
+  [rows]="pageSize" [totalRecords]="count"
    [showCurrentPageReport]=true [rowsPerPageOptions]="[1,2,5,10]"  [responsive]="true"  >
     <ng-template pTemplate="caption">
-    Tabs List
+      {{ 'home.Table List' | translate }}
     </ng-template>
     <ng-template pTemplate="header" let-columns>
         <tr>
             <th *ngFor="let col of columns" [pSortableColumn]="col.field">
-                {{col.header}}
+                {{col.header| translate}}
                 <p-sortIcon [field]="col.field"></p-sortIcon>
+                <input type="text" (click)="$event.stopPropagation()" pInputText (input)="dt.filter($event.target.value, col.field, col.filterMatchMode)">
+
             </th>
 
         </tr>
@@ -38,7 +40,10 @@
           </td>
           <td>
             <div *ngIf="t.translate">
-              <button class="mb-2 me-2 btn-transition btn btn-outline-focus" (click) ="details(t.id)">Details</button>
+              <button ngcontent-aqn-c41="" class="btn btn-warning"><i ngcontent-aqn-c41="" class="pe-7s-look btn-icon-wrapper text-white" (click) ="details(t.id)"></i></button>
+
+              <!-- <button _ngcontent-aqn-c9="" icon="fa fa-edit" pbutton="" type="button" ng-reflect-icon="fa fa-edit" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-icon-only" (click) ="details(t.id)"><span aria-hidden="true" class="ui-button-icon-left ui-clickable fa fa-edit"></span><span class="ui-button-text ui-clickable"></span></button> -->
+              <!-- <button class="mb-2 me-2 btn-transition btn btn-outline-focus" (click) ="details(t.id)">Details</button> -->
             </div>
           </td>
         </tr>

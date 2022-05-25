@@ -46,10 +46,10 @@ export class LanguesComponent implements OnInit {
   myObjArray=[]
 
   cols = [
-    { field: 'locale', header: 'Code' },
-    { field: 'languageName', header: 'Name' },
-    { field: 'global', header: 'Status' },
-    { field: 'Actions', header: 'Actions' }
+    { field: 'locale', header: 'Setting_translate.Code' },
+    { field: 'languageName', header: 'Setting_translate.Name' },
+    { field: 'global', header: 'Setting_translate.Status' },
+    { field: 'Actions', header: 'Setting_translate.Actions' }
 
 ];
     languages = [
@@ -257,7 +257,7 @@ export class LanguesComponent implements OnInit {
       this.translate.setDefaultLang('en');
   
       const browserLang = this.variablesGlobales.langue
-      this.translate.use(browserLang.match(/en|fr|ar/) ? browserLang : 'en');
+      this.translate.use(browserLang.match(/en|fr|ar/) ? browserLang : browserLang);
   
       console.log(browserLang);
       console.log("langue value in langue comp :",this.variablesGlobales.langue)

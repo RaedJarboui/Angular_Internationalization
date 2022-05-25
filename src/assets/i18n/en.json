@@ -5,13 +5,45 @@
       "TranslationTitle":"Settings Translation ",
       "add":"Add",
       "LanguageList":"Languages List",
-      "enable":"enable",
-      "disable":"disable",
-      "delete":"delete",
-      "edit":"edit"
-
-
-
-
+      "Table List":"List of Tables",
+      "Columns List":"List of Columns",
+      "enable":"Enable",
+      "disable":"Disable",
+      "delete":"Delete",
+      "edit":"Edit",
+      "New Langue":"New Langue",
+      "Locale":"Locale",
+       "LanguageName":"LanguageName", 
+       "Submit":"Submit",
+       "Confirm Delete":"Confirm Delete",
+       "Are you sure you want to delete this record.":"Are you sure you want to delete this record.",
+       "Yes, Delete!":"Yes, Delete!",
+       "Cancel":"Cancel",
+       "Edit Langue":"Edit Langue",
+       "Details":"View Details",
+       "show translation":"Show Translation",
+       "Tables Columns Data List":"Tables Columns Data List",
+       "Table Name":"Table Name",
+       "column":"Column",
+       "Translation List":"Translation List",
+       "save":"Save",
+       "Copy from Textbox":"Copy from Textbox",
+       "Settings Languages":"Settings Languages",
+       "Settings Translation":"Settings Translation",
+       "List of translation":"List of translation",
+       "Virtual Keyboard":"Virtual Keyboard"
+    },
+    "Setting_translate": {
+      "Code":"Code",
+      "Name":"Name",
+      "Type":"Type",
+      "Status":"Stats",
+      "Actions":"Actions",
+      "TableName":"TableName",
+      "Translate":"Translate",
+      "View Table details":"View Table details",
+      "page of count":"Page of count",
+      "Translation values product names":"Translation values product names",
+      "Translation values event names":"Translation values event names"
     }
   }

@@ -1,101 +1,3 @@
-<!-- <div [class]="'app-sidebar sidebar-shadow ' + (config$ | async).sidebarTheme" (mouseover)="sidebarHover()"
-     (mouseout)="sidebarHover()">
-  <div class="app-header__logo">
-    <div class="logo-src"></div>
-    <div class="header__pane ms-auto">
-      <button type="button" class="hamburger close-sidebar-btn hamburger--elastic"
-              [ngClass]="{'is-active' : globals.toggleSidebar}" (click)="toggleSidebar()">
-        <span class="hamburger-box">
-            <span class="hamburger-inner"></span>
-        </span>
-      </button>
-    </div>
-  </div>
-  <div class="app-sidebar-content">
-    <div class="app-sidebar-scroll">
-      <perfect-scrollbar [autoPropagation]="true">
-        <div class="v-sidebar-menu vsm-default">
-          <div class="vsm-list">
-            <ngb-accordion [destroyOnHide]="false" [closeOthers]="true" [activeIds]="extraParameter">
-              <ngb-panel>
-                <ng-template ngbPanelHeader>
-                  <div class="vsm-header">Translation Module</div>
-                </ng-template>
-              </ngb-panel>
-              <ngb-panel id="pages1Menu">
-                <ng-template ngbPanelHeader>    
-                  <a routerLinkActive="active-item" routerLink="/langues">
-                   <button class="vsm-link">
-                    <i class="vsm-icon pe-7s-safe"></i>
-                     <span class="vsm-title">Setting Language</span> 
-                  </button>
-                  </a>
-                </ng-template>
-              </ngb-panel>
-              <ngb-panel id="pages1Menu">
-                <ng-template ngbPanelHeader>    
-                  <a routerLinkActive="active-item" routerLink="/tabs">
-                   <button class="vsm-link">
-                    <i class="vsm-icon pe-7s-safe"></i>
-                     <span class="vsm-title">Setting Translation</span> 
-                  </button>
-                  </a>
-                </ng-template>
-              </ngb-panel>
-              <ngb-panel id="pages1Menu">
-                <ng-template ngbPanelHeader>    
-                  <a routerLinkActive="active-item" routerLink="/translation">
-                   <button class="vsm-link">
-                    <i class="vsm-icon pe-7s-safe"></i>
-                     <span class="vsm-title">List of Translation</span> 
-                  </button>
-                  </a>
-                </ng-template>
-              </ngb-panel>
-
-           
-              <ngb-panel>
-                <ng-template ngbPanelHeader>
-                  <div class="vsm-header">Simple Virtual Keyboard</div>
-                </ng-template>
-              </ngb-panel>
-              <ngb-panel id="pagesMenu3">
-                <ng-template ngbPanelHeader>
-                  <a routerLinkActive="active-item" routerLink="/keyboard">
-                  <button class="vsm-link">
-                    <i class="vsm-icon pe-7s-graph2"></i>
-                    <span class="vsm-title">Virtual Keyboard</span>
-                  </button>
-                  </a>
-                </ng-template>
-                <ng-template ngbPanelContent>
-                  <div class="vsm-dropdown">
-                    <div class="vsm-list">
-                      <div class="vsm-item">
-                        <a routerLinkActive="active-item" routerLink="/widgets/chart-boxes-3" class="vsm-link">
-                          <span class="vsm-title">Variation 3</span></a>
-                      </div>
-                    </div>
-                  </div>
-                </ng-template>
-              </ngb-panel>
-            </ngb-accordion>
-          
-          </div>
-        </div>
-      </perfect-scrollbar>
-    </div>
-  </div>
-</div> -->
-
-
-
-
-
-
-
-
-
 <div [class]="'app-sidebar sidebar-shadow ' + (config$ | async).sidebarTheme">
   <div class="app-header__logo">
     <div *ngIf="globals.sidebarHover === true">
@@ -112,15 +14,10 @@
         <div class="v-sidebar-menu vsm-default">
           <div class="vsm-list">
             <div class="vsm-header" ></div>
-            <div class="vsm-item" >
-              <a [routerLink]="['/']" routerLinkActive="Active" class="vsm-link">
-                <i class="vsm-icon pe-7s-graph1"></i>
-                <span class="vsm-title">Settings Languages</span>
-              </a>
-            </div>
+           
             <ngb-accordion [destroyOnHide]="false" [closeOthers]="true" [activeIds]="extraParameter">
               <ngb-panel
-               >
+                >
                 <ng-template ngbPanelHeader>
                   <div class="vsm-header"></div>
                 </ng-template>
@@ -128,68 +25,30 @@
               <ngb-panel id="elementsMenu"
                >
                 <ng-template ngbPanelHeader>
-                  <a [routerLink]="['/tabs']" routerLinkActive="Active" >
-                  <button ngbPanelToggle class="vsm-link">
+                  <a [routerLink]="['/']"><button ngbPanelToggle class="vsm-link">
                     <i class="vsm-icon pe-7s-date"></i>
-                    <span class="vsm-title">Settings Translation</span>
+                    <span class="vsm-title">{{ 'home.Settings Languages' | translate }}</span>
                   </button>
                 </a>
                 </ng-template>
-                <!-- <ng-template ngbPanelContent>
-                  <div class="vsm-dropdown">
-                    <div class="vsm-list">
-                      <div class="vsm-item" >
-                        <a [routerLink]="['/calendar']" routerLinkActive="Active" class="vsm-link"> <span
-                            class="vsm-title">{{'sidebar.calender'| translate }}</span></a>
-                      </div>
-                      <div class="vsm-item" >
-                        <a [routerLink]="['/task']" routerLinkActive="Active" class="vsm-link"> <span
-                            class="vsm-title">{{'sidebar.tasks'| translate }}</span></a>
-                      </div>
-                    </div>
-                  </div>
-                </ng-template> -->
+               
               </ngb-panel>
               <ngb-panel
-               >
+              >
                 <ng-template ngbPanelHeader>
                   <div class="vsm-header"></div>
                 </ng-template>
               </ngb-panel>
               <ngb-panel id="materialFormControls"
-                >
+              >
                 <ng-template ngbPanelHeader>
-                  <a [routerLink]="['/translation']" routerLinkActive="Active" >
-                  <button ngbPanelToggle class="vsm-link">
+                  <a [routerLink]="['/tabs']"><button ngbPanelToggle class="vsm-link">
                     <i class="vsm-icon pe-7s-user"></i>
-                    <span class="vsm-title">List of translation</span>
+                    <span class="vsm-title">{{'home.Settings Translation'| translate }}</span>
                   </button>
-                  </a>
-                </ng-template>
-                <!-- <ng-template ngbPanelContent>
-                  <div class="vsm-dropdown">
-                    <div class="vsm-list">
-                      <div class="vsm-item" >
-                        <a [routerLink]="['/customer-management']" (click)="customerReset()" class="vsm-link">
-                          <span class="vsm-title">{{'sidebar.customer_management'| translate }}</span></a>
-                      </div>
-                      <div class="vsm-item" >
-                        <a routerLinkActive="active-item" [routerLink]="['/customer-edit-menu']"
-                          [queryParams]="{mode: 2}" class="vsm-link">
-                          <span class="vsm-title">{{'sidebar.edit_customer'| translate }}</span></a>
-                      </div>
-                      <div class="vsm-item" >
-                        <a [routerLink]="['/customer-360']" [queryParams]="{mode: 1}" routerLinkActive="Active"
-                          class="vsm-link">
-                          <span class="vsm-title">{{'sidebar.customer_360'| translate }}</span></a>
-                      </div>
-                      <div class="vsm-item" >
-                        <a [routerLink]="['/meza-card-check']" routerLinkActive="Active" class="vsm-link">
-                          <span class="vsm-title">{{'sidebar.customer_meza_card'| translate }}</span></a>
-                      </div>
-                    </div>
-                  </div>
-                </ng-template> -->
+                </a>
+                  </ng-template>
+               
               </ngb-panel>
               <ngb-panel >
                 <ng-template ngbPanelHeader>
@@ -198,231 +57,39 @@
               </ngb-panel>
               <ngb-panel id="pagesMenu3" >
                 <ng-template ngbPanelHeader>
-                  <a [routerLink]="['/keyboard']" routerLinkActive="Active" >
-                  <button ngbPanelToggle class="vsm-link">
+                  <a [routerLink]="['/translation']"><button ngbPanelToggle class="vsm-link">
                     <i class="vsm-icon pe-7s-credit"></i>
-                    <span class="vsm-title">Virtual Keyboard</span>
+                    <span class="vsm-title">{{'home.List of translation'| translate }}</span>
                   </button>
                   </a>
                 </ng-template>
-                <!-- <ng-template ngbPanelContent>
-                  <div class="vsm-dropdown">
-                    <div class="vsm-list">
-                      <div class="vsm-item" >
-                        <a [routerLink]="['/unassigned-loans']" class="vsm-link">
-                          <span class="vsm-title">{{'sidebar.unassigned_loans' |translate}}</span></a>
-                      </div>
-                      <div class="vsm-item" >
-                        <a [routerLink]="['/issued-loans']" class="vsm-link">
-                          <span class="vsm-title">{{'sidebar.issued_loans' | translate}}</span></a>
-                      </div>
-                      <div class="vsm-item" >
-                        <a [routerLink]="['/loan-assign']" class="vsm-link">
-                          <span class="vsm-title">{{'sidebar.assign_loan'| translate }}</span></a>
-                      </div>
-                      <div class="vsm-item" >
-                        <a [routerLink]="['/online-application']" class="vsm-link">
-                          <span class="vsm-title">{{'sidebar.online_application'| translate }}</span></a>
-                      </div>
-                      <div class="vsm-item" >
-                        <a [routerLink]="['']" routerLinkActive="Active" class="vsm-link">
-                          <span class="vsm-title">{{'sidebar.list_application'| translate }}</span></a>
-                      </div>
-                      <div class="vsm-item" >
-                        <a [routerLink]="['/customer-list']" [queryParams]="{mode: 3}" class="vsm-link">
-                          <span class="vsm-title">{{'sidebar.loan_management'| translate }}</span></a>
-                      </div>
-                      <div class="vsm-item" >
-                        <a [routerLink]="['/exception-request']" class="vsm-link">
-                          <span class="vsm-title">{{'sidebar.exception_request' |translate}}</span></a>
-                      </div>
-                    </div>
-                  </div>
-                </ng-template> -->
+              
               </ngb-panel>
-              <!-- <ngb-panel
-               >
+              <ngb-panel
+              >
                 <ng-template ngbPanelHeader>
                   <div class="vsm-header"></div>
                 </ng-template>
-              </ngb-panel> -->
-              <!-- <ngb-panel id="dmsMenu"
-               >
+              </ngb-panel>
+              <ngb-panel id="dmsMenu"
+                >
                 <ng-template ngbPanelHeader>
-                  <button ngbPanelToggle class="vsm-link">
+                  <a [routerLink]="['/keyboard']"><button ngbPanelToggle class="vsm-link">
                     <i class="vsm-icon pe-7s-cloud-upload"></i>
-                    <span class="vsm-title">{{'sidebar.ged'| translate }}</span>
-                    <i class="vsm-arrow"></i>
+                    <span class="vsm-title">{{'home.Virtual Keyboard'| translate }}</span>
                   </button>
+                  </a>
                 </ng-template>
-                <ng-template ngbPanelContent>
-                  <div class="vsm-dropdown">
-                    <div class="vsm-list">
-                      <div class="vsm-item" >
-                        <a [routerLink]="['/find-document']" routerLinkActive="Active" class="vsm-link">
-                          <span class="vsm-title">{{'sidebar.find_document'| translate }}</span></a>
-                      </div>
-                      <div class="vsm-item" >
-                        <a [routerLink]="['/add-document']" routerLinkActive="Active" class="vsm-link">
-                          <span class="vsm-title">{{'sidebar.upload_document'| translate }}</span></a>
-                      </div>
-                    </div>
-                  </div>
-                </ng-template>
-              </ngb-panel> -->
-              <!-- <ngb-panel >
-                >
-                <ng-template ngbPanelHeader>
-                  <div class="vsm-header"></div>
-                </ng-template>
+                
               </ngb-panel>
-              <ngb-panel
-               >
-                <ng-template ngbPanelHeader
-                  >
-                  <button ngbPanelToggle class="vsm-link">
-                    <i class="vsm-icon pe-7s-piggy"></i>
-                    <span class="vsm-title">{{'sidebar.expenses'| translate }}</span>
-                    <i class="vsm-arrow"></i>
-                  </button>
-                </ng-template>
-                <ng-template ngbPanelContent>
-                  <div class="vsm-dropdown">
-                    <div class="vsm-list">
-                      <div class="vsm-item" >
-                        <a [routerLink]="['/expenses-settings']" routerLinkActive="Active" class="vsm-link"> <span
-                            class="vsm-title">{{'sidebar.setting_expenses'| translate }}</span></a>
-                      </div>
-                      <div class="vsm-item" >
-                        <a [routerLink]="['/expenses-list']" routerLinkActive="Active" class="vsm-link"> <span
-                            class="vsm-title">{{'sidebar.list_expenses'| translate }}</span></a>
-                      </div>
-                    </div>
-                  </div>
-                </ng-template>
-              </ngb-panel> -->
-              <!-- <ngb-panel>
-                <ng-template ngbPanelHeader>
-                  <div class="vsm-header"></div>
-                </ng-template>
-              </ngb-panel>
-              <ngb-panel id="complianceMenu" >
-                <ng-template ngbPanelHeader>
-                  <button ngbPanelToggle class="vsm-link">
-                    <i class="vsm-icon pe-7s-check"></i>
-                    <span class="vsm-title">{{'sidebar.compliance'| translate }}</span>
-                    <i class="vsm-arrow"></i>
-                  </button>
-                </ng-template>
-                <ng-template ngbPanelContent>
-                  <div class="vsm-dropdown">
-                    <div class="vsm-list">
-                      <div class="vsm-item" >
-                        <a [routerLink]="['/setting-aml']" routerLinkActive="Active" class="vsm-link">
-                          <span class="vsm-title">{{'setting.aml_setting.aml_setting'| translate }}</span></a>
-                      </div>
-                      <div class="vsm-item" >
-                        <a routerLinkActive="active-item" [routerLink]="['/customer-aml-check']"
-                          [queryParams]="{mode: 4}" class="vsm-link">
-                          <span class="vsm-title">{{'customer_aml.aml_check'| translate }}</span></a>
-                      </div>
-                    </div>
-                  </div>
-                </ng-template>
-              </ngb-panel> -->
-              <!-- <ngb-panel>
-    
-                <ng-template ngbPanelHeader>
-                  <div class="vsm-header"></div>
-                </ng-template>
-              </ngb-panel>
-              <ngb-panel
-                >
-                <ng-template ngbPanelHeader>
-                  <button ngbPanelToggle class="vsm-link">
-                    <i class="vsm-icon pe-7s-credit"></i>
-                    <span class="vsm-title">
-                      {{'meza_card.meza_card'| translate }}
-                    </span>
-                    <i class="vsm-arrow"></i>
-                  </button>
-                </ng-template>
-                <ng-template ngbPanelContent>
-                  <div class="vsm-dropdown">
-                    <div class="vsm-list">
-                      <div class="vsm-item" >
-                        <a [routerLink]="['/setting-meza-card']" routerLinkActive="Active" class="vsm-link"> <span
-                            class="vsm-title">{{'meza_card.setting_Meza_Card'| translate }}</span></a>
-                      </div>
-                      <div class="vsm-item" >
-                        <a [routerLink]="['/activate-meza-card']" routerLinkActive="Active" class="vsm-link"> <span
-                            class="vsm-title">{{'meza_card.activate_Meza_Card'| translate }}</span></a>
-                      </div>
-                    </div>
-                  </div>
-                </ng-template>
-              </ngb-panel> -->
-
-              <!-- <ngb-panel>
-                <ng-template ngbPanelHeader>
-                  <div class="vsm-header"></div>
-                </ng-template>
-              </ngb-panel>
-              <ngb-panel id="incentiveId">
-                <ng-template ngbPanelHeader>
-                  <button ngbPanelToggle class="vsm-link">
-                    <i class="vsm-icon pe-7s-gift"></i>
-                    <span class="vsm-title">{{'sidebar.incentive'| translate }}</span>
-                    <i class="vsm-arrow"></i>
-                  </button>
-                </ng-template>
-                <ng-template ngbPanelContent>
-                  <div class="vsm-dropdown">
-                    <div class="vsm-list">
-                      <div class="vsm-item"
-                       >
-                        <a [routerLink]="['/issuance-repayment-incentives']" routerLinkActive="Active" class="vsm-link">
-                          <span class="vsm-title">{{'sidebar.issuance_and_repayment_incentives'| translate }}</span></a>
-                      </div>
-                      <div class="vsm-item" >
-                        <a [routerLink]="['/registration-incentive']" routerLinkActive="Active" class="vsm-link"> <span
-                            class="vsm-title">{{'sidebar.registration_incentives'| translate }}</span></a>
-                      </div>
-                      <div class="vsm-item" >
-                        <a [routerLink]="['/operations-incentives']" routerLinkActive="Active" class="vsm-link"> <span
-                            class="vsm-title">{{'sidebar.operations_incentives'| translate }}</span></a>
-                      </div>
-                      <div class="vsm-item" >
-                        <a [routerLink]="['/legel-incentive']" routerLinkActive="Active" class="vsm-link">
-                          <span class="vsm-title">{{'sidebar.legal_incentive'| translate }}</span></a>
-                      </div>
-                      <div class="vsm-item" >
-                        <a [routerLink]="['/run-incentive']" routerLinkActive="Active" class="vsm-link">
-                          <span class="vsm-title">{{'sidebar.run_incentive'| translate }}</span></a>
-                      </div>
-                    </div>
-                  </div>
-          </ng-template>
-          </ngb-panel> -->
-          </ngb-accordion>
-          <div class="vsm-header" ></div>
-          <!-- <div class="vsm-item" >
-            <a [routerLink]="['/notification']" class="vsm-link">
-              <i class="vsm-icon pe-7s-bell"></i>
-              <span class="vsm-title">{{'sidebar.notification'| translate }}</span>
-            </a>
-          </div> -->
-          <div class="vsm-header" ></div>
-          <!-- <div class="vsm-item" >
-            <a [routerLink]="['/reports-list']" [queryParams]="{mode: 1}" routerLinkActive="Active" class="vsm-link">
-              <i class="vsm-icon pe-7s-note2"></i>
-              <span class="vsm-title">{{'sidebar.reports_list'| translate }}</span>
-            </a>
-          </div> -->
+            
+            
+             
+            
+          </ngb-accordion> 
         </div>
     </div>
     </perfect-scrollbar>
   </div>
 </div>
 </div>
-

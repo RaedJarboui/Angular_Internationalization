@@ -5,12 +5,46 @@
       "TranslationTitle":"إعدادات الترجمة",
       "add":"إضافة",
       "LanguageList":"قائمة اللغات",
+      "Table List":"قائمة جداول",
+      "Columns List":"قائمة الأعمدة",
       "enable":"ممكن",
       "disable":"إبطال",
       "delete":"حذف",
-      "edit":"تعديل"
-
-
+      "edit":"تعديل",
+      "New Langue":"لغة جديدة",
+      "Locale":"لغة",
+       "LanguageName":"اسم اللغة", 
+       "Submit":"إرسال",
+       "Confirm Delete":"تأكيد الحذف",
+       "Are you sure you want to delete this record.":"هل أنت متأكد أنك تريد حذف هذا السجل.",
+       "Yes, Delete!":"نعم ، احذف!",
+       "Cancel":"يلغي",
+       "Edit Langue":"تحرير اللغة",
+       "Details":"تفاصيل",
+       "show translation":"عرض الترجمة",
+       "Tables Columns Data List":"جداول الأعمدة قائمة البيانات",
+       "Table Name":" اسم الطاولة",
+       "column":"اسم العمود",
+       "Translation List":"قائمة الترجمات",
+       "save":"حفظ",
+       "Copy from Textbox":"نسخ من مربع النص",
+       "Settings Languages":"إعدادات اللغات",
+       "Settings Translation":"ترجمة الإعدادات",
+       "List of translation":"قائمة الترجمة",
+       "Virtual Keyboard":"لوحة مفاتيح افتراضية"
+    },
+    "Setting_translate": {
+      "Code":"شفرة",
+      "Name":"اسم",
+      "Status":"حالة",
+      "Actions":"أجراءات",
+      "Type":"نوع",
+      "TableName":"اسم الطاولة",
+      "Translate":"ترجمه",
+      "View Table details":"ترجمة عرض تفاصيل الجدول",
+      "page of count":"صفحة العد",
+      "Translation values product names":"ترجمة أسماء المنتجات",
+      "Translation values event names":"ترجمة أسماء الأحداث"
 
 
     }

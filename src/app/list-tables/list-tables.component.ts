@@ -28,9 +28,9 @@ export class ListTablesComponent implements OnInit {
 
 
   cols = [
-    { field: 'tableName', header: 'TableName' },
-    { field: 'translate', header: 'Translate' },
-    { field: 'View Table details', header: 'View Table details' },
+    { field: 'tableName', header: 'Setting_translate.TableName' },
+    { field: 'translate', header: 'Setting_translate.Translate' },
+    { field: 'View Table details', header: 'Setting_translate.View Table details' },
 
 ];
 
@@ -39,7 +39,7 @@ export class ListTablesComponent implements OnInit {
     this.translate.setDefaultLang('en');
 
     const browserLang = this.variablesGlobales.langue
-    this.translate.use(browserLang.match(/en|fr|ar/) ? browserLang : 'en');
+    this.translate.use(browserLang.match(/en|fr|ar/) ? browserLang : browserLang);
 
     console.log(browserLang);
     console.log("langue value in list tables comp :",this.variablesGlobales.langue)

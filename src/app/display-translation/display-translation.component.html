@@ -1,15 +1,22 @@
 <h2>{{ 'home.pageTitle' | translate }}</h2>
 
-<!-- Select Language :<select #langSelect (change)="translate.use(langSelect.value)" [(ngModel)]="selectedlang" (ngModelChange)="select($event)">
-  <option *ngFor="let lang of translate.getLangs()" [value]="lang" [selected]="lang === translate.currentLang">{{ lang }}</option>
+
+{{ 'Setting_translate.Translation values product names' | translate }} : 
+<!-- <select>
+<option *ngFor="let t of variablesGlobales.productNames" [value]="t" [selected]="t">{{ t }}</option>
 </select> -->
-Translation values product names : <select>
-  <option *ngFor="let t of variablesGlobales.productNames" [value]="t" [selected]="t">{{ t }}</option>
-</select>
+
+<select style="display: inline-block;" >
+  <option *ngFor="let t of variablesGlobales.productNames" [value]="t" [selected]="t" _ngcontent-bpw-c21=""  >{{ t }}</option>
+</select> 
 <br>
 <br>
 
 
-Translation values event names : <select>
-  <option *ngFor="let tt of variablesGlobales.eventNames" [value]="tt" [selected]="tt">{{ tt }}</option>
+{{ 'Setting_translate.Translation values event names' | translate }} : 
+<select style="display: inline-block;">
+  <option *ngFor="let tt of variablesGlobales.eventNames" [value]="tt" [selected]="tt" _ngcontent-bpw-c21="">{{ tt }}</option>
 </select>
+
+
+<i class="lnr-lock text-primary"></i>

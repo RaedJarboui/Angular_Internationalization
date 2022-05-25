@@ -70,6 +70,7 @@
     "redux": "4.0.0",
     "rxjs": "^6.6.3",
     "sass": "^1.32.8",
+    "linearicons": "^1.0.1",
     "simple-keyboard": "latest",
     "simple-keyboard-layouts": "1.8.2",
     "slick-carousel": "^1.8.1",

@@ -21,9 +21,9 @@ export class TablesColumnsComponent implements OnInit {
   count : number
 
   cols = [
-    { field: 'name_column', header: 'name' },
-    { field: 'type_column', header: 'type' },
-    { field: 'actions', header: 'actions' },
+    { field: 'name_column', header: 'Setting_translate.Name' },
+    { field: 'type_column', header: 'Setting_translate.Type' },
+    { field: 'actions', header: 'Setting_translate.Actions' },
 
 ];
 

@@ -6,6 +6,7 @@ import { LanguesComponent } from './langues.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { SharedModule } from '../shared/shared.module';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
+import { TablesColumnsComponent } from '../tables-columns/tables-columns.component';
 
 @NgModule({
   declarations: [LanguesComponent],
