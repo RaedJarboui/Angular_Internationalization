@@ -23,18 +23,14 @@
         <tr>
             <th *ngFor="let col of columns" [pSortableColumn]="col.field" >
                 {{col.header | translate}}
-                <p-sortIcon [field]="col.field">
-                  <input type="text" (click)="$event.stopPropagation()" pInputText (input)="dt.filter($event.target.value, col.field, col.filterMatchMode)">
-                </p-sortIcon>
+                <p-sortIcon [field]="col.field"></p-sortIcon>
+                <input type="text" (click)="$event.stopPropagation()" pInputText (input)="dt.filter($event.target.value, col.field, col.filterMatchMode)">
+
 
             </th>
 
         </tr>
-        <tr>
-            <th *ngFor="let col of columns" [ngSwitch]="col.field" >
-            <input type="text" pInputText (input)="dt.filter($event.target.value, col.field, col.filterMatchMode)">
-            </th>
-        </tr>
+        
     </ng-template>
     <ng-template pTemplate="body" let-langue >
         <tr>
@@ -141,9 +137,7 @@
 
 
 
-    <span class="lnr lnr-exit"></span> lnr-exit
-    <i class="lnr lnr-exit"></i> lnr-exit
-
+ 
 
    
     

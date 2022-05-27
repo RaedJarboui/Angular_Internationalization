@@ -43,7 +43,7 @@ import {AngularSpinnerComponent} from '../angular-spinner/angular-spinner.compon
 
    ],
    declarations: [
-    AngularSpinnerComponent
+     AngularSpinnerComponent
    ],
    exports: [
      CommonModule,

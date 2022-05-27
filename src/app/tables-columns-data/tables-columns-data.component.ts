@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewEncapsulation,ChangeDetectorRef,DoCheck, KeyValueDiffers, KeyValueDiffer, ElementRef, ViewChild, ViewChildren  } from '@angular/core';
 //import { TranslateService } from '@ngx-translate/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { EventService } from '../services/event.service';
 import { TranslationService } from '../services/translation.service';
 import * as $ from 'jquery';
@@ -12,6 +12,7 @@ import Keyboard from "simple-keyboard";
 import KeyboardLayouts from "simple-keyboard-layouts";
 import { decodedTextSpanIntersectsWith } from 'typescript';
 import { ToastrService } from 'ngx-toastr';
+import { VariablesGlobales } from '../services/VariablesGlobales ';
 
 
 
@@ -100,6 +101,7 @@ export class TablesColumnsDataComponent implements OnInit {
   descending: any;
   ArrayString1: any;
   loading = true;
+  jsonArray: any;
 
   
 
@@ -114,6 +116,8 @@ export class TablesColumnsDataComponent implements OnInit {
     private modalService: NgbModal,
     public dataDialogHandler: MatDialog,
     private toast: ToastrService,
+    public router:Router,
+    public variablesGlobales:VariablesGlobales
   ) {
 
     this.keyboardLayouts = new KeyboardLayouts();
@@ -221,6 +225,7 @@ export class TablesColumnsDataComponent implements OnInit {
          this.missing = data.missing
          this.missing_lang= data.missing_lang
          this.count = data.count
+         this.jsonArray=data.jsonArray
          if(data)
           this.loading = false;
          console.log("array_string",this.array_string)
@@ -629,6 +634,7 @@ export class TablesColumnsDataComponent implements OnInit {
     else if(!isEmpty && !event.multiSortMeta){
       console.log("yes filter and no sort table json")
       
+      this.loading = true;
 
       console.log("filter :", event.filters)
       var keys = Object.keys(event.filters)
@@ -652,7 +658,9 @@ export class TablesColumnsDataComponent implements OnInit {
          console.log("value of found contains : ",this.ArrayString1.filter(v => v.includes(event.filters[this.filterField].value)))
          const result = this.ArrayString1.filter(v => v.includes(event.filters[this.filterField].value))
   
-         if (this.select2_array.length == 0 && this.ArrayString1.filter(v => v.includes(event.filters[this.filterField].value))){
+         if (this.ArrayString1.filter(v => v.includes(event.filters[this.filterField].value))){
+          this.select2_array=[]
+
           for(var i=0;i<result.length;i++){
             this.select2_array.push(result[i])
           }
@@ -663,6 +671,9 @@ export class TablesColumnsDataComponent implements OnInit {
           }else if(data.sortDirection == -1){
             this.ascending= this.select2_array.sort((a,b) => (a > b ? 1 : -1))
             console.log("ascending",this.ascending)
+          }
+          if(this.select2_array.length>0){
+            this.loading=false
           }
           
           console.log("true found ")
@@ -1201,6 +1212,27 @@ console.log(this.global_langues[j].locale)
       default:
         return false;
     }
+  }
+  udfValues(s){
+    console.log(s);
+    this.router.navigate(['/udf'])
+    this.variablesGlobales.fieldName=s;
+    this.variablesGlobales.tableName=this.selected_table
+    this.variablesGlobales.column=this.selected_column
+    this.variablesGlobales.json=this.boolValue
+    //console.log("jsonArray value :",this.variablesGlobales.jsonArray)
+    var data = this.jsonArray.filter((obj, pos, arr) => {
+      return arr
+        .map(mapObj => mapObj.FIELD_NAME)
+        .indexOf(obj.FIELD_NAME) == pos;
+    });
+   
+   console.log(data);
+   var ID_UDF_LIST_VALUE = data.filter(item=>item.FIELD_NAME === s);
+   console.log(ID_UDF_LIST_VALUE);
+  this.variablesGlobales.ID_UDF_LIST_VALUE=ID_UDF_LIST_VALUE[0].ID_UDF_LIST_VALUE
+
+
   }
 
 

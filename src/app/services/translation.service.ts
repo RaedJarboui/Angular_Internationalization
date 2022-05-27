@@ -106,5 +106,8 @@ nameTypeColumnData(nameTable,selectedColumn,json,params):Observable<any>{
 TranslateText(langFrom,langTo,text):Observable<any>{
 return this.http.post(`http://localhost:8080/translate/text/${langFrom}/${langTo}`,text,{responseType: 'text'})
 }
+findListAcmUDF(id):Observable<any>{
+  return this.http.get(`http://localhost:8080/find/acm_udf_list_values/${id}`)
 
+}
 }

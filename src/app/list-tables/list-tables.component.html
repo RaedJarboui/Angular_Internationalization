@@ -15,32 +15,27 @@
                 {{col.header| translate}}
                 <p-sortIcon [field]="col.field"></p-sortIcon>
                 <input type="text" (click)="$event.stopPropagation()" pInputText (input)="dt.filter($event.target.value, col.field, col.filterMatchMode)">
-
             </th>
 
         </tr>
-        <tr>
-            <th *ngFor="let col of columns" [ngSwitch]="col.field">
-            <input pInputText type="text" (input)="dt.filter($event.target.value, col.field, col.filterMatchMode)">
-            </th>
-        </tr>
+     
     </ng-template>
     <ng-template pTemplate="body" let-t let-rowIndex="rowIndex">
         <tr>
           <td>
-            {{t.tableName}} 
+            {{t.tableName}}
           </td>
           <td>
               <div class="row">
                   <label class="switch">
-                  <input type="checkbox" [(ngModel)]="t.translate" (change)="toggleVisibility(rowIndex,$event)" >                
+                  <input type="checkbox" [(ngModel)]="t.translate" (change)="toggleVisibility(tab_list.indexOf(t),$event)" >                
                   <span class="slider round"></span>
                   </label>
           </div>
           </td>
           <td>
             <div *ngIf="t.translate">
-              <button ngcontent-aqn-c41="" class="btn btn-warning"><i ngcontent-aqn-c41="" class="pe-7s-look btn-icon-wrapper text-white" (click) ="details(t.id)"></i></button>
+              <button ngcontent-aqn-c41="" class="btn btn-warning" (click) ="details(t.id)"><i ngcontent-aqn-c41="" class="pe-7s-look btn-icon-wrapper text-white" ></i></button>
 
               <!-- <button _ngcontent-aqn-c9="" icon="fa fa-edit" pbutton="" type="button" ng-reflect-icon="fa fa-edit" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-icon-only" (click) ="details(t.id)"><span aria-hidden="true" class="ui-button-icon-left ui-clickable fa fa-edit"></span><span class="ui-button-text ui-clickable"></span></button> -->
               <!-- <button class="mb-2 me-2 btn-transition btn btn-outline-focus" (click) ="details(t.id)">Details</button> -->

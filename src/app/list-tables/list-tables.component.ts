@@ -82,7 +82,7 @@ export class ListTablesComponent implements OnInit {
         this.translationService.getSortedListTab(object).subscribe((data)=>{
           console.log("SortedLangues :",data)
           this.tab_list=data.tab_list;
-          this.count = data.totalElements
+          this.count = this.tab_list.length
           this.pageSize=data.pageSize
           if(data)
         this.loading = false;
@@ -98,12 +98,13 @@ export class ListTablesComponent implements OnInit {
           this.count = data.totalElements
           this.pageSize=data.pageSize
           if(data)
-      this.loading = false;
+        this.loading = false;
     
         })
     
       }else if(!isEmpty && !event.multiSortMeta){
         console.log("yes filter and no sort")
+        this.tab_list=[]
         this.loading = true;
         console.log("filter :", event.filters)
         var keys = Object.keys(event.filters)
@@ -121,9 +122,9 @@ export class ListTablesComponent implements OnInit {
          this.translationService.getSortedListTab(object).subscribe((data)=>{
            console.log("SortedLangues :",data)
            this.tab_list=data.tab_list;
-           this.count = data.totalElements
+           this.count = this.tab_list.length
            this.pageSize=data.pageSize
-           if(data)
+           if(this.tab_list)
           this.loading = false;
       
          })
@@ -148,7 +149,7 @@ export class ListTablesComponent implements OnInit {
         this.translationService.getSortedListTab(object).subscribe((data)=>{
           console.log("SortedLangues :",data)
           this.tab_list=data.tab_list;
-          this.count = data.totalElements
+          this.count = this.tab_list.length
           this.pageSize=data.pageSize
           if(data)
       this.loading = false;

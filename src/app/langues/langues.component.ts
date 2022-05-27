@@ -305,17 +305,13 @@ if(event.multiSortMeta && isEmpty){
     this.translationService.getSortedLangues(object).subscribe((data)=>{
       console.log("SortedLangues :",data)
       this.langues=data.languages;
-      this.count = data.totalElements
+      this.count = this.langues.length
       this.pageSize=data.pageSize
-      if(data)
+      if(this.langues)
       this.loading = false;
 
 
-      // this._loading.loadingSub
-      // .pipe(delay(0)) // This prevents a ExpressionChangedAfterItHasBeenCheckedError for subsequent requests
-      // .subscribe(() => {
-      //   console.log("loading :",this.loading)
-      // });
+     
   
 
       
@@ -331,15 +327,11 @@ if(event.multiSortMeta && isEmpty){
       this.langues=data.languages;
       this.count = data.totalElements
       this.pageSize=data.pageSize
-      if(data)
+      if(this.langues)
       this.loading = false;
 
 
-      // this._loading.loadingSub
-      // .pipe(delay(0)) // This prevents a ExpressionChangedAfterItHasBeenCheckedError for subsequent requests
-      // .subscribe((loading) => {
-      //   this.loading = loading;
-      // });
+     
 
     })
 
@@ -359,9 +351,9 @@ if(event.multiSortMeta && isEmpty){
      this.translationService.getSortedLangues(object).subscribe((data)=>{
        console.log("SortedLangues :",data)
        this.langues=data.languages;
-       this.count = data.totalElements
+       this.count = this.langues.length
        this.pageSize=data.pageSize
-       if(data)
+       if(this.langues)
       this.loading = false;
 
       
@@ -383,9 +375,9 @@ if(event.multiSortMeta && isEmpty){
     this.translationService.getSortedLangues(object).subscribe((data)=>{
       console.log("SortedLangues :",data)
       this.langues=data.languages;
-      this.count = data.totalElements
+      this.count = this.langues.length
       this.pageSize=data.pageSize
-      if(data)
+      if(this.langues)
       this.loading = false;
 
     })

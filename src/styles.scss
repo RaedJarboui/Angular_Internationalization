@@ -1,6 +1,6 @@
  @import "assets/base";
 //  @import "~bootstrap/dist/css/bootstrap.min.css";
-// @import '~@angular/material/prebuilt-themes/indigo-pink.css';
+@import '~@angular/material/prebuilt-themes/indigo-pink.css';
 
 // #toast-container > div {
 //   opacity:1;
@@ -111,12 +111,19 @@ i.inactive {
   z-index: 99999;
 }
 
-.spinner {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-}
+// .spinner {
+//   position: absolute;
+//   top: 50%;
+//   left: 50%;
+//   transform: translate(-50%, -50%);
+// }
+// mat-progress-spinner {
+//   position: absolute;
+//   top: 50%;
+//   left: 50%;
+//   transform: translate(-50%, -50%);
+//   z-index: 5;
+// }
 
 .home-calendar {
   .cal-month-view {

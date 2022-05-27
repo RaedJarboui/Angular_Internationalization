@@ -1,4 +1,4 @@
-<<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 <a routerLink="/tabs"><i class="fa fa-solid fa-arrow-left"></i></a>
 
   <p-table *ngIf="!value_json" [columns]="cols" [value]="col"  sortMode="multiple" #dt 
@@ -16,13 +16,8 @@
                 <input type="text" (click)="$event.stopPropagation()" pInputText (input)="dt.filter($event.target.value, col.field, col.filterMatchMode)">
 
             </th>
-
         </tr>
-        <tr>
-            <th *ngFor="let col of columns" [ngSwitch]="col.field">
-            <input pInputText type="text" (input)="dt.filter($event.target.value, col.field, col.filterMatchMode)">
-            </th>
-        </tr>
+      
     </ng-template>
     <ng-template pTemplate="body" let-c let-rowIndex="rowIndex">
         <tr>
@@ -63,14 +58,12 @@
             <th *ngFor="let col of columns" [pSortableColumn]="col.field">
                 {{col.header}}
                 <p-sortIcon [field]="col.field"></p-sortIcon>
+                <input type="text" (click)="$event.stopPropagation()" pInputText (input)="dt.filter($event.target.value, col.field, col.filterMatchMode)">
+
             </th>
 
         </tr>
-        <tr>
-            <th *ngFor="let col of columns" [ngSwitch]="col.field">
-            <input pInputText type="text" (input)="dt.filter($event.target.value, col.field, col.filterMatchMode)">
-            </th>
-        </tr>
+       
     </ng-template>
     <ng-template pTemplate="body" let-c let-rowIndex="rowIndex">
         <tr>
