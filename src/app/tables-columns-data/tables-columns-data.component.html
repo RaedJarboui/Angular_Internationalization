@@ -13,10 +13,6 @@
 
 </div>
 <ng-container  *ngIf="!boolValue && selected_table !== 'acm_udf_field' && selected_column!=='FIELD_NAME'; else second ">
-
-
-
- aaaaaaaaaaaaaa
   <div style = "margin-top: 40px">
     <p-table [columns]="col" [value]="array_string"  sortMode="multiple"
     [lazy]="true" sortMode="multiple" #dt (onLazyLoad)="handlePageChange($event)" [paginator]="true"
@@ -80,7 +76,7 @@
                   
                   
                   <div *ngFor="let m of missing_lang">
-                      <div *ngIf="m.langue === l.locale && s === m.fieldValue ">
+                      <div *ngIf="m.langue === l.locale && s === m.field_value ">
                       <input type="text" name="items[]" [matAutocomplete]="auto"
                       (keyup)="onKeyUp($event,j)" (click)="myClickFunction(j)"
                      
@@ -102,14 +98,30 @@
       </ng-template>
     </p-table>
     </div>
-
+    <div style="text-align:center" [ngClass]="!isActive ? 'hide-keyboard' : ''">
+      <input
+    (input)="onInputChange($event)"
+    class="input"
+    value="{{value}}"
+    #userinput
+    placeholder="Tap on the virtual keyboard to start"
+    />
+    <button (click)="copyInputMessage(userinput)" value="click to copy" >{{ 'home.Copy from Textbox' | translate }}</button>
+    
+    
+    
+      <div class="simple-keyboard"></div>
+      <div class="select-container">
+        <select class='select-option' required (change)="onSelectChange($event)">
+          <option class='option' [selected]="layout.name == selectedLayout" *ngFor='let layout of layouts' [value]="layout.name">{{layout.name}}</option>
+        </select>
+      </div>
+      </div>
+    
   </ng-container>
 
 <ng-template #second>
   <ng-container  *ngIf="!boolValue && selected_table === 'acm_udf_field' ; else third ">
-
-bbbbbbbbbbbbb
-
 <div>
 
   <div style = "margin-top: 40px">
@@ -175,7 +187,7 @@ bbbbbbbbbbbbb
                   
                   
                   <div *ngFor="let m of missing_lang">
-                      <div *ngIf="m.langue === l.locale && s === m.fieldValue ">
+                      <div *ngIf="m.langue === l.locale && s === m.field_value ">
                       <input type="text" name="items[]" [matAutocomplete]="auto"
                       (keyup)="onKeyUp($event,j)" (click)="myClickFunction(j)"
                      
@@ -191,7 +203,7 @@ bbbbbbbbbbbbb
             </td>
             <td>
               <button class="btn-wide mb-2 me-2 btn btn-success btn-sm" (click)="addTranslation(array_string.indexOf(s))">save</button>
-              <button class="btn-wide mb-2 me-2 btn btn-primary btn-sm" *ngIf ="s === 'Nationality'" (click)="udfValues(s)">udf values</button>
+              <button class="btn-wide mb-2 me-2 btn btn-primary btn-sm" *ngIf ="s === 'Nationality' || s === 'Family situation' " (click)="udfValues(s)">udf values</button>
 
             </td>
                  
@@ -199,6 +211,26 @@ bbbbbbbbbbbbb
       </ng-template>
     </p-table>
     </div>
+    <div style="text-align:center" [ngClass]="!isActive ? 'hide-keyboard' : ''">
+      <input
+    (input)="onInputChange($event)"
+    class="input"
+    value="{{value}}"
+    #userinput
+    placeholder="Tap on the virtual keyboard to start"
+    />
+    <button (click)="copyInputMessage(userinput)" value="click to copy" >{{ 'home.Copy from Textbox' | translate }}</button>
+    
+    
+    
+      <div class="simple-keyboard"></div>
+      <div class="select-container">
+        <select class='select-option' required (change)="onSelectChange($event)">
+          <option class='option' [selected]="layout.name == selectedLayout" *ngFor='let layout of layouts' [value]="layout.name">{{layout.name}}</option>
+        </select>
+      </div>
+      </div>
+    
 </div>
 </ng-container>
 </ng-template>
@@ -207,7 +239,6 @@ bbbbbbbbbbbbb
 
 <ng-template #third>
   <ng-container *ngIf="boolValue">
-    ccccccccccccccccccc
     {{ 'home.Table Name' | translate  }}:
   
   
@@ -283,7 +314,7 @@ bbbbbbbbbbbbb
                     </div>
                   </div>
                   <div *ngFor="let m of missing_lang">
-                    <div *ngIf="m.langue === l.locale && c === m.fieldValue ">
+                    <div *ngIf="m.langue === l.locale && c === m.field_value ">
                     <input type="text" name="items[]" [matAutocomplete]="auto"
                     (keyup)="onKeyUp($event,j)" (click)="myClickFunction(j)" (input)="onInputChange($event)" />
                    
@@ -304,6 +335,26 @@ bbbbbbbbbbbbb
         </ng-template>
       </p-table>
       </div>
+      <div style="text-align:center" [ngClass]="!isActive ? 'hide-keyboard' : ''">
+        <input
+      (input)="onInputChange($event)"
+      class="input"
+      value="{{value}}"
+      #userinput
+      placeholder="Tap on the virtual keyboard to start"
+      />
+      <button (click)="copyInputMessage(userinput)" value="click to copy" >{{ 'home.Copy from Textbox' | translate }}</button>
+      
+      
+      
+        <div class="simple-keyboard"></div>
+        <div class="select-container">
+          <select class='select-option' required (change)="onSelectChange($event)">
+            <option class='option' [selected]="layout.name == selectedLayout" *ngFor='let layout of layouts' [value]="layout.name">{{layout.name}}</option>
+          </select>
+        </div>
+        </div>
+      
   
     </div>
     
@@ -336,25 +387,6 @@ bbbbbbbbbbbbb
   
   
   
-  <div style="text-align:center" [ngClass]="!isActive ? 'hide-keyboard' : ''">
-    <input
-  (input)="onInputChange($event)"
-  class="input"
-  value="{{value}}"
-  #userinput
-  placeholder="Tap on the virtual keyboard to start"
-  />
-  <button (click)="copyInputMessage(userinput)" value="click to copy" >{{ 'home.Copy from Textbox' | translate }}</button>
-  
-  
-  
-    <div class="simple-keyboard"></div>
-    <div class="select-container">
-      <select class='select-option' required (change)="onSelectChange($event)">
-        <option class='option' [selected]="layout.name == selectedLayout" *ngFor='let layout of layouts' [value]="layout.name">{{layout.name}}</option>
-      </select>
-    </div>
-    </div>
   
        
      

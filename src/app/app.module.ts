@@ -230,7 +230,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     SharedModule,
     SlickCarouselModule,
     ToastrModule.forRoot({
-      timeOut: 1000,
+      timeOut: 3000,
       positionClass: 'toast-top-right'
     }),
     TableModule,

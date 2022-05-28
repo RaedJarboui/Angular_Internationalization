@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { TranslateUdfRoutingModule } from './translate-udf-routing.module';
 import { TranslateUdfComponent } from './translate-udf.component';
 import {TableModule} from 'primeng/table';
+import {MatAutocompleteModule} from '@angular/material/autocomplete';
 
 
 @NgModule({
@@ -11,7 +12,8 @@ import {TableModule} from 'primeng/table';
   imports: [
     CommonModule,
     TranslateUdfRoutingModule,
-    TableModule
+    TableModule,
+    MatAutocompleteModule
   ]
 })
 export class TranslateUdfModule { }

@@ -1,6 +1,6 @@
 <p>translate-udf works!</p>
 <div style = "margin-top: 40px">
-    <p-table [columns]="col" [value]="acm_udf_list"  sortMode="multiple"
+    <p-table [columns]="col" [value]="array_string"  sortMode="multiple"
     [lazy]="true" sortMode="multiple" #dt (onLazyLoad)="handlePageChange($event)" [paginator]="true"
       [rows]="pageSize" [totalRecords]="count"  [currentPageReportTemplate]="'page of count'"
        [showCurrentPageReport]=true [rowsPerPageOptions]="[1,2,5,10]"  [responsive]="true" 
@@ -23,7 +23,7 @@
       <ng-template pTemplate="body" let-s let-rowIndex="rowIndex" >
           <tr >
               <td>
-                {{s.description}}
+                {{s}}
               </td>
               <td *ngFor="let l of global_langues;let j = index;trackBy: trackByFn">
                 <div *ngFor="let d of db_data">
@@ -62,7 +62,7 @@
                   
                   
                   <div *ngFor="let m of missing_lang">
-                      <div *ngIf="m.langue === l.locale && s === m.fieldValue ">
+                      <div *ngIf="m.langue === l.locale && s === m.field_value ">
                       <input type="text" name="items[]" [matAutocomplete]="auto"
                       (keyup)="onKeyUp($event,j)" (click)="myClickFunction(j)"
                      

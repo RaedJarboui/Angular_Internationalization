@@ -110,4 +110,9 @@ findListAcmUDF(id):Observable<any>{
   return this.http.get(`http://localhost:8080/find/acm_udf_list_values/${id}`)
 
 }
+
+translateListUDF(desc,nameTable,selectedColumn,json):Observable<any>{
+  
+  return this.http.post(`http://localhost:8080/find/acm_udf_list_values/${nameTable}/${selectedColumn}/${json}`,desc);
+ }
 }

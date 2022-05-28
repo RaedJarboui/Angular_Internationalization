@@ -397,6 +397,7 @@ export class TablesColumnsDataComponent implements OnInit {
           this.array_string.push(result[i])
         }
         console.log("array string true found : ", this.array_string)
+        this.count=this.array_string.length
         if(data.sortDirection == -1){
           this.descending= this.array_string.sort((a,b) => (a > b ? -1 : 1))
           console.log("descending",this.descending)
@@ -1019,11 +1020,6 @@ console.log(this.global_langues[j].locale)
     console.log(this.array_string);
     console.log("value de i : ",i)
     this.index=i
-
-
-   
-
-
     console.log("value de index : ",this.index)
     console.log(values);
     console.log(values.length);
@@ -1071,9 +1067,12 @@ console.log(this.global_langues[j].locale)
       console.log('edit');
 
       const object2 = { translations: result[0].data };
+      console.log("object 2 value :",object2)
+      console.log("array string index 0 :",this.array_string[this.index])
+
       this.eventService
         .editTranslation(
-          this.array_string[this.index-1],
+          this.array_string[this.index],
           this.selected_column,
           this.selected_table,
           null,
