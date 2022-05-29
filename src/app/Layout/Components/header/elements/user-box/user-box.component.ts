@@ -43,6 +43,19 @@ export class UserBoxComponent implements OnInit {
     } else if (this.translate.currentLang === 'ar') {
       this.ngbDropdownMenu.placement = 'bottom-left';
     }
+
+    if(this.variablesGlobales.langue == ''){
+      this.translationService.get_Values_FromSelectedLang("Nationality","FIELD_NAME","fr").subscribe((data)=>{
+        this.variablesGlobales.nationality=data
+        console.log("nationality values :",this.variablesGlobales.nationality)
+  
+        this.translationService.get_Values_FromSelectedLang("Family situation","FIELD_NAME","fr").subscribe((data)=>{
+          this.variablesGlobales.familySituation=data
+          console.log("family situation values :",this.variablesGlobales.familySituation)
+  
+        })
+      })
+    }
   }
 
   logout() {
@@ -58,13 +71,13 @@ export class UserBoxComponent implements OnInit {
     this.variablesGlobales.langue='fr'
 
     console.log("selected langue via service :",this.variablesGlobales.langue)
-    this.translationService.get_Values_FromSelectedLang("product","name",this.variablesGlobales.langue).subscribe((data)=>{
-      this.variablesGlobales.productNames=data
-      console.log("product names :",this.variablesGlobales.productNames)
+    this.translationService.get_Values_FromSelectedLang("Nationality","FIELD_NAME",this.variablesGlobales.langue).subscribe((data)=>{
+      this.variablesGlobales.nationality=data
+      console.log("nationality values :",this.variablesGlobales.nationality)
 
-      this.translationService.get_Values_FromSelectedLang("event","name",this.variablesGlobales.langue).subscribe((data)=>{
-        this.variablesGlobales.eventNames=data
-        console.log("event names :",this.variablesGlobales.eventNames)
+      this.translationService.get_Values_FromSelectedLang("Family situation","FIELD_NAME",this.variablesGlobales.langue).subscribe((data)=>{
+        this.variablesGlobales.familySituation=data
+        console.log("family situation values :",this.variablesGlobales.familySituation)
 
       })
     })
@@ -77,13 +90,13 @@ export class UserBoxComponent implements OnInit {
     this.variablesGlobales.langue='en'
 
     console.log("selected langue via service :",this.variablesGlobales.langue)
-    this.translationService.get_Values_FromSelectedLang("product","name",this.variablesGlobales.langue).subscribe((data)=>{
-      this.variablesGlobales.productNames=data
-      console.log("product names :",this.variablesGlobales.productNames)
+    this.translationService.get_Values_FromSelectedLang("Nationality","FIELD_NAME",this.variablesGlobales.langue).subscribe((data)=>{
+      this.variablesGlobales.nationality=data
+      console.log("nationality values :",this.variablesGlobales.nationality)
 
-      this.translationService.get_Values_FromSelectedLang("event","name",this.variablesGlobales.langue).subscribe((data)=>{
-        this.variablesGlobales.eventNames=data
-        console.log("event names :",this.variablesGlobales.eventNames)
+      this.translationService.get_Values_FromSelectedLang("Family situation","FIELD_NAME",this.variablesGlobales.langue).subscribe((data)=>{
+        this.variablesGlobales.familySituation=data
+        console.log("family situation values :",this.variablesGlobales.familySituation)
 
       })
     })
@@ -97,13 +110,13 @@ export class UserBoxComponent implements OnInit {
 
 
     console.log("selected langue via service :",this.variablesGlobales.langue)
-    this.translationService.get_Values_FromSelectedLang("product","name",this.variablesGlobales.langue).subscribe((data)=>{
-      this.variablesGlobales.productNames=data
-      console.log("product names :",this.variablesGlobales.productNames)
+    this.translationService.get_Values_FromSelectedLang("Nationality","FIELD_NAME",this.variablesGlobales.langue).subscribe((data)=>{
+      this.variablesGlobales.nationality=data
+      console.log("nationality values :",this.variablesGlobales.nationality)
 
-      this.translationService.get_Values_FromSelectedLang("event","name",this.variablesGlobales.langue).subscribe((data)=>{
-        this.variablesGlobales.eventNames=data
-        console.log("event names :",this.variablesGlobales.eventNames)
+      this.translationService.get_Values_FromSelectedLang("Family situation","FIELD_NAME",this.variablesGlobales.langue).subscribe((data)=>{
+        this.variablesGlobales.familySituation=data
+        console.log("family situation values :",this.variablesGlobales.familySituation)
 
       })
     })

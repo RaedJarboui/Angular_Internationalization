@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 @Injectable()
 export class VariablesGlobales {
   langue: string = '';
-  productNames:any
-  eventNames:any
+  nationality:any
+  familySituation:any
   fieldName: string =''
   tableName:string=''
   column:string=''

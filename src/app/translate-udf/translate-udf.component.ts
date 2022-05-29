@@ -62,7 +62,7 @@ handlePageChange(event){
         
   this.e=event
 
-  console.log(event);
+  //console.log(event);
   let currentPage = event.first / event.rows + 1;
   const params = this.getRequestParams(currentPage, event.rows);
 
@@ -78,7 +78,7 @@ handlePageChange(event){
 
     this.translationService.getLangues().subscribe((data) => {
       this.langues = data;
-      console.log("langues :",this.langues)
+      //console.log("langues :",this.langues)
       for (var i = 0; i < this.langues.length; i++) {
         if (this.langues[i].global == true) {
           this.count++;
@@ -90,7 +90,7 @@ handlePageChange(event){
       .getListColumns(this.variablesGlobales.tableName)
       .subscribe((data) => {
         this.list_columns = data;
-        console.log(this.list_columns);
+        console.log("list of columns :",this.list_columns);
       })
        for(var i=0;i<this.global_langues.length;i++){
       this.col.push(
@@ -104,12 +104,12 @@ handlePageChange(event){
 
     this.col=arr1
     let index = this.col.findIndex(item => item.field == 'Actions')
-    console.log("index : ",index)
+    //console.log("index : ",index)
     this.col.push(this.col.splice(index, 1)[0]);
-    console.log("cols : ",this.col)
+    //console.log("cols : ",this.col)
       console.log("global_langues", this.global_langues);
       var obj={"description":this.acm_udf_list_description}
-      this.translationService.translateListUDF(obj,this.variablesGlobales.tableName,this.variablesGlobales.column,this.variablesGlobales.json).subscribe(data=>{
+      this.translationService.translateListUDF(obj,this.variablesGlobales.fieldName,this.variablesGlobales.column,this.variablesGlobales.json).subscribe(data=>{
         console.log("dataaaaaaaaaaaaaaa", data);
         console.log("hiiiiiiiiiiii")
         this.array_string = data.arrayString;
@@ -119,6 +119,9 @@ handlePageChange(event){
         this.missing = data.missing
         this.missing_lang= data.missing_lang
         this.count = this.array_string.length
+        const expected = new Set();
+        this.missing_lang = this.missing_lang.filter(item => !expected.has(JSON.stringify(item)) ? expected.add(JSON.stringify(item)) : false);
+        console.log("unique values :",this.missing_lang)
       })
     
 
@@ -210,9 +213,9 @@ addTranslation(i) {
     const object2 = { translations: result[0].data };
     this.eventService
       .editTranslation(
-        this.array_string[this.index-1],
+        this.array_string[this.index],
         this.variablesGlobales.column,
-        this.variablesGlobales.tableName,
+        this.variablesGlobales.fieldName,
         null,
         null,
         object2
@@ -231,7 +234,7 @@ addTranslation(i) {
     console.log("fieldValue:", result[0].value)
 
     const object1 = {
-      name_table: this.variablesGlobales.tableName,
+      name_table: this.variablesGlobales.fieldName,
       fieldValue: result[0].value,
       selectedColumn: this.variablesGlobales.column,
       tblabacusName:null,
