@@ -1,210 +1,415 @@
-<h2>{{ 'home.pageTitle' | translate }}</h2>
 
 
-<!-- {{ 'Setting_translate.Translation values product names' | translate }} :  -->
-<select style="display: inline-block;"  _ngcontent-bpw-c21="" class="form-control ng-pristine ng-invalid ng-touched" required=""  ng-reflect-required="">
-  <option *ngFor="let t of variablesGlobales.nationality" [value]="t" [selected]="t" _ngcontent-bpw-c21=""  >{{ t }}</option>
-</select> 
-<br>
-<br>
-<!-- {{ 'Setting_translate.Translation values event names' | translate }} :  -->
-<select style="display: inline-block;"  _ngcontent-bpw-c21="" class="form-control ng-pristine ng-invalid ng-touched" required=""  ng-reflect-required="">
-  <option *ngFor="let tt of variablesGlobales.familySituation" [value]="tt" [selected]="tt" _ngcontent-bpw-c21="">{{ tt }}</option>
+<h2>{{ "home.pageTitle" | translate }}</h2>
+
+Country :<select style="display: inline-block;" [(ngModel)]="country" name="country" (ngModelChange)="select1($event)" _ngcontent-bpw-c21="" class="form-control ng-pristine ng-invalid ng-touched"  required="">
+  <option _ngcontent-bpw-c21="" value="Select one" selected> -- Select Table -- </option>
+  <option *ngFor="let c of countries" _ngcontent-bpw-c21="" [value]="c.addressListValueID"  >{{ c.name }}</option>
+
+</select>  
+
+Region : <select style="display: inline-block;" [(ngModel)]="region" (ngModelChange)="select2($event)" _ngcontent-bpw-c21="" class="form-control ng-pristine ng-invalid ng-touched"  required="">
+  <option _ngcontent-bpw-c21="" value="Select one" selected> -- Select Table -- </option>
+    <option *ngFor="let r of regions" _ngcontent-bpw-c21="" [value]="r.addressListValueID"  >{{ r.name }}</option>
+
+</select>  
+
+City : <select style="display: inline-block;" [(ngModel)]="city" name="city" (ngModelChange)="select3($event)" _ngcontent-bpw-c21="" class="form-control ng-pristine ng-invalid ng-touched"  required="">
+  <option _ngcontent-bpw-c21="" value="Select one" selected> -- Select Table -- </option>
+  <option *ngFor="let c of cities" _ngcontent-bpw-c21="" [value]="c.addressListValueID"  >{{ c.name }}</option>
+
+</select>  
+
+Disrict : <select style="display: inline-block;" [(ngModel)]="district" name="district" (ngModelChange)="select4($event)" _ngcontent-bpw-c21="" class="form-control ng-pristine ng-invalid ng-touched"  required="">
+  <option _ngcontent-bpw-c21="" value="Select one" selected> -- Select Table -- </option>
+  <option *ngFor="let d of districts" _ngcontent-bpw-c21="" [value]="d.addressListValueID"  >{{ d.name }}</option>
+
+</select>  
+
+<!-- Nationality :
+<select
+  style="display: inline-block"
+  _ngcontent-bpw-c21=""
+  class="form-control ng-pristine ng-invalid ng-touched"
+  required=""
+  ng-reflect-required=""
+>
+  <option
+    *ngFor="let t of variablesGlobales.nationality"
+    [value]="t"
+    [selected]="t"
+    _ngcontent-bpw-c21=""
+  >
+    {{ t }}
+  </option>
+</select>
+<br />
+<br />
+Family Situation :
+<select
+  style="display: inline-block"
+  _ngcontent-bpw-c21=""
+  class="form-control ng-pristine ng-invalid ng-touched"
+  required=""
+  ng-reflect-required=""
+>
+  <option
+    *ngFor="let tt of variablesGlobales.familySituation"
+    [value]="tt"
+    [selected]="tt"
+    _ngcontent-bpw-c21=""
+  >
+    {{ tt }}
+  </option>
 </select>
 
-<br>
-<br>
+<br />
+<br />
 
+Branches :
+<select
+  style="display: inline-block"
+  _ngcontent-bpw-c21=""
+  class="form-control ng-pristine ng-invalid ng-touched"
+  required=""
+  ng-reflect-required=""
+>
+  <option
+    *ngFor="let tt of variablesGlobales.branches"
+    [value]="tt"
+    [selected]="tt"
+    _ngcontent-bpw-c21=""
+  >
+    {{ tt }}
+  </option>
+</select>
 
+Relationship :
+<select
+  style="display: inline-block"
+  _ngcontent-bpw-c21=""
+  class="form-control ng-pristine ng-invalid ng-touched"
+  required=""
+  ng-reflect-required=""
+>
+  <option
+    *ngFor="let tt of variablesGlobales.relationship"
+    [value]="tt"
+    [selected]="tt"
+    _ngcontent-bpw-c21=""
+  >
+    {{ tt }}
+  </option>
+</select>
+<br />
+<br /> -->
+<div class="card-hover-shadow-2x mb-1 card">
+  <div
+    class="card-header d-flex justify-content-between"
+    data-target="#collapseCustomer"
+    aria-expanded="true"
+    aria-controls="collapseCustomerAccount"
+  >
+    <div>
+      <i class="lnr lnr-user text-secondary pr-2"></i>
+      {{ "customer_management.customer_information_groupe" | translate }}
+    </div>
+    <div>
+      <i
+        [ngClass]="
+          expandedCustomer === true
+            ? 'lnr lnr-chevron-up text-secondary'
+            : 'lnr lnr-chevron-down text-secondary'
+        "
+      ></i>
+    </div>
+  </div>
+  <div
+    id="collapseCustomer"
+    [ngClass]="expandedCustomer === true ? 'collapse show' : 'collapse'"
+    aria-labelledby="headingOne"
+    data-parent="#accordionExample"
+  >
+    <div>
+      <div class="card-body mx-2">
+        <form>
+            <!-- ROW 1-->
+          <div class="row mb-2">
+            <div class="col-xl-6 col-sm-6 col-md-6 px-1">
+              <div class="position-relative form-group">
+                <label>Branche</label>
+                <span class="text-danger">*</span>
+                <select class="form-control" name="branch">
+                  <option selected value>
+                    {{
+                      "customer_management.branch_default_select" | translate
+                    }}
+                  </option>
+                  <option *ngFor="let tt of variablesGlobales.branches">
+                    {{tt}}
+                  </option>
+                </select>
+              </div>
+            </div>
+            <div class="col-xl-6 col-sm-6 col-md-6 px-1">
+              <div class="position-relative form-group">
+                <label>Relationship </label>
+                <span class="text-danger">*</span>
+                <select class="form-control" name="Relationship">
+                  <option selected value>
+                    {{ "customer_management.relationships_default_select" | translate }}
+                  </option>
 
+                  <option *ngFor="let tt of variablesGlobales.relationship">
+                    {{tt}}
+                  </option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <!-- ROW 2 -->
+            <div class="row mb-2">
+              <div class="col-xl-3 col-sm-6 col-md-6 px-1">
+                <div class="position-relative form-group">
+                  <label >{{'customer_management.name_part1'| translate }}</label>
+                  <span class="text-danger">*</span>
+                  <input placeholder="{{'customer_management.name_part1'| translate }}"
+                    name="namePart1" type="text" class="form-control" />
+                </div>
+              </div>
+              <div class="col-xl-3 col-sm-6 col-md-6 px-1">
+                <div class="position-relative form-group">
+                  <label>{{'customer_management.name_part2'| translate }}</label>
+                  <span class="text-danger">*</span>
+                  <input placeholder="{{'customer_management.name_part2'| translate }}" 
+                    name="namePart2" type="text" class="form-control" />
+                </div>
+              </div>
+              <div  class="col-xl-3 col-sm-6 col-md-6 px-1">
+                <div class="position-relative form-group">
+                  <label>{{'customer_management.name_part3'| translate }}</label>
+                  <span class="text-danger">*</span>
+                  <input placeholder="{{'customer_management.name_part3'| translate }}"
+                    name="namePart3" type="text" class="form-control" />
+                </div>
+              </div>
+              <div  class="col-xl-3 col-sm-6 col-md-6 px-1">
+                <div class="position-relative form-group">
+                  <label>{{'customer_management.name_part4'| translate }}</label>
+                  <span class="text-danger">*</span>
+                  <input placeholder="{{'customer_management.name_part4'| translate }}" 
+                    name="namePart4" type="text" class="form-control" />
+                </div>
+              </div>               
+            </div>
+            <!-- ROW 3 -->
+            <div class="row mb-2">
+              <div class="col-xl-3 col-sm-6 col-md-6 px-1">
+                <div class="position-relative form-group">
+                  <label> dateOfBirth</label>
+                  <span class="text-danger">*</span>
+                  <hijri-gregorian-datepicker
+                    [ngClass]="empty === true ? 'ACM-hijriError' : 'ACM-hijri'"
+                    placeHolder="dd/mm/yyyy"
+                    name="dateOfBirth"
+                    #datePicker
+                  >
+                  </hijri-gregorian-datepicker>
+                </div>
+              </div>
+              <div class="col-xl-3 col-sm-6 col-md-6 px-1">
+                <div class="position-relative form-group">
+                  <label>hijriBirthdate</label>
+                  <span class="text-danger">*</span>
+                  <hijri-gregorian-datepicker
+                    [ngClass]="empty === true ? 'ACM-hijriError' : 'ACM-hijri'"
+                    placeHolder="dd/mm/yyyy"
+                    #datePicker
+                    name="hijriBirthdate"
+                  >
+                  </hijri-gregorian-datepicker>
+                </div>
+              </div>
+              <div class="col-xl-3 col-sm-6 col-md-6 px-1">
+                <div class="position-relative form-group">
+                  <label>gender</label>
+                  <span class="text-danger">*</span>
+                  <mat-radio-group
+                    labelPosition="after"
+                    class="d-flex flex-row bd-highlight mb-3"
+                    name="gender"
+                  >
+                    <mat-radio-button class="pt-2 px-3 bd-highlight" value="M">
+                      {{ "customer_management.male" | translate }}
+                    </mat-radio-button>
+                    <mat-radio-button class="pt-2 px-3 bd-highlight" value="F">
+                      {{ "customer_management.female" | translate }}
+                    </mat-radio-button>
+                  </mat-radio-group>
+                </div>
+              </div>
+              <div class="col-xl-3 col-sm-6 col-md-6 px-1">
+                <div class="position-relative form-group">
+                  <label>maritalStatus</label>
+                  <span class="text-danger">*</span>
+                  <mat-radio-group
+                    labelPosition="after"
+                    class="d-flex flex-row bd-highlight mb-3"
+                    name="maritalStatus"
+                  >
+                    <mat-radio-button class="pt-2 px-3 bd-highlight" value="S">
+                      {{ "customer_management.single" | translate }}
+                    </mat-radio-button>
+                    <mat-radio-button class="pt-2 px-3 bd-highlight" value="M">
+                      {{ "customer_management.married" | translate }}
+                    </mat-radio-button>
+                  </mat-radio-group>
+                </div>
+              </div>
+            </div>
+            <!-- ROW 4 -->
+            <div class="row mb-2">
+              <div class="col-xl-4 col-sm-4 col-md-4 px-1">
+                <div class="position-relative form-group">
+                  <label> {{'customer_management.mobile'| translate }}</label>
+                  <span class="text-danger">*</span>
+                  <input class="form-control" name="mask_phone_number"
+                  placeholder="{{'customer_management.mask_phone_number'| translate }}"
+                    type="text" >
+                </div>
+              </div>
+              <div class="col-xl-4 col-sm-4 col-md-4 px-1">
+                <div class="position-relative form-group">
+                  <label> {{'customer_management.mobile2'| translate }}</label>
+                  <input class="form-control" name="mask_mobile" placeholder="{{'customer_management.mask_mobile'| translate }}" type="text"
+                   >
+                </div>
+              </div>
+              <div class="col-xl-4 col-sm-4 col-md-4 px-1">
+                <div class="position-relative form-group">
+                  <label> {{'customer_management.email'| translate }}</label>
+                  <input class="form-control" name="email" placeholder="{{'customer_management.email'| translate }}" type="email"
+                  >
+                </div>
+              </div>
+            </div>
+            <!-- ROW 5 -->
+            <div class="row mb-2">
+              <div class="col-xl-3 col-sm-3 col-md-3 px-1">
+                <div class="position-relative form-group">
+                  <label> nationality</label>
+                  <span class="text-danger">*</span>
+                  <select class="form-control" name="nationality">
+                    <option selected value>  {{
+                      "customer_management.nationality_default_select"
+                        | translate
+                    }}</option>
 
+                    <option   *ngFor="let t of variablesGlobales.nationality"
+                    [value]="t"
+                   >
+                    {{t}}
+                      <!-- {{
+                        "customer_management.nationality_default_select" | translate
+                      }} -->
+                    </option>
+                    <ng-container>
+                    </ng-container>
+                  </select>
+                </div>
+              </div>
+              <div class="col-xl-3 col-sm-3 col-md-3 px-1">
+                <div class="position-relative form-group">
+                  <label>nationalId</label>
+                  <span class="text-danger">*</span>
+                  <input
+                    class="form-control"
+                    name="nationalId"
+                    placeholder="{{
+                      'customer_management.mask_national_id' | translate
+                    }}"
+                    maxlength="10"
+                    type="text"
+                  />
+                </div>
+              </div>
+              <div class="col-xl-3 col-sm-3 col-md-3 px-1">
+                <div class="position-relative form-group">
+                  <label>nationalIDExpiryDate</label>
+                  <span class="text-danger">*</span>
+                  <hijri-gregorian-datepicker
+                  name="nationalIDExpiryDate"
 
-    
+                    [ngClass]="
+                      emptyExpiry === true ? 'ACM-hijriError' : 'ACM-hijri'
+                    "
+                    #datePicker
+                  >
+                  </hijri-gregorian-datepicker>
+                </div>
+              </div>
+              <div class="col-xl-3 col-sm-3 col-md-3 px-1">
+                <div class="position-relative form-group">
+                  <label>nationalIDExpiryHijriDate</label>
+                  <span class="text-danger">*</span>
+                  <hijri-gregorian-datepicker
+                  name="nationalIDExpiryHijriDate"
 
+                    [ngClass]="
+                      emptyExpiry === true ? 'ACM-hijriError' : 'ACM-hijri'
+                    "
+                    placeHolder="dd/mm/yyyy"
+                    #datePicker
+                  >
+                  </hijri-gregorian-datepicker>
+                </div>
+              </div>
+            </div>
+            <!-- ROW 6 -->
+            <div class="row mb-2">
+            <div class="col-xl-3 col-sm-3 col-md-3 px-1">
+              <div class="position-relative form-group">
+                <label> familySituation</label>
+                <span class="text-danger">*</span>
+                <select class="form-control" name="familySituation"
+                >
+                  <option selected value>
+                    {{
+                      "customer_management.family_situation_default_select"
+                        | translate
+                    }}
+                  </option>
+                  <ng-container>
+                    <option *ngFor="let tt of variablesGlobales.familySituation">
+                      {{tt}}
+                    </option>
+                  </ng-container>
+                </select>
+              </div>
+            </div>
+            <div class="col-xl-3 col-sm-3 col-md-3 px-1">
+              <div class="position-relative form-group">
+                <label>{{'customer_management.place_national_id'| translate }}</label>
+                <span class="text-danger">*</span>
+                <select class="form-control" name="place_national_id" >
+                  <option selected value>
+                    {{'customer_management.place_national_id_default_select'| translate }}
+                  </option>
 
-
-
-
-
-
-  <div class="card-hover-shadow-2x mb-1 card">
-    <div class="card-header d-flex justify-content-between" data-target="#collapseCustomer" aria-expanded="true"
-      aria-controls="collapseCustomerAccount" >
-      <div>
-        <i class="lnr lnr-user text-secondary pr-2"></i>
-        {{ 'customer_management.customer_information_groupe' | translate }}
-      </div>
-      <div>
-        <i [ngClass]="(expandedCustomer===true)?'lnr lnr-chevron-up text-secondary':'lnr lnr-chevron-down text-secondary'"></i>
+                </select>
+              </div>
+            </div>
+            <div class="col-xl-3 col-sm-3 col-md-3 px-1">
+              <div class="position-relative form-group">
+                <label>{{'customer_management.issue_date'| translate }}</label>
+                <span class="text-danger">*</span>
+                <input class="form-control" name="issue_date" placeholder="{{'customer_management.issue_date'| translate }}"
+                  type="date"  >
+              </div>
+            </div>
+            </div>
+        </form>
       </div>
     </div>
-    <div id="collapseCustomer" [ngClass]="(expandedCustomer===true)?'collapse show':'collapse'"
-      aria-labelledby="headingOne" data-parent="#accordionExample">
-
-      <div >
-        <form >
-          <div class="card-body">
-            <div class="col-xl-12 col-sm-12 form-row no-gutters">
-              <div  class="col-xl-4 col-lg-4 col-md-6 col-sm-12 px-1">
-
-                    <div> 
-                        <div class="position-relative form-group">
-                          <label>titre</label>
-                          <span class="text-danger" >*</span>
-                          <select class="form-control" name="branch" 
-                            >
-                            <option selected value>
-                              {{'customer_management.branch_default_select'| translate }}</option>
-                            <option>
-                              description
-                            </option>
-                          </select>
-                        </div>
-                      <div >
-                        <div  class="position-relative form-group">
-                          <label>hiddenHabilitation</label>
-                          <span class="text-danger">*</span>
-                          <select class="form-control" 
-                            >
-                            <option selected value>
-                              {{'customer_management.account_portfolio'| translate }}
-                            <option>
-                              fullName
-                            </option>
-                          </select>
-                        </div>
-                      </div>
-
-
-                        <div class="position-relative form-group">
-                          <label> dateOfBirth</label>
-                          <span class="text-danger" >*</span>
-                          <hijri-gregorian-datepicker [ngClass]="(empty===true)?'ACM-hijriError':'ACM-hijri'"
-                          placeHolder="dd/mm/yyyy" #datePicker>
-                          </hijri-gregorian-datepicker>
-                        </div>
-                        <div class="position-relative form-group">
-                          <label>hijriBirthdate</label>
-                          <span class="text-danger" >*</span>
-                          <hijri-gregorian-datepicker [ngClass]="(empty===true)?'ACM-hijriError':'ACM-hijri'"
-                             placeHolder="dd/mm/yyyy" #datePicker>
-                          </hijri-gregorian-datepicker>
-                        </div>
-                      
-                        <div class="position-relative form-group">
-                          <label>gender</label>
-                          <span class="text-danger" >*</span>
-                          <mat-radio-group labelPosition="after" 
-                            
-                            class="d-flex flex-row bd-highlight mb-3">
-                            <mat-radio-button class="pt-2 px-3 bd-highlight" value="M">
-                              {{'customer_management.male'| translate }}
-                            </mat-radio-button>
-                            <mat-radio-button class="pt-2 px-3 bd-highlight" value="F">
-                              {{'customer_management.female'| translate }}
-                            </mat-radio-button>
-                          </mat-radio-group>
-                        </div>
-                
-                        <div class="position-relative form-group">
-                          <label>maritalStatus</label>
-                          <span class="text-danger" >*</span>
-                          <mat-radio-group labelPosition="after" 
-                            
-                            class="d-flex flex-row bd-highlight mb-3">
-                            <mat-radio-button class="pt-2 px-3 bd-highlight" value="S">
-                              {{'customer_management.single'| translate }}
-                            </mat-radio-button>
-                            <mat-radio-button class="pt-2 px-3 bd-highlight" value="M">
-                              {{'customer_management.married'| translate }}
-                            </mat-radio-button>
-                          </mat-radio-group>
-                        </div>
-                     
-                        <div class="position-relative form-group">
-                          <label> nationality</label>
-                          <span class="text-danger">*</span>
-                          <select class="form-control" 
-                           >
-                            <option selected value>
-                              {{'customer_management.nationality_default_select'| translate }}
-                            </option>
-                            <ng-container>
-                              <option >
-                                nationality
-                              </option>
-                            </ng-container>
-                          </select>
-                        </div>
-                     
-                        <div  class="position-relative form-group">
-                          <label>nationalId</label>
-                          <span class="text-danger">*</span>
-                          <input class="form-control" 
-                            
-                            placeholder="{{'customer_management.mask_national_id'| translate }}" maxlength="10"
-                            type="text">
-                        </div>
-                     
-                        <div  class="position-relative form-group">
-                          <label>residentId</label>
-                          <span class="text-danger">*</span>
-                          <input class="form-control" 
-                            placeholder="{{'customer_management.mask_resident_id'| translate }}" maxlength="10"
-                            type="text">
-                        </div>
-                   
-                        <div  class="position-relative form-group">
-                          <label>residentRelationStatus</label>
-                          <span class="text-danger" >*</span>
-                          <select class="form-control" 
-                            >
-                            <ng-container >
-                              <option >
-                                residentRelationStatus
-                              </option>
-                            </ng-container>
-                          </select>
-                        </div>
-                     
-                        <div class="position-relative form-group">
-                          <label>nationalIDExpiryDate</label>
-                          <span class="text-danger">*</span>
-                          <hijri-gregorian-datepicker [ngClass]="(emptyExpiry===true)?'ACM-hijriError':'ACM-hijri'"
-                            #datePicker>
-                          </hijri-gregorian-datepicker>
-                        </div>
-                     
-                        <div class="position-relative form-group">
-                          <label>nationalIDExpiryHijriDate</label>
-                          <span class="text-danger">*</span>
-                          <hijri-gregorian-datepicker [ngClass]="(emptyExpiry===true)?'ACM-hijriError':'ACM-hijri'"
-                             placeHolder="dd/mm/yyyy" #datePicker>
-                          </hijri-gregorian-datepicker>
-                        </div>
-                     
-                        <div class="position-relative form-group">
-                          <label> familySituation</label>
-                          <span class="text-danger" >*</span>
-                          <select class="form-control" 
-                            >
-                            <option selected value>
-                              {{'customer_management.family_situation_default_select'| translate }}
-                            </option>
-                            <ng-container >
-                              <option >
-                                familySituation
-                              </option>
-                            </ng-container>
-                          </select>
-                        </div>
-                  
-                      </div>
-                    </div>
-                  </div>
-
-           
-
-          </div>
-        </form>
-     
+  </div>
+</div>

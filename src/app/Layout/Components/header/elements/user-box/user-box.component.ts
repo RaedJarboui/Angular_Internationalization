@@ -45,15 +45,28 @@ export class UserBoxComponent implements OnInit {
     }
 
     if(this.variablesGlobales.langue == ''){
-      this.translationService.get_Values_FromSelectedLang("Nationality","FIELD_NAME","fr").subscribe((data)=>{
+      this.translationService.get_Values_FromSelectedLang("Nationality","FIELD_NAME","null","null","fr").subscribe((data)=>{
         this.variablesGlobales.nationality=data
         console.log("nationality values :",this.variablesGlobales.nationality)
   
-        this.translationService.get_Values_FromSelectedLang("Family situation","FIELD_NAME","fr").subscribe((data)=>{
+        this.translationService.get_Values_FromSelectedLang("Family situation","FIELD_NAME","null","null","fr").subscribe((data)=>{
           this.variablesGlobales.familySituation=data
           console.log("family situation values :",this.variablesGlobales.familySituation)
   
         })
+
+        this.translationService.get_Values_FromSelectedLang("acm_setting_list_values","VALUE_JSON","Branches","name","fr").subscribe((data)=>{
+          this.variablesGlobales.branches=data
+          console.log("family situation values :",this.variablesGlobales.familySituation)
+  
+        })
+
+        this.translationService.get_Values_FromSelectedLang("acm_setting_list_values","VALUE_JSON","Relationship","name","fr").subscribe((data)=>{
+          this.variablesGlobales.relationship=data
+          console.log("family situation values :",this.variablesGlobales.familySituation)
+  
+        })
+
       })
     }
   }
@@ -71,13 +84,26 @@ export class UserBoxComponent implements OnInit {
     this.variablesGlobales.langue='fr'
 
     console.log("selected langue via service :",this.variablesGlobales.langue)
-    this.translationService.get_Values_FromSelectedLang("Nationality","FIELD_NAME",this.variablesGlobales.langue).subscribe((data)=>{
+    this.translationService.get_Values_FromSelectedLang("Nationality","FIELD_NAME","null","null",this.variablesGlobales.langue).subscribe((data)=>{
       this.variablesGlobales.nationality=data
       console.log("nationality values :",this.variablesGlobales.nationality)
 
-      this.translationService.get_Values_FromSelectedLang("Family situation","FIELD_NAME",this.variablesGlobales.langue).subscribe((data)=>{
+      this.translationService.get_Values_FromSelectedLang("Family situation","FIELD_NAME","null","null",this.variablesGlobales.langue).subscribe((data)=>{
         this.variablesGlobales.familySituation=data
         console.log("family situation values :",this.variablesGlobales.familySituation)
+
+
+        this.translationService.get_Values_FromSelectedLang("acm_setting_list_values","VALUE_JSON","Branches","name",this.variablesGlobales.langue).subscribe((data)=>{
+          this.variablesGlobales.branches=data
+          console.log("family situation values :",this.variablesGlobales.familySituation)
+  
+        })
+
+        this.translationService.get_Values_FromSelectedLang("acm_setting_list_values","VALUE_JSON","Relationship","name",this.variablesGlobales.langue).subscribe((data)=>{
+          this.variablesGlobales.relationship=data
+          console.log("family situation values :",this.variablesGlobales.familySituation)
+  
+        })
 
       })
     })
@@ -90,13 +116,25 @@ export class UserBoxComponent implements OnInit {
     this.variablesGlobales.langue='en'
 
     console.log("selected langue via service :",this.variablesGlobales.langue)
-    this.translationService.get_Values_FromSelectedLang("Nationality","FIELD_NAME",this.variablesGlobales.langue).subscribe((data)=>{
+    this.translationService.get_Values_FromSelectedLang("Nationality","FIELD_NAME","null","null",this.variablesGlobales.langue).subscribe((data)=>{
       this.variablesGlobales.nationality=data
       console.log("nationality values :",this.variablesGlobales.nationality)
 
-      this.translationService.get_Values_FromSelectedLang("Family situation","FIELD_NAME",this.variablesGlobales.langue).subscribe((data)=>{
+      this.translationService.get_Values_FromSelectedLang("Family situation","FIELD_NAME","null","null",this.variablesGlobales.langue).subscribe((data)=>{
         this.variablesGlobales.familySituation=data
         console.log("family situation values :",this.variablesGlobales.familySituation)
+
+        this.translationService.get_Values_FromSelectedLang("acm_setting_list_values","VALUE_JSON","Branches","name",this.variablesGlobales.langue).subscribe((data)=>{
+          this.variablesGlobales.branches=data
+          console.log("family situation values :",this.variablesGlobales.familySituation)
+  
+        })
+
+        this.translationService.get_Values_FromSelectedLang("acm_setting_list_values","VALUE_JSON","Relationship","name",this.variablesGlobales.langue).subscribe((data)=>{
+          this.variablesGlobales.relationship=data
+          console.log("family situation values :",this.variablesGlobales.familySituation)
+  
+        })
 
       })
     })
@@ -110,13 +148,25 @@ export class UserBoxComponent implements OnInit {
 
 
     console.log("selected langue via service :",this.variablesGlobales.langue)
-    this.translationService.get_Values_FromSelectedLang("Nationality","FIELD_NAME",this.variablesGlobales.langue).subscribe((data)=>{
+    this.translationService.get_Values_FromSelectedLang("Nationality","FIELD_NAME","null","null",this.variablesGlobales.langue).subscribe((data)=>{
       this.variablesGlobales.nationality=data
       console.log("nationality values :",this.variablesGlobales.nationality)
 
-      this.translationService.get_Values_FromSelectedLang("Family situation","FIELD_NAME",this.variablesGlobales.langue).subscribe((data)=>{
+      this.translationService.get_Values_FromSelectedLang("Family situation","FIELD_NAME","null","null",this.variablesGlobales.langue).subscribe((data)=>{
         this.variablesGlobales.familySituation=data
         console.log("family situation values :",this.variablesGlobales.familySituation)
+
+        this.translationService.get_Values_FromSelectedLang("acm_setting_list_values","VALUE_JSON","Branches","name",this.variablesGlobales.langue).subscribe((data)=>{
+          this.variablesGlobales.branches=data
+          console.log("family situation values :",this.variablesGlobales.familySituation)
+  
+        })
+
+        this.translationService.get_Values_FromSelectedLang("acm_setting_list_values","VALUE_JSON","Relationship","name",this.variablesGlobales.langue).subscribe((data)=>{
+          this.variablesGlobales.relationship=data
+          console.log("family situation values :",this.variablesGlobales.familySituation)
+  
+        })
 
       })
     })

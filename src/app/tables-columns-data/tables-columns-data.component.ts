@@ -1075,8 +1075,8 @@ console.log(this.global_langues[j].locale)
           this.array_string[this.index],
           this.selected_column,
           this.selected_table,
-          null,
-          null,
+          "null",
+          "null",
           object2
         )
         .subscribe((data) => {
@@ -1096,10 +1096,11 @@ console.log(this.global_langues[j].locale)
         name_table: this.selected_table,
         fieldValue: result[0].value,
         selectedColumn: this.selected_column,
-        tblabacusName:null,
-        tblabacusNameColumn:null,
+        tblabacusName:"null",
+        tblabacusNameColumn:"null",
         translations: result[0].data,
       };
+      console.log("object 1 values :",object1)
       this.eventService.addTranslation(object1).subscribe((data) => {
         console.log(data);
         this.toast.success("I'm a toast!", "Translation added succesfully!");

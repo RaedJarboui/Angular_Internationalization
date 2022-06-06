@@ -1,7 +1,7 @@
 <div style = "margin-top: 40px">
     <p-table [columns]="col" [value]="array_string"  sortMode="multiple"
     [lazy]="true" sortMode="multiple" #dt (onLazyLoad)="handlePageChange($event)" [paginator]="true"
-      [rows]="pageSize" [totalRecords]="count"  [currentPageReportTemplate]="'page of count'"
+      [rows]="pageSize" [totalRecords]="count" 
        [showCurrentPageReport]=true [rowsPerPageOptions]="[1,2,5,10]"  [responsive]="true" 
     >
       <ng-template pTemplate="caption">
@@ -28,6 +28,7 @@
                 <div *ngFor="let d of db_data">
                   <div *ngFor="let dd of d.translations">
                     <div *ngIf="dd.langue === l.locale && s === d.fieldValue">
+                      
                       <input type="text" name="items[]" value="{{dd.value}}" [matAutocomplete]="auto"
                       (keyup)="onKeyUp($event,j)" (click)="myClickFunction(j)"
                       />     
@@ -43,6 +44,7 @@
     
                     <div *ngFor="let m of missing">
                     <div *ngIf="s === m">
+                      
                       <input type="text" name="items[]" [matAutocomplete]="auto"
                       (keyup)="onKeyUp($event,j)" (click)="myClickFunction(j)"
                      
@@ -62,6 +64,7 @@
                   
                   <div *ngFor="let m of missing_lang">
                       <div *ngIf="m.langue === l.locale && s === m.field_value ">
+                        
                       <input type="text" name="items[]" [matAutocomplete]="auto"
                       (keyup)="onKeyUp($event,j)" (click)="myClickFunction(j)"
                      

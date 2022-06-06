@@ -17,11 +17,17 @@ acm_udf_list:any
 pageSize = 2
 col=[]
 acm_udf_list_description =[]
-  array_string: any;
-  db_data: any;
-  db1_data: any;
-  missing: any;
-  missing_lang: any;
+ 
+array_string = [];
+array_translation_values;
+isActiveData=[]
+db_data = [];
+db1_data = [];
+missing = [];
+missing_lang =[];
+
+
+
   filteredTranslation: any;
   values: any[];
   index: any;
@@ -56,16 +62,15 @@ getRequestParams(page, size) {
 }
 e:any
 handlePageChange(event){
-  this.acm_udf_list_description =[]
-  this.acm_udf_list=[]
+  
  
         
   this.e=event
-
-  //console.log(event);
   let currentPage = event.first / event.rows + 1;
   const params = this.getRequestParams(currentPage, event.rows);
-
+  this.acm_udf_list_description =[]
+  this.acm_udf_list=[]
+  this.global_langues=[]
   this.translationService.findListAcmUDF(this.variablesGlobales.ID_UDF_LIST_VALUE).subscribe(data=>{
     console.log(data)
    this.acm_udf_list=data
@@ -74,14 +79,15 @@ handlePageChange(event){
      this.acm_udf_list_description.push(this.acm_udf_list[i].description)
    }
    console.log("acm_udf_list_description :",this.acm_udf_list_description.toString)
+   this.count = this.acm_udf_list_description.length
+
+   console.log("count :",this.count)
 
 
     this.translationService.getLangues().subscribe((data) => {
       this.langues = data;
-      //console.log("langues :",this.langues)
       for (var i = 0; i < this.langues.length; i++) {
         if (this.langues[i].global == true) {
-          this.count++;
           this.global_langues.push(this.langues[i]);
         }
       }
@@ -104,21 +110,19 @@ handlePageChange(event){
 
     this.col=arr1
     let index = this.col.findIndex(item => item.field == 'Actions')
-    //console.log("index : ",index)
     this.col.push(this.col.splice(index, 1)[0]);
-    //console.log("cols : ",this.col)
       console.log("global_langues", this.global_langues);
       var obj={"description":this.acm_udf_list_description}
-      this.translationService.translateListUDF(obj,this.variablesGlobales.fieldName,this.variablesGlobales.column,this.variablesGlobales.json).subscribe(data=>{
+      this.array_string=[]
+      this.translationService.translateListUDF(obj,this.variablesGlobales.fieldName,this.variablesGlobales.column,this.variablesGlobales.json,params).subscribe(data=>{
         console.log("dataaaaaaaaaaaaaaa", data);
         console.log("hiiiiiiiiiiii")
         this.array_string = data.arrayString;
-        //this.ArrayString = data.ArrayString
         this.db_data = data.db_data
         this.db1_data = data.db1_data
         this.missing = data.missing
         this.missing_lang= data.missing_lang
-        this.count = this.array_string.length
+
         const expected = new Set();
         this.missing_lang = this.missing_lang.filter(item => !expected.has(JSON.stringify(item)) ? expected.add(JSON.stringify(item)) : false);
         console.log("unique values :",this.missing_lang)
@@ -216,8 +220,8 @@ addTranslation(i) {
         this.array_string[this.index],
         this.variablesGlobales.column,
         this.variablesGlobales.fieldName,
-        null,
-        null,
+        "null",
+        "null",
         object2
       )
       .subscribe((data) => {
@@ -237,8 +241,8 @@ addTranslation(i) {
       name_table: this.variablesGlobales.fieldName,
       fieldValue: result[0].value,
       selectedColumn: this.variablesGlobales.column,
-      tblabacusName:null,
-      tblabacusNameColumn:null,
+      tblabacusName:"null",
+      tblabacusNameColumn:"null",
       translations: result[0].data,
     };
     this.eventService.addTranslation(object1).subscribe((data) => {

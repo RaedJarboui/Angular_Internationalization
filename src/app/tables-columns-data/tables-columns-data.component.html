@@ -16,7 +16,7 @@
   <div style = "margin-top: 40px">
     <p-table [columns]="col" [value]="array_string"  sortMode="multiple"
     [lazy]="true" sortMode="multiple" #dt (onLazyLoad)="handlePageChange($event)" [paginator]="true"
-      [rows]="pageSize" [totalRecords]="count"  [currentPageReportTemplate]="'page of count'"
+      [rows]="pageSize" [totalRecords]="count"  
        [showCurrentPageReport]=true [rowsPerPageOptions]="[1,2,5,10]"  [responsive]="true" 
     >
       <ng-template pTemplate="caption">
@@ -127,7 +127,7 @@
   <div style = "margin-top: 40px">
     <p-table [columns]="col" [value]="array_string"  sortMode="multiple"
     [lazy]="true" sortMode="multiple" #dt (onLazyLoad)="handlePageChange($event)" [paginator]="true"
-      [rows]="pageSize" [totalRecords]="count"  [currentPageReportTemplate]="'page of count'"
+      [rows]="pageSize" [totalRecords]="count" 
        [showCurrentPageReport]=true [rowsPerPageOptions]="[1,2,5,10]"  [responsive]="true" 
     >
       <ng-template pTemplate="caption">

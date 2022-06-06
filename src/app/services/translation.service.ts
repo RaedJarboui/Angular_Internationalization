@@ -96,9 +96,9 @@ nameTypeColumnData(nameTable,selectedColumn,json,params):Observable<any>{
   
   return this.http.get(`http://localhost:8080/translate/autocomplete/${langue}/${value}`);
  }
- get_Values_FromSelectedLang(nameTable,selectedColumn,langue):Observable<any>{
+ get_Values_FromSelectedLang(nameTable,selectedColumn,tblabacusName,tblabacusNameColumn,langue):Observable<any>{
   
-  return this.http.get(`http://localhost:8080/translate/i18n/values/${nameTable}/${selectedColumn}/${langue}`);
+  return this.http.get(`http://localhost:8080/translate/i18n/values/${nameTable}/${selectedColumn}/${tblabacusName}/${tblabacusNameColumn}/${langue}`);
  }
  readDocxFiles(path):Observable<Object>{
   return this.http.post(`http://localhost:8080/translate/word`,path,{responseType: 'text'});
@@ -111,8 +111,41 @@ findListAcmUDF(id):Observable<any>{
 
 }
 
-translateListUDF(desc,nameTable,selectedColumn,json):Observable<any>{
+translateListUDF(desc,nameTable,selectedColumn,json,params):Observable<any>{
   
-  return this.http.post(`http://localhost:8080/find/acm_udf_list_values/${nameTable}/${selectedColumn}/${json}`,desc);
+  return this.http.post(`http://localhost:8080/find/acm_udf_list_values/${nameTable}/${selectedColumn}/${json}`,desc,{params});
  }
+
+ findAddress(addressSettingDTO):Observable<any>{
+  return this.http.post(`http://localhost:8080/address-settings`,addressSettingDTO)
+
+}
+
+findAddressType():Observable<any>{
+  return this.http.get(`http://localhost:8080/address-settings/find-address-type`)
+
+}
+
+findSettingAddress():Observable<any>{
+  return this.http.get(`http://localhost:8080/address-settings/find-settings-address`)
+
+}
+
+findAddressList(idAddressList):Observable<any>{
+  return this.http.post(`http://localhost:8080/address-settings/find-address-list`,idAddressList)
+
+}
+
+findAddressListValue(addressSettingDTO):Observable<any>{
+  return this.http.post(`http://localhost:8080/address-settings/find-address-list-value`,addressSettingDTO)
+
+}
+
+readAcmAddressTranslation(values,langue):Observable<any>{
+  return this.http.post(`http://localhost:8080/find/address/translation/${langue}`,values)
+
+}
+
+
+
 }

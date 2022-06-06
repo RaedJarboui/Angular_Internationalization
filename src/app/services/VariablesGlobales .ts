@@ -9,5 +9,7 @@ export class VariablesGlobales {
   column:string=''
   json:Boolean
   ID_UDF_LIST_VALUE:any
+  branches : any
+  relationship:any
 
 }
