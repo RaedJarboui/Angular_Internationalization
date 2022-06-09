@@ -2,107 +2,32 @@
 
 <h2>{{ "home.pageTitle" | translate }}</h2>
 
-Country :<select style="display: inline-block;" [(ngModel)]="country" name="country" (ngModelChange)="select1($event)" _ngcontent-bpw-c21="" class="form-control ng-pristine ng-invalid ng-touched"  required="">
-  <option _ngcontent-bpw-c21="" value="Select one" selected> -- Select Table -- </option>
-  <option *ngFor="let c of countries" _ngcontent-bpw-c21="" [value]="c.addressListValueID"  >{{ c.name }}</option>
+  Country :<select style="display: inline-block;" [(ngModel)]="country" name="country" (ngModelChange)="select1($event)" _ngcontent-bpw-c21="" class="form-control ng-pristine ng-invalid ng-touched"  required="">
+    <option _ngcontent-bpw-c21="" value="Select one" selected> -- Select Table -- </option>
+    <option *ngFor="let c of variablesGlobales.country" _ngcontent-bpw-c21="" [value]="c"  >{{ c }}</option>
+  
+  </select>  
+  
+  Region : <select style="display: inline-block;" [(ngModel)]="region" (ngModelChange)="select2($event)" _ngcontent-bpw-c21="" class="form-control ng-pristine ng-invalid ng-touched"  required="">
+    <option _ngcontent-bpw-c21="" value="Select one" selected> -- Select Table -- </option>
+      <option *ngFor="let r of variablesGlobales.region" _ngcontent-bpw-c21="" [value]="r"  >{{ r }}</option>
+  
+  </select>  
+  
+  City : <select style="display: inline-block;" [(ngModel)]="city" name="city" (ngModelChange)="select3($event)" _ngcontent-bpw-c21="" class="form-control ng-pristine ng-invalid ng-touched"  required="">
+    <option _ngcontent-bpw-c21="" value="Select one" selected> -- Select Table -- </option>
+    <option *ngFor="let c of variablesGlobales.city" _ngcontent-bpw-c21="" [value]="c"  >{{ c }}</option>
+  
+  </select>  
+  
+  Disrict : <select style="display: inline-block;" [(ngModel)]="district" name="district" (ngModelChange)="select4($event)" _ngcontent-bpw-c21="" class="form-control ng-pristine ng-invalid ng-touched"  required="">
+    <option _ngcontent-bpw-c21="" value="Select one" selected> -- Select Table -- </option>
+    <option *ngFor="let d of variablesGlobales.district" _ngcontent-bpw-c21="" [value]="d"  >{{ d }}</option>
+  
+  </select>  
 
-</select>  
 
-Region : <select style="display: inline-block;" [(ngModel)]="region" (ngModelChange)="select2($event)" _ngcontent-bpw-c21="" class="form-control ng-pristine ng-invalid ng-touched"  required="">
-  <option _ngcontent-bpw-c21="" value="Select one" selected> -- Select Table -- </option>
-    <option *ngFor="let r of regions" _ngcontent-bpw-c21="" [value]="r.addressListValueID"  >{{ r.name }}</option>
 
-</select>  
-
-City : <select style="display: inline-block;" [(ngModel)]="city" name="city" (ngModelChange)="select3($event)" _ngcontent-bpw-c21="" class="form-control ng-pristine ng-invalid ng-touched"  required="">
-  <option _ngcontent-bpw-c21="" value="Select one" selected> -- Select Table -- </option>
-  <option *ngFor="let c of cities" _ngcontent-bpw-c21="" [value]="c.addressListValueID"  >{{ c.name }}</option>
-
-</select>  
-
-Disrict : <select style="display: inline-block;" [(ngModel)]="district" name="district" (ngModelChange)="select4($event)" _ngcontent-bpw-c21="" class="form-control ng-pristine ng-invalid ng-touched"  required="">
-  <option _ngcontent-bpw-c21="" value="Select one" selected> -- Select Table -- </option>
-  <option *ngFor="let d of districts" _ngcontent-bpw-c21="" [value]="d.addressListValueID"  >{{ d.name }}</option>
-
-</select>  
-
-<!-- Nationality :
-<select
-  style="display: inline-block"
-  _ngcontent-bpw-c21=""
-  class="form-control ng-pristine ng-invalid ng-touched"
-  required=""
-  ng-reflect-required=""
->
-  <option
-    *ngFor="let t of variablesGlobales.nationality"
-    [value]="t"
-    [selected]="t"
-    _ngcontent-bpw-c21=""
-  >
-    {{ t }}
-  </option>
-</select>
-<br />
-<br />
-Family Situation :
-<select
-  style="display: inline-block"
-  _ngcontent-bpw-c21=""
-  class="form-control ng-pristine ng-invalid ng-touched"
-  required=""
-  ng-reflect-required=""
->
-  <option
-    *ngFor="let tt of variablesGlobales.familySituation"
-    [value]="tt"
-    [selected]="tt"
-    _ngcontent-bpw-c21=""
-  >
-    {{ tt }}
-  </option>
-</select>
-
-<br />
-<br />
-
-Branches :
-<select
-  style="display: inline-block"
-  _ngcontent-bpw-c21=""
-  class="form-control ng-pristine ng-invalid ng-touched"
-  required=""
-  ng-reflect-required=""
->
-  <option
-    *ngFor="let tt of variablesGlobales.branches"
-    [value]="tt"
-    [selected]="tt"
-    _ngcontent-bpw-c21=""
-  >
-    {{ tt }}
-  </option>
-</select>
-
-Relationship :
-<select
-  style="display: inline-block"
-  _ngcontent-bpw-c21=""
-  class="form-control ng-pristine ng-invalid ng-touched"
-  required=""
-  ng-reflect-required=""
->
-  <option
-    *ngFor="let tt of variablesGlobales.relationship"
-    [value]="tt"
-    [selected]="tt"
-    _ngcontent-bpw-c21=""
-  >
-    {{ tt }}
-  </option>
-</select>
-<br />
-<br /> -->
 <div class="card-hover-shadow-2x mb-1 card">
   <div
     class="card-header d-flex justify-content-between"
@@ -413,3 +338,194 @@ Relationship :
     </div>
   </div>
 </div>
+
+
+<br>
+<br>
+
+<form>
+  <div class="card-body pt-0">
+      <div >
+        <div class="form-row">
+          <div class="widget-content p-0 text-uppercase">
+            <div class="widget-content-outer">
+              <div class="widget-content-wrapper">
+                <div class="widget-content-left">
+                  <div class="widget-heading">{{'customer_management.address'| translate }} </div>
+                  <div class="custom-checkbox custom-control">
+                    <input class="custom-control-input" type="checkbox">
+                    <label
+                      class="custom-control-label">{{'customer_management.primary-address'| translate }}</label>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="px-3">
+            <button class="btn btn-danger" >
+              <i class="pe-7s-trash btn-icon-wrapper text-white"></i>
+            </button>
+          </div>
+        </div>
+        <hr class="solid">
+        <div class="form-row">
+        </div>
+        <div class="form-row d-flex align-items-end">
+          <div class="col-xl-4 col-md-4 px-1">
+            <div class="position-relative form-group">
+              <label>{{'customer_management.address_type'| translate }}</label>
+              <span class="text-danger">*</span>
+              <select class="form-control" name="addressType" >
+                <option selected value>
+                  {{'customer_management.address_type_default_select'| translate }}
+                </option>
+                <option *ngFor="let a of addressType" [ngValue]="a">{{a.name}}
+                </option>
+              </select>
+            </div>
+          </div>
+          <div class="col-xl-4 col-md-4 px-1">
+            <div class="position-relative form-group">
+              <label> {{'customer_management.date_moved_in'| translate }}</label>
+              <span class="text-danger">*</span>
+              <input type="date" class="form-control" >
+            </div>
+          </div>
+          <div class="col-xl-4 col-md-4 px-1">
+            <div class="position-relative form-group">
+              <label> {{'customer_management.date_moved_out'| translate }}</label>
+              <input type="date" class="form-control" >
+            </div>
+          </div>
+        </div>
+
+
+
+        <div class="form-row d-flex align-items-end">
+          <div class="col-xl-4 col-md-4 px-1">
+            <div class="position-relative form-group">
+              <label>{{'customer_management.country'| translate }}</label>
+              <span  class="text-danger">*</span>
+              <select class="form-control" [(ngModel)]="country" name="country" (ngModelChange)="select1($event)">
+                <option selected value>
+                  {{'customer_management.country_default_select'| translate }}</option>
+                <ng-container *ngFor="let country of variablesGlobales.country">
+                  <option [ngValue]="country" >
+                    {{country}}
+                  </option>
+                </ng-container>
+              </select>
+            </div>
+          </div>
+          <div class="col-xl-4 col-md-4 px-1">
+            <div class="position-relative form-group">
+              <label>{{'customer_management.region'| translate }}</label>
+              <span  class="text-danger">*</span>
+              <select class="form-control" [(ngModel)]="region" name="region" (ngModelChange)="select2($event)"
+                      >
+                <option selected value>
+                  {{'customer_management.region_default_select'| translate }}</option>
+                <ng-container *ngFor="let region of variablesGlobales.region">
+                  <option [ngValue]="region">
+                    {{region}}
+                  </option>
+                </ng-container>
+              </select>
+            </div>
+          </div>
+          <div class="col-xl-4 col-md-4 px-1">
+            <div class="position-relative form-group">
+              <label>{{'customer_management.city'| translate }}</label>
+              <span  class="text-danger">*</span>
+              <select class="form-control" [(ngModel)]="city" name="city" (ngModelChange)="select3($event)" >
+                <option selected value>
+                  {{'customer_management.city_default_select'| translate }}</option>
+                <ng-container *ngFor="let city of variablesGlobales.city">
+                  <option [ngValue]="city" >
+                    {{city}}
+                  </option>
+                </ng-container>
+              </select>
+            </div>
+          </div>
+        </div>
+
+
+
+
+        
+        <div class="form-row d-flex align-items-end">
+          <div class="col-xl-4 col-md-4 px-1">
+            <div class="position-relative form-group">
+              <label>{{'customer_management.district'| translate }}</label>
+              <span  class="text-danger">*</span>
+              <select class="form-control" [(ngModel)]="district" name="district" (ngModelChange)="select4($event)"
+                      >
+                <option selected value>
+                  {{'customer_management.district_default_select'| translate }}</option>
+                <ng-container *ngFor="let district of variablesGlobales.district">
+                  <option [ngValue]="district"
+                          >
+                    {{district}}
+                  </option>
+                </ng-container>
+              </select>
+            </div>
+          </div>
+          <div class="col-xl-4 col-md-4 px-1">
+            <div class="position-relative form-group">
+              <label>{{'customer_management.street'| translate }}</label>
+              <span  class="text-danger">*</span>
+              <input placeholder="{{'customer_management.street'| translate }}" name="street" type="text"
+                     class="form-control" />
+            </div>
+          </div>
+          <div class="col-xl-4 col-md-4 px-1">
+            <div class="position-relative form-group">
+              <label>{{'customer_management.building_number'| translate }}</label>
+              <span  class="text-danger">*</span>
+              <input placeholder="{{'customer_management.building_number'| translate }}" name="buildingNumber"
+                     type="text" class="form-control" />
+            </div>
+          </div>
+        </div>
+
+
+
+        <div class="form-row d-flex align-items-end">
+          <div class="col-xl-4 col-md-4 px-1">
+            <div class="position-relative form-group">
+              <label>{{'customer_management.unit_number'| translate }}</label>
+              <span  class="text-danger">*</span>
+              <input placeholder="{{'customer_management.unit_number'| translate }}" name="unitNumber" type="text"
+                     class="form-control" />
+            </div>
+          </div>
+          <div class="col-xl-4 col-md-4 px-1">
+            <div class="position-relative form-group">
+              <label>{{'customer_management.zip_code'| translate }}</label>
+              <span  class="text-danger">*</span>
+              <input placeholder="{{'customer_management.zip_code'| translate }}" name="zipCode" type="text"
+                     class="form-control" />
+            </div>
+          </div>
+          <div class="col-xl-4 col-md-4 px-1">
+            <div class="position-relative form-group">
+              <label>{{'customer_management.gps-location'| translate }} </label>
+              <div class="input-group">
+                <input placeholder="{{'customer_management.gps-location'| translate }}"
+                       type="text" class="form-control" />
+                <div class="input-group-append">
+                  <button class="btn-icon btn-icon-only btn btn-primary"  type="button">
+                    <i class="pe-7s-map-marker"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <hr class="solid">
+      </div>
+    </div>
+   
+</form>

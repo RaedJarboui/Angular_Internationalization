@@ -103,11 +103,6 @@ export class TablesColumnsDataComponent implements OnInit {
   loading = true;
   jsonArray: any;
 
-  
-
-
-
- 
 
   constructor(
     private translationService: TranslationService,
@@ -1127,13 +1122,12 @@ console.log(this.global_langues[j].locale)
     console.log(this.select_array[i].VALUE_JSON[this.selected_col]);
     var a = Object.values(this.select_array[i].VALUE_JSON);
     console.log(a);
-    console.log(a[0]);
-    console.log(this.array_translation_values); // 0
+    //console.log(a[0]);
+    //console.log(this.array_translation_values); 
     var num = 0;
-    var num2 = 0;
     while (num < this.global_langues.length) {
       this.values.push({
-        value: this.select_array[i].VALUE_JSON[this.selected_col],
+        value: this.select2_array[i],
         translation: {
           langue: this.global_langues[num].locale,
           value: values[i * this.global_langues.length + num],
@@ -1141,6 +1135,7 @@ console.log(this.global_langues[j].locale)
       });
       num++;
     }
+    console.log("values :",this.values)
 
       var hash = Object.create(null),
       result = this.values.reduce(function (r, a) {
@@ -1180,6 +1175,11 @@ console.log(this.global_langues[j].locale)
         )
         .subscribe((data) => {
           console.log(data);
+          this.toast.success("I'm a toast!", "Translation edited succesfully!");
+
+        },err=>{
+          this.toast.error("I'm a toast!", "Translation not edited succesfully!");
+
         });
     } else {
       console.log('add');
@@ -1194,6 +1194,11 @@ console.log(this.global_langues[j].locale)
       console.log("object4 :",object4)
       this.eventService.addTranslation(object4).subscribe((data) => {
         console.log(data);
+        this.toast.success("I'm a toast!", "Translation added succesfully!");
+
+      },err=>{
+        this.toast.error("I'm a toast!", "Translation not added succesfully!");
+
       });
     }
     console.log(this.add_edit);

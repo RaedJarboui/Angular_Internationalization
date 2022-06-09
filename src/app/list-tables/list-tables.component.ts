@@ -21,7 +21,7 @@ export class ListTablesComponent implements OnInit {
   title = '';
   page = 1;
   count = 0;
-  pageSize = 2;
+  pageSize = 5;
   pageSizes = [1,2, 5, 10];
   tab_list:any
   loading = true;

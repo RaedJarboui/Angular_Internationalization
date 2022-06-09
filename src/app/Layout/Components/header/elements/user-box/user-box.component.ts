@@ -66,6 +66,15 @@ export class UserBoxComponent implements OnInit {
           console.log("family situation values :",this.variablesGlobales.familySituation)
   
         })
+        
+        this.translationService.findAddressListValue({"addressListId": 1}).subscribe((data)=>{
+          for(var i=0;i<data.length;i++){
+            this.variablesGlobales.countries.push(data[i].name)
+          }
+          //this.variablesGlobales.countries=data
+          console.log("countrie values :",this.variablesGlobales.countries)
+
+        })
 
       })
     }
@@ -78,6 +87,7 @@ export class UserBoxComponent implements OnInit {
 
 
   langFR() {
+   
     this.translate.use('fr');
     this.ngbDropdownMenu.placement = 'bottom-right';
     localStorage.setItem('lang', 'fr');
@@ -104,12 +114,26 @@ export class UserBoxComponent implements OnInit {
           console.log("family situation values :",this.variablesGlobales.familySituation)
   
         })
+       
 
+          this.translationService.readAcmAddressTranslation(this.variablesGlobales.countries,'fr').subscribe((data)=>{
+          //this.regions=data
+          this.variablesGlobales.country=data
+          console.log("data countries french :",data)
+          console.log("data countries french :",this.variablesGlobales.country)
+          console.log("data countries values :",this.variablesGlobales.countries)
+
+
+    
+
+          })
+  
       })
     })
   }
 
   langEN() {
+    
     this.translate.use('en');
     this.ngbDropdownMenu.placement = 'bottom-right';
     localStorage.setItem('lang', 'en');
@@ -132,15 +156,25 @@ export class UserBoxComponent implements OnInit {
 
         this.translationService.get_Values_FromSelectedLang("acm_setting_list_values","VALUE_JSON","Relationship","name",this.variablesGlobales.langue).subscribe((data)=>{
           this.variablesGlobales.relationship=data
-          console.log("family situation values :",this.variablesGlobales.familySituation)
+          console.log("relationships values :",this.variablesGlobales.relationship)
   
         })
+       
+        this.translationService.readAcmAddressTranslation(this.variablesGlobales.countries,'en').subscribe((data)=>{
+          this.variablesGlobales.country=data
+          console.log("data countries english :",data)
+          console.log("data country english :", this.variablesGlobales.country)
+          console.log("data countries values :",this.variablesGlobales.countries)
+
+          })
 
       })
     })
   }
 
   langAR() {
+  
+
     this.translate.use('ar');
     this.ngbDropdownMenu.placement = 'bottom-left';
     localStorage.setItem('lang', 'ar');
@@ -155,7 +189,6 @@ export class UserBoxComponent implements OnInit {
       this.translationService.get_Values_FromSelectedLang("Family situation","FIELD_NAME","null","null",this.variablesGlobales.langue).subscribe((data)=>{
         this.variablesGlobales.familySituation=data
         console.log("family situation values :",this.variablesGlobales.familySituation)
-
         this.translationService.get_Values_FromSelectedLang("acm_setting_list_values","VALUE_JSON","Branches","name",this.variablesGlobales.langue).subscribe((data)=>{
           this.variablesGlobales.branches=data
           console.log("family situation values :",this.variablesGlobales.familySituation)
@@ -164,9 +197,19 @@ export class UserBoxComponent implements OnInit {
 
         this.translationService.get_Values_FromSelectedLang("acm_setting_list_values","VALUE_JSON","Relationship","name",this.variablesGlobales.langue).subscribe((data)=>{
           this.variablesGlobales.relationship=data
-          console.log("family situation values :",this.variablesGlobales.familySituation)
+          console.log("relationships values :",this.variablesGlobales.relationship)
   
         })
+       
+        this.translationService.readAcmAddressTranslation(this.variablesGlobales.countries,'ar').subscribe((data)=>{
+          //this.regions=data
+          this.variablesGlobales.country=data
+
+          console.log("data countries arabic :",data) 
+          console.log("data country arabic :", this.variablesGlobales.country)
+          console.log("data countries values :",this.variablesGlobales.countries)
+
+          })
 
       })
     })

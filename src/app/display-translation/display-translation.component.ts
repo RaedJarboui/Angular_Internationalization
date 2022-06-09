@@ -114,7 +114,29 @@ export class DisplayTranslationComponent implements OnInit {
 
           this.translationService.findAddressListValue({"addressListId": 1}).subscribe((data)=>{
             this.countries=data
-            console.log("country",this.countries)
+
+            this.translationService.readAcmAddressTranslation(this.variablesGlobales.countries,"fr").subscribe((data)=>{
+              this.variablesGlobales.country=data
+            })
+            // console.log("country",this.countries)
+            // var values=[]
+            // for(var i=0;i<this.countries.length;i++){
+            //   values.push(this.countries[i].name)
+            // }
+
+            // if(this.variablesGlobales.langue == ''){
+            //   this.translationService.readAcmAddressTranslation(values,'ar').subscribe((data)=>{
+            //     this.countries=data
+            //     console.log("country",this.countries)
+
+            //   })
+            // }else{
+            //   this.translationService.readAcmAddressTranslation(values,this.variablesGlobales.langue).subscribe((data)=>{
+            //     this.countries=data
+            //     console.log("country",this.countries)
+
+            //   })
+            // }
 
           })
         })
@@ -190,44 +212,274 @@ export class DisplayTranslationComponent implements OnInit {
 }
 
 select1(event){
+
+  if(this.variablesGlobales.langue == ''){
+
+  var values=[]
+  this.variablesGlobales.regions=[]
 console.log("select 1 changed")
 console.log("country",this.countries)
-var obj = {"addressListId":2,"parentId":this.countries.addressListValueID}
-this.translationService.findAddressListValue(obj).subscribe((data)=>{
-  this.regions=data
-  console.log("regions",this.regions)
+for(var i=0;i<this.variablesGlobales.countries.length;i++){
+  var obj = {"addressListId":2,"parentId":this.variablesGlobales.countries[i].addressListValueID}
+  this.translationService.findAddressListValue(obj).subscribe((data)=>{
+    this.regions=data
+    console.log("regions",this.regions)
+    for(var i=0;i<this.regions.length;i++){
+      
+      this.variablesGlobales.regions.push(this.regions[i])
+      values.push(this.regions[i].name)
 
+    }
+
+    this.translationService.readAcmAddressTranslation(values,"fr").subscribe((data)=>{
+      this.variablesGlobales.region=data
+      console.log("data region english :", this.variablesGlobales.region)
+      console.log("data regions values :",this.variablesGlobales.regions)
+
+      })
+    
+
+
+  
+  
+  
+  })
+}
+  }else{
+
+    var values=[]
+    this.variablesGlobales.regions=[]
+  console.log("select 1 changed")
+  console.log("country",this.countries)
+  for(var i=0;i<this.variablesGlobales.countries.length;i++){
+    var obj = {"addressListId":2,"parentId":this.variablesGlobales.countries[i].addressListValueID}
+    this.translationService.findAddressListValue(obj).subscribe((data)=>{
+      this.regions=data
+      console.log("regions",this.regions)
+      for(var i=0;i<this.regions.length;i++){
+        
+        this.variablesGlobales.regions.push(this.regions[i])
+        values.push(this.regions[i].name)
+  
+      }
+  
+      this.translationService.readAcmAddressTranslation(values,this.variablesGlobales.langue).subscribe((data)=>{
+        this.variablesGlobales.region=data
+        console.log("data region english :", this.variablesGlobales.region)
+        console.log("data regions values :",this.variablesGlobales.regions)
+  
+        })
+      
+  
+  
+    
+    
+    
+    })
+  }
+
+
+
+
+  }
+
+
+}
+objectif :any
+
+values_districts=[]
+
+select2(event){
+  if(this.variablesGlobales.langue == ''){
+
+  var values=[]
+  this.variablesGlobales.city=[]
+  var values_cities=[]
+  console.log("select 2 changed")
+  console.log("value de region ",this.region)
+  console.log("data region  :", this.variablesGlobales.region)
+  console.log("data regions values :",this.variablesGlobales.regions)
+  this.translationService.readAcmAddressTranslation([this.region],"fr").subscribe((data)=>{
+    console.log("value new region de region ",data)
+    this.objectif = this.variablesGlobales.regions.filter(x=>x.name == data);
+   console.log("objectif valueeeee :",this.objectif)
+  
+    var obj = {"addressListId":4,"parentId":this.objectif[0].addressListValueID}
+    console.log("object :",obj)
+  this.translationService.findAddressListValue(obj).subscribe((data)=>{
+    this.cities=data
+    this.variablesGlobales.cities=[]
+    console.log("cities",this.cities)
+    for(var i=0;i<this.cities.length;i++){
+      this.variablesGlobales.cities.push(this.cities[i])
+      values.push(this.regions[i].name)
+
+    }
+
+    this.translationService.readAcmAddressTranslation(values,"fr").subscribe((data)=>{
+      this.variablesGlobales.city=data
+      console.log("data city  :", this.variablesGlobales.city + "langue :","fr")
+      console.log("data city values :",this.variablesGlobales.cities)
+      for(var i=0;i<this.variablesGlobales.cities.length;i++){
+        values_cities.push(this.variablesGlobales.cities[i].name)
+  
+      }
+      this.translationService.readAcmAddressTranslation(values_cities,"fr").subscribe((data)=>{
+        this.variablesGlobales.city=data
+      })
+
+      })
+  
+  
+  })
 
 })
 
-}
+  }else{
 
-select2(event){
-  console.log("select 2 changed")
-  console.log("value de region ",this.region)
-  var obj = {"addressListId":4,"parentId":this.region}
-  this.translationService.findAddressListValue(obj).subscribe((data)=>{
-    this.cities=data
-    this.districts=[]
-    console.log("cities",this.cities)
+
+    var values=[]
+    this.variablesGlobales.city=[]
+    var values_cities=[]
+    console.log("select 2 changed")
+    console.log("value de region ",this.region)
+    console.log("data region  :", this.variablesGlobales.region)
+    console.log("data regions values :",this.variablesGlobales.regions)
+    this.translationService.readAcmAddressTranslation([this.region],this.variablesGlobales.langue).subscribe((data)=>{
+      console.log("value new region de region ",data)
+      this.objectif = this.variablesGlobales.regions.filter(x=>x.name == data);
+     console.log("objectif valueeeee :",this.objectif)
+    
+      var obj = {"addressListId":4,"parentId":this.objectif[0].addressListValueID}
+      console.log("object :",obj)
+    this.translationService.findAddressListValue(obj).subscribe((data)=>{
+      this.cities=data
+      this.variablesGlobales.cities=[]
+      console.log("cities",this.cities)
+      for(var i=0;i<this.cities.length;i++){
+        this.variablesGlobales.cities.push(this.cities[i])
+        values.push(this.regions[i].name)
   
+      }
+  
+      this.translationService.readAcmAddressTranslation(values,this.variablesGlobales.langue).subscribe((data)=>{
+        this.variablesGlobales.city=data
+        console.log("data city  :", this.variablesGlobales.city + "langue :",this.variablesGlobales.langue)
+        console.log("data city values :",this.variablesGlobales.cities)
+        for(var i=0;i<this.variablesGlobales.cities.length;i++){
+          values_cities.push(this.variablesGlobales.cities[i].name)
+    
+        }
+        console.log(" values cities  :", values_cities )
+
+        this.translationService.readAcmAddressTranslation(values_cities,this.variablesGlobales.langue).subscribe((data)=>{
+          this.variablesGlobales.city=data
+          console.log("translation values cities  :", this.variablesGlobales.city )
+
+        })
+  
+        })
+    
+    
+    })
   
   })
 
 
+
+  }
 }
 
 select3(event){
+
+  if(this.variablesGlobales.langue == ''){
+
+
+
+  var values=[]
+  this.variablesGlobales.district=[]
+  
   console.log("select 3 changed")
   console.log("value de city ",this.city)
-
-  var obj = {"addressListId":8,"parentId":this.city}
+  console.log("data city  :", this.variablesGlobales.city)
+  console.log("data cities values :",this.variablesGlobales.cities)
+  this.translationService.readAcmAddressTranslation([this.city],"fr").subscribe((data)=>{
+    console.log("value new city  ",data)
+    this.objectif = this.variablesGlobales.cities.filter(x=>x.name == data);
+   console.log("objectif valueeeee :",this.objectif)
+  
+    var obj = {"addressListId":8,"parentId":this.objectif[0].addressListValueID}
+    console.log("object :",obj)
   this.translationService.findAddressListValue(obj).subscribe((data)=>{
     this.districts=data
+    
     console.log("districts",this.districts)
+    for(var i=0;i<this.districts.length;i++){
+      this.variablesGlobales.districts.push(this.cities[i])
+      values.push(this.districts[i].name)
+
+    }
+    console.log("values :",values)
+
+
+    this.translationService.readAcmAddressTranslation(values,"fr").subscribe((data)=>{
+      this.variablesGlobales.district=data
+      console.log("variablesGlobales districts",this.variablesGlobales.district)
+
+    
+
+      })
   
   
-  })
+   })
+
+ })
+
+}else{
+
+
+  var values=[]
+  this.variablesGlobales.district=[]
+  
+  console.log("select 3 changed")
+  console.log("value de city ",this.city)
+  console.log("data city  :", this.variablesGlobales.city)
+  console.log("data cities values :",this.variablesGlobales.cities)
+  this.translationService.readAcmAddressTranslation([this.city],this.variablesGlobales.langue).subscribe((data)=>{
+    console.log("value new city  ",data)
+    this.objectif = this.variablesGlobales.cities.filter(x=>x.name == data);
+   console.log("objectif valueeeee :",this.objectif)
+  
+    var obj = {"addressListId":8,"parentId":this.objectif[0].addressListValueID}
+    console.log("object :",obj)
+  this.translationService.findAddressListValue(obj).subscribe((data)=>{
+    this.districts=data
+    
+    console.log("districts",this.districts)
+    for(var i=0;i<this.districts.length;i++){
+      this.variablesGlobales.districts.push(this.cities[i])
+      values.push(this.districts[i].name)
+
+    }
+    console.log("values :",values)
+
+
+    this.translationService.readAcmAddressTranslation(values,this.variablesGlobales.langue).subscribe((data)=>{
+      this.variablesGlobales.district=data
+      console.log("variablesGlobales districts",this.variablesGlobales.district)
+
+    
+
+      })
+  
+  
+   })
+
+ })
+
+
+
+}
 
 
 }

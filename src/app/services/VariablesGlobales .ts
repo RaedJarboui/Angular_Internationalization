@@ -11,5 +11,12 @@ export class VariablesGlobales {
   ID_UDF_LIST_VALUE:any
   branches : any
   relationship:any
-
+  country;
+  region;
+  city;
+  district;
+  countries = []
+  regions=[]
+  cities=[]
+  districts=[]
 }
