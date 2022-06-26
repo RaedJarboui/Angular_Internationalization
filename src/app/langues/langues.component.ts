@@ -257,8 +257,13 @@ export class LanguesComponent implements OnInit {
       this.translate.setDefaultLang('en');
   
       const browserLang = this.variablesGlobales.langue
-      this.translate.use(browserLang.match(/en|fr|ar/) ? browserLang : browserLang);
-  
+      //this.translate.use(browserLang.match(/en|fr|ar/) ? browserLang : browserLang);
+      if( this.variablesGlobales.langue == ''){
+        this.translate.use(browserLang.match(/en|fr|ar/) ? browserLang : 'fr')
+        }else{
+          this.translate.use(browserLang.match(/en|fr|ar/) ? browserLang : this.variablesGlobales.langue);
+    
+        }
       console.log(browserLang);
       console.log("langue value in langue comp :",this.variablesGlobales.langue)
    }

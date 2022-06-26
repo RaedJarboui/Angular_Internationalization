@@ -1,0 +1,40 @@
+app-translate-udf .simple-keyboard {
+    max-width: 850px;
+    bottom: 500px;
+
+  }
+  app-translate-udf #container {position:relative;}
+  app-translate-udf .fa.fa-keyboard.active::after {
+ 
+  content: "/";
+  color: rgb(255, 30, 0);
+  font-weight: 700;
+  right: 20px;
+  top: -10px;
+}
+app-translate-udf .fa.fa-keyboard:after {
+  position: absolute;
+  font-weight: 700;
+  font-size: 1.7em;
+  left: 7px;
+  top: -10px;
+
+  
+  
+}
+app-translate-udf .hide-keyboard {
+  overflow: hidden;
+  height: 0;
+  font-weight: 700;
+  font-size: 1.7em;
+  left: 7px;
+  top: -10px;
+}
+app-translate-udf .errspan {
+        float: right;
+        margin-right: 6px;
+        margin-top: -20px;
+        position: relative;
+        z-index: 2;
+        font-size: 26px;
+    }

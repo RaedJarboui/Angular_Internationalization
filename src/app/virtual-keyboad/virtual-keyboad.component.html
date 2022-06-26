@@ -1,4 +1,4 @@
- <input
+ <!-- <input
   (input)="onInputChange($event)"
   class="input"
   value="{{value}}"
@@ -18,7 +18,7 @@
 			<option class='option' [selected]="layout.name == selectedLayout" *ngFor='let layout of layouts' [value]="layout.name">{{layout.name}}</option>
 		</select>
 	</div>
-  </div>
+  </div> -->
 
   <h2>Upload File</h2>
   <input type="file" (change)="onFileChange($event)" name="file" />
@@ -29,7 +29,7 @@
   </select>
 
 
-  <select [(ngModel)]="to_lang" class="browser-default custom-select">
+  To Language : <select [(ngModel)]="to_lang" class="browser-default custom-select">
     <option value="Select one" selected>Select one</option>
     <option *ngFor="let l of langues">{{ l }}</option>
   </select>

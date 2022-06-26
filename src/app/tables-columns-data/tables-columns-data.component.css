@@ -19,7 +19,7 @@ app-tables-columns-data ul {
   width:13px;
   height:13px;
   background-color:red;
-}
+} */
 
 app-tables-columns-data i{ margin:15px; }
 
@@ -30,8 +30,8 @@ app-tables-columns-data .fa.fa-keyboard.active::after {
   content: "/";
   color: rgb(255, 30, 0);
   font-weight: 700;
-  font-size: 1.7em;
-  left: 7px;
+  /* font-size: 26px; */
+  right: 20px;
   top: -10px;
 }
 
@@ -48,7 +48,12 @@ app-tables-columns-data .fa.fa-keyboard:after {
 app-tables-columns-data .hide-keyboard {
   overflow: hidden;
   height: 0;
+  font-weight: 700;
+  font-size: 1.7em;
+  left: 7px;
+  top: -10px;
 }
+
 
 app-tables-columns-data .errspan {
         float: right;
@@ -56,6 +61,7 @@ app-tables-columns-data .errspan {
         margin-top: -20px;
         position: relative;
         z-index: 2;
+        font-size: 26px;
     }
 
     app-tables-columns-data mat-progress-spinner {

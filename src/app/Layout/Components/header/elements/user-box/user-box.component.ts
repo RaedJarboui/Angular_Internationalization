@@ -25,8 +25,12 @@ export class UserBoxComponent implements OnInit {
               public ngbDropdownMenu: NgbDropdownConfig,private authService: AuthService
               ,public variablesGlobales: VariablesGlobales) {
                 const browserLang = this.translate.getBrowserLang();
-    this.translate.use(browserLang.match(/en|fr|ar/) ? browserLang : '');
-
+                if( this.variablesGlobales.langue == ''){
+                  this.translate.use(browserLang.match(/en|fr|ar/) ? browserLang : 'fr')
+                  }else{
+                    this.translate.use(browserLang.match(/en|fr|ar/) ? browserLang : this.variablesGlobales.langue);
+              
+                  }
     console.log(browserLang);
   }
 
@@ -87,6 +91,11 @@ export class UserBoxComponent implements OnInit {
 
 
   langFR() {
+    this.variablesGlobales.country=[]
+    this.variablesGlobales.region=[]
+    this.variablesGlobales.city=[]
+    this.variablesGlobales.district=[]
+
    
     this.translate.use('fr');
     this.ngbDropdownMenu.placement = 'bottom-right';
@@ -133,6 +142,10 @@ export class UserBoxComponent implements OnInit {
   }
 
   langEN() {
+    this.variablesGlobales.country=[]
+    this.variablesGlobales.region=[]
+    this.variablesGlobales.city=[]
+    this.variablesGlobales.district=[]
     
     this.translate.use('en');
     this.ngbDropdownMenu.placement = 'bottom-right';
@@ -173,6 +186,10 @@ export class UserBoxComponent implements OnInit {
   }
 
   langAR() {
+    this.variablesGlobales.country=[]
+    this.variablesGlobales.region=[]
+    this.variablesGlobales.city=[]
+    this.variablesGlobales.district=[]
   
 
     this.translate.use('ar');

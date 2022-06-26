@@ -1,7 +1,8 @@
 {
     "home": {
-      "pageTitle": "English",
       "LanguageTitle":"Settings Languages",
+      "Settings Languages":"Settings Languages",
+      "pageTitle": "English",
       "TranslationTitle":"Settings Translation ",
       "add":"Add",
       "LanguageList":"Languages List",
@@ -28,7 +29,6 @@
        "Translation List":"Translation List",
        "save":"Save",
        "Copy from Textbox":"Copy from Textbox",
-       "Settings Languages":"Settings Languages",
        "Settings Translation":"Settings Translation",
        "List of translation":"List of translation",
        "Virtual Keyboard":"Virtual Keyboard"

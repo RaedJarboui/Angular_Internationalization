@@ -107,9 +107,6 @@
     placeholder="Tap on the virtual keyboard to start"
     />
     <button (click)="copyInputMessage(userinput)" value="click to copy" >{{ 'home.Copy from Textbox' | translate }}</button>
-    
-    
-    
       <div class="simple-keyboard"></div>
       <div class="select-container">
         <select class='select-option' required (change)="onSelectChange($event)">
@@ -203,7 +200,7 @@
             </td>
             <td>
               <button class="btn-wide mb-2 me-2 btn btn-success btn-sm" (click)="addTranslation(array_string.indexOf(s))">save</button>
-              <button class="btn-wide mb-2 me-2 btn btn-primary btn-sm" *ngIf ="s === 'Nationality' || s === 'Family situation' " (click)="udfValues(s)">udf values</button>
+              <button class="btn-wide mb-2 me-2 btn btn-primary btn-sm" *ngIf ="s === 'Nationality' || s === 'Family situation' "  (click)="udfValues(s)">udf values</button>
 
             </td>
                  
@@ -236,7 +233,6 @@
 </ng-template>
 
 
-
 <ng-template #third>
   <ng-container *ngIf="boolValue">
     {{ 'home.Table Name' | translate  }}:
@@ -246,10 +242,7 @@
       <option _ngcontent-bpw-c21="" value="Select one" selected> -- Select Table -- </option>
       <option *ngFor="let c of last_array" _ngcontent-bpw-c21=""  >{{ c.TABLE_ABACUS_NAME }}</option>
     </select>  
-    
-   
-  
-   
+      
     {{ 'home.column' | translate }}:
     <select style="display: inline-block;" [(ngModel)]="selected_col" (ngModelChange)="select2($event)" _ngcontent-bpw-c21="" class="form-control ng-pristine ng-invalid ng-touched" required=""  ng-reflect-required=""  >
       <option _ngcontent-bpw-c21="" value="Select one" selected> -- Select a Column-- </option>
@@ -258,8 +251,6 @@
     <br />
     <br />
    <div *ngIf="selected_tab && selected_col">
-  
-  
     <div style = "margin-top: 40px">
       <p-table [columns]="col" [value]="select2_array" 
       [lazy]="true" sortMode="multiple" #dt (onLazyLoad)="handlePageChangee($event)" [paginator]="true"
@@ -335,30 +326,26 @@
         </ng-template>
       </p-table>
       </div>
-      <div style="text-align:center" [ngClass]="!isActive ? 'hide-keyboard' : ''">
-        <input
-      (input)="onInputChange($event)"
-      class="input"
-      value="{{value}}"
-      #userinput
-      placeholder="Tap on the virtual keyboard to start"
-      />
-      <button (click)="copyInputMessage(userinput)" value="click to copy" >{{ 'home.Copy from Textbox' | translate }}</button>
-      
-      
-      
-        <div class="simple-keyboard"></div>
-        <div class="select-container">
-          <select class='select-option' required (change)="onSelectChange($event)">
-            <option class='option' [selected]="layout.name == selectedLayout" *ngFor='let layout of layouts' [value]="layout.name">{{layout.name}}</option>
-          </select>
-        </div>
-        </div>
-      
-  
-    </div>
-    
-  
+    </div>   
+
+    <div style="text-align:center" [ngClass]="!isActive ? 'hide-keyboard' : ''">
+      <input
+    (input)="onInputChange($event)"
+    class="input"
+    value="{{value}}"
+    #userinput
+    placeholder="Tap on the virtual keyboard to start"
+    />
+    <button (click)="copyInputMessage(userinput)" value="click to copy" >{{ 'home.Copy from Textbox' | translate }}</button>
+      <div class="simple-keyboard"></div>
+      <div class="select-container">
+        <select class='select-option' required (change)="onSelectChange($event)">
+          <option class='option' [selected]="layout.name == selectedLayout" *ngFor='let layout of layouts' [value]="layout.name">{{layout.name}}</option>
+        </select>
+      </div>
+      </div>
+  </ng-container>
+</ng-template>
   
   <ng-template #content let-modal>
     <div class="modal-header">

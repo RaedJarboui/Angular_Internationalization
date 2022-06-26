@@ -1,7 +1,6 @@
 
 
-<h2>{{ "home.pageTitle" | translate }}</h2>
-
+<!-- 
   Country :<select style="display: inline-block;" [(ngModel)]="country" name="country" (ngModelChange)="select1($event)" _ngcontent-bpw-c21="" class="form-control ng-pristine ng-invalid ng-touched"  required="">
     <option _ngcontent-bpw-c21="" value="Select one" selected> -- Select Table -- </option>
     <option *ngFor="let c of variablesGlobales.country" _ngcontent-bpw-c21="" [value]="c"  >{{ c }}</option>
@@ -24,7 +23,7 @@
     <option _ngcontent-bpw-c21="" value="Select one" selected> -- Select Table -- </option>
     <option *ngFor="let d of variablesGlobales.district" _ngcontent-bpw-c21="" [value]="d"  >{{ d }}</option>
   
-  </select>  
+  </select>   -->
 
 
 
@@ -406,9 +405,11 @@
             <div class="position-relative form-group">
               <label>{{'customer_management.country'| translate }}</label>
               <span  class="text-danger">*</span>
-              <select class="form-control" [(ngModel)]="country" name="country" (ngModelChange)="select1($event)">
+              <select class="form-control" (change)="select1($event.target.value)">
                 <option selected value>
-                  {{'customer_management.country_default_select'| translate }}</option>
+                  {{'customer_management.country_default_select'| translate }}
+                
+                </option>
                 <ng-container *ngFor="let country of variablesGlobales.country">
                   <option [ngValue]="country" >
                     {{country}}
@@ -421,7 +422,7 @@
             <div class="position-relative form-group">
               <label>{{'customer_management.region'| translate }}</label>
               <span  class="text-danger">*</span>
-              <select class="form-control" [(ngModel)]="region" name="region" (ngModelChange)="select2($event)"
+              <select class="form-control"  (change)="select2($event.target.value)"
                       >
                 <option selected value>
                   {{'customer_management.region_default_select'| translate }}</option>
@@ -437,7 +438,7 @@
             <div class="position-relative form-group">
               <label>{{'customer_management.city'| translate }}</label>
               <span  class="text-danger">*</span>
-              <select class="form-control" [(ngModel)]="city" name="city" (ngModelChange)="select3($event)" >
+              <select class="form-control"  (change)="select3($event.target.value)" >
                 <option selected value>
                   {{'customer_management.city_default_select'| translate }}</option>
                 <ng-container *ngFor="let city of variablesGlobales.city">
@@ -459,7 +460,7 @@
             <div class="position-relative form-group">
               <label>{{'customer_management.district'| translate }}</label>
               <span  class="text-danger">*</span>
-              <select class="form-control" [(ngModel)]="district" name="district" (ngModelChange)="select4($event)"
+              <select class="form-control" (change)="select4($event.target.value)"
                       >
                 <option selected value>
                   {{'customer_management.district_default_select'| translate }}</option>

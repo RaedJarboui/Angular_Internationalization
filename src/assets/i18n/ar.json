@@ -1,7 +1,8 @@
 {
     "home": {
-      "pageTitle": "العربية",
       "LanguageTitle":"اعدادات اللغة",
+      "Settings Languages":"إعدادات اللغات",
+      "pageTitle": "العربية",
       "TranslationTitle":"إعدادات الترجمة",
       "add":"إضافة",
       "LanguageList":"قائمة اللغات",
@@ -28,7 +29,6 @@
        "Translation List":"قائمة الترجمات",
        "save":"حفظ",
        "Copy from Textbox":"نسخ من مربع النص",
-       "Settings Languages":"إعدادات اللغات",
        "Settings Translation":"ترجمة الإعدادات",
        "List of translation":"قائمة الترجمة",
        "Virtual Keyboard":"لوحة مفاتيح افتراضية"
