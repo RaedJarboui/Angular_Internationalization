@@ -107,7 +107,6 @@ export class DisplayTranslationComponent implements OnInit {
   }
 
   ngOnInit(): void {
-
     this.translationService.findAddressType().subscribe((data)=>{
       this.addressType =data;
       console.log("addressType",this.addressType)
@@ -121,9 +120,13 @@ export class DisplayTranslationComponent implements OnInit {
 
           this.translationService.findAddressListValue({"addressListId": 1}).subscribe((data)=>{
             this.countries=data
+            console.log("this.countries:",this.countries)
+            console.log("variablesGlobales countries value :",this.variablesGlobales.countries)
 
             this.translationService.readAcmAddressTranslation(this.variablesGlobales.countries,"fr").subscribe((data)=>{
               this.variablesGlobales.country=data
+              console.log("variablesGlobales countrie value :",this.variablesGlobales.country)
+
             })
           
 
@@ -219,6 +222,7 @@ for(var i=0;i<this.variablesGlobales.countries.length;i++){
       values.push(this.regions[i].name)
 
     }
+      console.log("values",values)
 
     this.translationService.readAcmAddressTranslation(values,"fr").subscribe((data)=>{
       this.variablesGlobales.region=data
@@ -251,7 +255,8 @@ for(var i=0;i<this.variablesGlobales.countries.length;i++){
         values.push(this.regions[i].name)
   
       }
-  
+      console.log("values",values)
+
       this.translationService.readAcmAddressTranslation(values,this.variablesGlobales.langue).subscribe((data)=>{
         this.variablesGlobales.region=data
         console.log("data region english :", this.variablesGlobales.region)
@@ -275,30 +280,26 @@ for(var i=0;i<this.variablesGlobales.countries.length;i++){
 
 }
 objectif :any
-
 values_districts=[]
-
 select2(e){
   this.region=e
   if(this.variablesGlobales.langue == ''){
-
   var values=[]
   this.variablesGlobales.city=[]
   var values_cities=[]
   console.log("select 2 changed")
-  console.log("value de region ",this.region)
+  console.log("value de region 1",this.region)
   console.log("data region  :", this.variablesGlobales.region)
   console.log("data regions values :",this.variablesGlobales.regions)
   this.translationService.readAcmAddressTranslation([this.region],"fr").subscribe((data)=>{
     console.log("value new region de region ",data)
     if(data.length ==0){
-
-  console.log("data length = 0") 
+    console.log("data length = 0") 
     this.objectif = this.variablesGlobales.regions.filter(x=>x.name == this.region);
   }
     else {
       console.log("data length > 0") 
-      this.objectif = this.variablesGlobales.regions.filter(x=>x.name == data);
+      this.objectif = this.variablesGlobales.regions.filter(x=>x.name == data[0]);
 
     }
 
@@ -350,7 +351,7 @@ select2(e){
     this.variablesGlobales.city=[]
     var values_cities=[]
     console.log("select 2 changed")
-    console.log("value de region ",this.region)
+    console.log("value de region 2",this.region)
     console.log("data region  :", this.variablesGlobales.region)
     console.log("data regions values :",this.variablesGlobales.regions)
     this.translationService.readAcmAddressTranslation([this.region],this.variablesGlobales.langue).subscribe((data)=>{
@@ -363,7 +364,7 @@ select2(e){
         }
           else {
             console.log("data length > 0") 
-            this.objectif = this.variablesGlobales.regions.filter(x=>x.name == data);
+            this.objectif = this.variablesGlobales.regions.filter(x=>x.name == data[0]);
       
           }
 
@@ -441,7 +442,7 @@ select3(e){
     }
       else {
         console.log("data length > 0") 
-        this.objectif = this.variablesGlobales.cities.filter(x=>x.name == data);
+        this.objectif = this.variablesGlobales.cities.filter(x=>x.name == data[0]);
   
       }
   
@@ -506,7 +507,7 @@ select3(e){
           }
             else {
               console.log("data length > 0") 
-              this.objectif = this.variablesGlobales.cities.filter(x=>x.name == data);
+              this.objectif = this.variablesGlobales.cities.filter(x=>x.name == data[0]);
         
             }
 
